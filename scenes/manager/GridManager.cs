@@ -15,21 +15,23 @@ public partial class GridManager : Node
 	[Export]
 	private TileMapLayer baseTerrainTilemapLayer;
 
+	private List<TileMapLayer> allTilemapLayers = [];
+
 	public override void _Ready()
 	{
 		GameEvents.Instance.BuildingPlaced += OnBuildingPlaced;
+		allTilemapLayers = GetAllTilemapLayers(baseTerrainTilemapLayer);
 	}
 
 	public bool IsTilePositionValid(Vector2I tilePosition)
 	{
-		var customData = baseTerrainTilemapLayer.GetCellTileData(tilePosition);
-
-		if(customData == null || !(bool)customData.GetCustomData("buildable"))
+		foreach(var layer in allTilemapLayers)
 		{
-			return false;
+			var customData = layer.GetCellTileData(tilePosition);
+			if(customData == null) continue;
+			return (bool)customData.GetCustomData("buildable");
 		}
-
-		return !occupiedCells.Contains(tilePosition);
+		return false;
 	}
 
 	public void MarkTileAsOccupied(Vector2I tilePosition)
@@ -57,6 +59,22 @@ public partial class GridManager : Node
 		Vector2 mousePosition = highlightTilemapLayer.GetGlobalMousePosition();
 		var gridPosition = (mousePosition / 64).Floor();
 		return new Vector2I((int)gridPosition.X, (int)gridPosition.Y);
+	}
+
+	private List<TileMapLayer> GetAllTilemapLayers(TileMapLayer rootTilemapLayer)
+	{
+		var result = new List<TileMapLayer>();
+		var children = rootTilemapLayer.GetChildren();
+		children.Reverse();
+		foreach(var child in children)
+		{
+			if(child is TileMapLayer childLayer)
+			{
+				result.AddRange(GetAllTilemapLayers(childLayer));
+			}
+		}
+		result.Add(rootTilemapLayer);
+		return result;
 	}
 
 	private void HighlightValidTilesInRadius(Vector2I rootCell, int radius)
