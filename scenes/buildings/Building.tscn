@@ -1,12 +1,10 @@
 [gd_scene format=3 uid="uid://qt45nbj5xyoo"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ls7xv"]
-resource_local_to_scene = true
-size = Vector2(64, 64)
+[ext_resource type="Texture2D" uid="uid://cj3vjv4nal070" path="res://assets/buildings/blue/tower_blue.png" id="1_qrrx1"]
 
 [node name="Building" type="Node2D" unique_id=1478313097]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=944794174]
-modulate = Color(0.9137255, 0, 0, 1)
-texture = SubResource("PlaceholderTexture2D_ls7xv")
+texture = ExtResource("1_qrrx1")
 centered = false
+offset = Vector2(-32, -164)
