@@ -25,6 +25,10 @@ window/stretch/mode="canvas_items"
 
 project/assembly_name="Tiny RTS"
 
+[editor]
+
+naming/scene_name_casing=1
+
 [input]
 
 left_click={
