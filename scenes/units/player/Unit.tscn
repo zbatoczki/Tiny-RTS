@@ -601,10 +601,26 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="Worker" type="Node2D" unique_id=844453842]
+[sub_resource type="CircleShape2D" id="CircleShape2D_e0hnn"]
+
+[node name="Unit" type="CharacterBody2D" unique_id=1980137832]
+
+[node name="StateMachine" type="Node" parent="." unique_id=1894410732]
+
+[node name="IdleState" type="Node" parent="StateMachine" unique_id=289236341]
+
+[node name="MoveState" type="Node" parent="StateMachine" unique_id=1927376606]
+
+[node name="ActionState" type="Node" parent="StateMachine" unique_id=831701112]
+
+[node name="DeadState" type="Node" parent="StateMachine" unique_id=1152257704]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=290410313]
 sprite_frames = SubResource("SpriteFrames_kryca")
 animation = &"idle_meat"
 autoplay = "default_idle"
 frame_progress = 0.517222
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1633008240]
+scale = Vector2(3, 3)
+shape = SubResource("CircleShape2D_e0hnn")

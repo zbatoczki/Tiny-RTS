@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://ldhygolivtsg"]
+
+[ext_resource type="Script" uid="uid://eq8lsrthv7c7" path="res://scenes/component/HealthComponent.cs" id="1_bva5i"]
+[ext_resource type="Texture2D" uid="uid://bh8eupxwml5oq" path="res://assets/ui/health/smallbar_base_full.png" id="1_i1jat"]
+[ext_resource type="Texture2D" uid="uid://cvb38my7dqojw" path="res://assets/ui/health/smallbar_fill.png" id="2_bva5i"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xwnxc"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wg3e3"]
+texture = ExtResource("2_bva5i")
+region_rect = Rect2(0, 30, 64, 3)
+
+[node name="HealthComponent" type="Node2D" unique_id=1944934705]
+script = ExtResource("1_bva5i")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1737424808]
+offset_right = 128.0
+offset_bottom = 31.0
+texture = ExtResource("1_i1jat")
+region_rect = Rect2(49, 21, 94, 20)
+patch_margin_left = 11
+patch_margin_right = 11
+axis_stretch_horizontal = 1
+
+[node name="HealthProgressBar" type="ProgressBar" parent="NinePatchRect" unique_id=676862394]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 10.0
+offset_top = 14.0
+offset_right = 117.58501
+offset_bottom = 18.68
+theme_override_styles/background = SubResource("StyleBoxEmpty_xwnxc")
+theme_override_styles/fill = SubResource("StyleBoxTexture_wg3e3")
+value = 50.0
+show_percentage = false
+
+[node name="Button" type="Button" parent="." unique_id=1542816046]
+offset_left = 2.0
+offset_top = 43.0
+offset_right = 10.0
+offset_bottom = 51.0
+text = "-5 health"
+
+[node name="Button2" type="Button" parent="." unique_id=2141413909]
+offset_left = 86.0
+offset_top = 43.0
+offset_right = 163.0
+offset_bottom = 74.0
+text = "+5 health"
