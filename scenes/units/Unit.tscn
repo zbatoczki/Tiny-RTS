@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://c8oo8lg1yuu6f"]
+
+[ext_resource type="PackedScene" uid="uid://ldhygolivtsg" path="res://scenes/component/HealthComponent.tscn" id="13_kflat"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kryca"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"move",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e0hnn"]
+
+[node name="Unit" type="CharacterBody2D" unique_id=1980137832]
+
+[node name="StateMachine" type="Node" parent="." unique_id=1894410732]
+
+[node name="IdleState" type="Node" parent="StateMachine" unique_id=289236341]
+
+[node name="MoveState" type="Node" parent="StateMachine" unique_id=1927376606]
+
+[node name="ActionState" type="Node" parent="StateMachine" unique_id=831701112]
+
+[node name="DeadState" type="Node" parent="StateMachine" unique_id=1152257704]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=290410313]
+sprite_frames = SubResource("SpriteFrames_kryca")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1633008240]
+scale = Vector2(3, 3)
+shape = SubResource("CircleShape2D_e0hnn")
+
+[node name="HealthComponent" parent="." unique_id=1944934705 instance=ExtResource("13_kflat")]
+position = Vector2(-32, -60)
+scale = Vector2(0.5, 0.5)

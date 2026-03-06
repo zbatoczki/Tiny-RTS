@@ -33,17 +33,3 @@ theme_override_styles/background = SubResource("StyleBoxEmpty_xwnxc")
 theme_override_styles/fill = SubResource("StyleBoxTexture_wg3e3")
 value = 50.0
 show_percentage = false
-
-[node name="Button" type="Button" parent="." unique_id=1542816046]
-offset_left = 2.0
-offset_top = 43.0
-offset_right = 10.0
-offset_bottom = 51.0
-text = "-5 health"
-
-[node name="Button2" type="Button" parent="." unique_id=2141413909]
-offset_left = 86.0
-offset_top = 43.0
-offset_right = 163.0
-offset_bottom = 74.0
-text = "+5 health"
