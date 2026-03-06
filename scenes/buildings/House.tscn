@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://b0cshne787gkg"]
+
+[ext_resource type="Texture2D" uid="uid://yj054wwvd22y" path="res://assets/buildings/blue/house1_blue.png" id="1_4m68r"]
+[ext_resource type="PackedScene" uid="uid://b7g8ekjirkq30" path="res://scenes/component/BuildingComponent.tscn" id="1_d6kjr"]
+
+[node name="House" type="Node2D" unique_id=1307641633]
+y_sort_enabled = true
+
+[node name="BuildingComponent" parent="." unique_id=1158880757 instance=ExtResource("1_d6kjr")]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2113930396]
+position = Vector2(32, 32)
+texture = ExtResource("1_4m68r")
+centered = false
+offset = Vector2(-64, -140)

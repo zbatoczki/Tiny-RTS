@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://b7g8ekjirkq30" path="res://scenes/component/BuildingComponent.tscn" id="1_p4c3j"]
 [ext_resource type="Texture2D" uid="uid://cj3vjv4nal070" path="res://assets/buildings/blue/tower_blue.png" id="1_qrrx1"]
 
-[node name="Building" type="Node2D" unique_id=1478313097]
+[node name="Tower" type="Node2D" unique_id=1478313097]
 y_sort_enabled = true
 
 [node name="BuildingComponent" parent="." unique_id=1158880757 instance=ExtResource("1_p4c3j")]

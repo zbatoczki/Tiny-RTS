@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c1meg1gb6mik1" path="res://scenes/manager/GridManager.tscn" id="2_rarhs"]
 [ext_resource type="TileSet" uid="uid://hpf85rt8xamv" path="res://resources/highlight_tileset.tres" id="2_rvslj"]
 [ext_resource type="TileSet" uid="uid://djlecc884ekiu" path="res://resources/tiles.tres" id="3_vcsgt"]
+[ext_resource type="PackedScene" uid="uid://b0cshne787gkg" path="res://scenes/buildings/House.tscn" id="5_c01mt"]
 [ext_resource type="PackedScene" uid="uid://c3dt5squhvpgj" path="res://scenes/buildings/Base.tscn" id="5_vcsgt"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_sgp6g"]
@@ -30,7 +31,10 @@ tile_map_data = PackedByteArray("AAAKAAMAAQAAAAAAAAAIAAMAAQAAAAAAAAAFAAYAAQAAAAA
 tile_set = ExtResource("3_vcsgt")
 
 [node name="Base" parent="YSortRoot" unique_id=224519788 instance=ExtResource("5_vcsgt")]
-position = Vector2(192, 192)
+position = Vector2(448, 256)
+
+[node name="House" parent="YSortRoot" unique_id=1307641633 instance=ExtResource("5_c01mt")]
+position = Vector2(896, 192)
 
 [node name="HighlightTilemapLayer" type="TileMapLayer" parent="." unique_id=1796272973]
 modulate = Color(1, 1, 1, 0.49803922)
@@ -41,9 +45,16 @@ visible = false
 texture = SubResource("PlaceholderTexture2D_sgp6g")
 centered = false
 
-[node name="Button" type="Button" parent="." unique_id=939781616]
+[node name="PlaceTowerButton" type="Button" parent="." unique_id=939781616]
 offset_left = 64.0
 offset_top = 640.0
 offset_right = 181.0
 offset_bottom = 671.0
-text = "Place Building"
+text = "Place Tower"
+
+[node name="PlaceHouseButton" type="Button" parent="." unique_id=1948850785]
+offset_left = 192.0
+offset_top = 640.0
+offset_right = 309.0
+offset_bottom = 671.0
+text = "Place House"
