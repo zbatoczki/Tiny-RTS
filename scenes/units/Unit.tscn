@@ -1,8 +1,13 @@
 [gd_scene format=3 uid="uid://c8oo8lg1yuu6f"]
 
+[ext_resource type="Script" uid="uid://c0wxnruj1snwt" path="res://scenes/units/Unit.cs" id="1_gocqw"]
 [ext_resource type="PackedScene" uid="uid://ldhygolivtsg" path="res://scenes/component/HealthComponent.tscn" id="13_kflat"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_kryca"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_e0hnn"]
+radius = 6.596229
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e3b5r"]
+resource_local_to_scene = true
 animations = [{
 "frames": [],
 "loop": true,
@@ -15,29 +20,20 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_e0hnn"]
-
 [node name="Unit" type="CharacterBody2D" unique_id=1980137832]
-
-[node name="StateMachine" type="Node" parent="." unique_id=1894410732]
-
-[node name="IdleState" type="Node" parent="StateMachine" unique_id=289236341]
-
-[node name="MoveState" type="Node" parent="StateMachine" unique_id=1927376606]
-
-[node name="ActionState" type="Node" parent="StateMachine" unique_id=831701112]
-
-[node name="DeadState" type="Node" parent="StateMachine" unique_id=1152257704]
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=290410313]
-sprite_frames = SubResource("SpriteFrames_kryca")
-animation = &"idle"
-autoplay = "idle"
+collision_layer = 2
+script = ExtResource("1_gocqw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1633008240]
 scale = Vector2(3, 3)
 shape = SubResource("CircleShape2D_e0hnn")
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=290410313]
+sprite_frames = SubResource("SpriteFrames_e3b5r")
+animation = &"idle"
+centered = false
+
 [node name="HealthComponent" parent="." unique_id=1944934705 instance=ExtResource("13_kflat")]
-position = Vector2(-32, -60)
+y_sort_enabled = true
+position = Vector2(-32, -70)
 scale = Vector2(0.5, 0.5)

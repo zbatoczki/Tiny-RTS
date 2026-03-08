@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bm3qv1rtfn1is"]
+
+[ext_resource type="Script" uid="uid://cl807gvd73aa0" path="res://scenes/ui/UnitSelector.cs" id="1_s0xvq"]
+
+[node name="UnitSelector" type="Control" unique_id=18307296]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_s0xvq")
+borderColor = Color(0, 1, 0, 1)
+borderWidth = 2.0

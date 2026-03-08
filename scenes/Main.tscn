@@ -6,6 +6,8 @@
 [ext_resource type="TileSet" uid="uid://djlecc884ekiu" path="res://resources/tiles.tres" id="3_vcsgt"]
 [ext_resource type="PackedScene" uid="uid://b0cshne787gkg" path="res://scenes/buildings/House.tscn" id="5_c01mt"]
 [ext_resource type="PackedScene" uid="uid://c3dt5squhvpgj" path="res://scenes/buildings/Base.tscn" id="5_vcsgt"]
+[ext_resource type="PackedScene" uid="uid://bxo4obx7s5dql" path="res://scenes/units/player/Worker.tscn" id="6_nxtc6"]
+[ext_resource type="PackedScene" uid="uid://bm3qv1rtfn1is" path="res://scenes/ui/UnitSelector.tscn" id="8_jlsqs"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_sgp6g"]
 size = Vector2(64, 64)
@@ -36,6 +38,10 @@ position = Vector2(448, 256)
 [node name="House" parent="YSortRoot" unique_id=1307641633 instance=ExtResource("5_c01mt")]
 position = Vector2(896, 192)
 
+[node name="Worker" parent="YSortRoot" unique_id=1980137832 instance=ExtResource("6_nxtc6")]
+position = Vector2(576, 448)
+collision_layer = 1
+
 [node name="HighlightTilemapLayer" type="TileMapLayer" parent="." unique_id=1796272973]
 modulate = Color(1, 1, 1, 0.49803922)
 tile_set = ExtResource("2_rvslj")
@@ -44,6 +50,8 @@ tile_set = ExtResource("2_rvslj")
 visible = false
 texture = SubResource("PlaceholderTexture2D_sgp6g")
 centered = false
+
+[node name="UnitSelector" parent="." unique_id=18307296 instance=ExtResource("8_jlsqs")]
 
 [node name="PlaceTowerButton" type="Button" parent="." unique_id=939781616]
 offset_left = 64.0
