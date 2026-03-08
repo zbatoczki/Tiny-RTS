@@ -42,6 +42,22 @@ position = Vector2(896, 192)
 position = Vector2(576, 448)
 collision_layer = 1
 
+[node name="Worker2" parent="YSortRoot" unique_id=1192160377 instance=ExtResource("6_nxtc6")]
+position = Vector2(704, 384)
+collision_layer = 1
+
+[node name="Worker3" parent="YSortRoot" unique_id=1400729344 instance=ExtResource("6_nxtc6")]
+position = Vector2(704, 512)
+collision_layer = 1
+
+[node name="Worker4" parent="YSortRoot" unique_id=430268830 instance=ExtResource("6_nxtc6")]
+position = Vector2(576, 576)
+collision_layer = 1
+
+[node name="Worker5" parent="YSortRoot" unique_id=158870230 instance=ExtResource("6_nxtc6")]
+position = Vector2(576, 320)
+collision_layer = 1
+
 [node name="HighlightTilemapLayer" type="TileMapLayer" parent="." unique_id=1796272973]
 modulate = Color(1, 1, 1, 0.49803922)
 tile_set = ExtResource("2_rvslj")

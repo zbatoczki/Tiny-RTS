@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bg38er7nnyp1r"]
+
+[ext_resource type="Script" uid="uid://csd666dql3odv" path="res://scenes/autoload/UnitManager.cs" id="1_tluwl"]
+
+[node name="UnitManager" type="Node2D" unique_id=174444908]
+script = ExtResource("1_tluwl")

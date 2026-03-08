@@ -1,4 +1,6 @@
 using System.Linq;
+using Game.Autoload;
+using Game.InputMap;
 using Game.Units;
 using Godot;
 
@@ -6,112 +8,84 @@ namespace Game.UI;
 
 public partial class UnitSelector : Control
 {
-	private const int UNITS_LAYER = 1 << 1;
-	private readonly StringName LEFT_CLICK = "left_click";
-
 	[Export]
 	private Color borderColor;
 	[Export]
 	private float borderWidth;
+	[Export]
+	private TileMapLayer tileMapLayer;
+
+	private float defaultWidth;
 
 	private bool selecting = false;
 	private Vector2 dragStart;
+	private Vector2 dragEnd;
 	private Rect2 selectBox;
-	private System.Collections.Generic.Dictionary<int, Unit> selectedUnits = [];
+
+    public override void _Ready()
+    {
+        defaultWidth = borderWidth;
+    }
+
 
     public override void _UnhandledInput(InputEvent inputEvent)
     {
-		Vector2 mousePosition = GetViewport().GetMousePosition();
-        if(inputEvent.IsActionPressed(LEFT_CLICK))
-		{			
+		Vector2 mousePosition = GetGlobalMousePosition();
+        if(inputEvent.IsActionPressed(InputMapping.LEFT_CLICK))
+		{
+			borderWidth = defaultWidth;
 			selecting = true;
 			dragStart = mousePosition;
+			dragEnd = mousePosition;
 		}
-		else if(inputEvent.IsActionReleased(LEFT_CLICK))
+		else if(inputEvent.IsActionReleased(InputMapping.LEFT_CLICK))
 		{
+			borderWidth = 0;
 			selecting = false;
-			if (dragStart.IsEqualApprox(mousePosition))
-				SelectSingleUnit();
-			else
-				UpdateSelectedUnits();
-			
+			dragStart = Vector2.Zero;
+			dragEnd = Vector2.Zero;
 			QueueRedraw();
 		}
-		else if(selecting && inputEvent is InputEventMouseMotion mouseMotion)
+		
+		if(selecting && inputEvent is InputEventMouseMotion)
 		{
-			GenerateSelectionBox(mousePosition);
+			dragEnd = mousePosition;
+			QueueRedraw();
+			UnitManager.Instance.SelectedRect = selectBox;
+		}
+		if (inputEvent.IsActionPressed(InputMapping.RIGHT_CLICK))
+		{
+			UnitManager.Instance.MoveToPosition(tileMapLayer, GetTilePosition(mousePosition));
 		}
     }
 
     public override void _Draw()
     {
-        if(!selecting) return;
+		Vector2 rectPosition = dragStart;
+		Vector2 rectSize = dragEnd - dragStart;
+		
+		if(rectSize.X < 0)
+		{
+			rectPosition.X += rectSize.X;			
+		}
+		if(rectSize.Y < 0)
+		{
+			rectPosition.Y += rectSize.Y;			
+		}
+		rectSize = rectSize.Abs();
 
-		DrawRect(selectBox, borderColor, false, borderWidth);
+		selectBox = new Rect2(rectPosition, rectSize);
+
+		DrawRect(selectBox, borderColor, filled: false, borderWidth);
     }
 
-	private void GenerateSelectionBox(Vector2 mousePosition)
+	private Vector2I GetTilePosition(Vector2 position)
 	{
-		var xMin = Mathf.Min(dragStart.X, mousePosition.X);
-		var yMin = Mathf.Min(dragStart.Y, mousePosition.Y);
-		var width = Mathf.Max(dragStart.X, mousePosition.X) - xMin;
-		var height = Mathf.Max(dragStart.Y, mousePosition.Y) - yMin;
-
-		selectBox = new Rect2(xMin, yMin, width, height);
-
-		UpdateSelectedUnits();
-		QueueRedraw();
+		GD.Print(position);
+		Vector2 localposition = tileMapLayer.ToLocal(position);
+		Vector2I tilePosition = tileMapLayer.LocalToMap(localposition);
+		return tilePosition;
 	}
-
-	private void UpdateSelectedUnits()
-	{
-		var playerUnits = GetTree().GetNodesInGroup("PlayerUnit").Cast<Unit>();
-		foreach(var unit in playerUnits)
-		{
-			if (unit.IsInsideSelectionBox(selectBox))
-				unit.Select();
-			else
-				unit.Deselect();
-		}
-	}
-
-	private void SelectSingleUnit()
-	{
-		PhysicsDirectSpaceState2D space = GetWorld2D().DirectSpaceState;
-
-
-        var query = new PhysicsPointQueryParameters2D
-		{
-			Position = GetGlobalMousePosition(),
-			CollideWithAreas = false,
-			CollideWithBodies = true,
-			CollisionMask = UNITS_LAYER
-		};
-
-		var results = space.IntersectPoint(query);
-
-		DeselectAllUnits();
-		GD.Print(results.Count);
-        if (results.Count == 0)
-            return;
-
-        var collider = results[0]["collider"].As<Node>();
-
-        if (collider is Unit unitHit)
-        {
-            unitHit.Select();
-        }
-	}
-
-	private void DeselectAllUnits()
-	{
-		var playerUnits = GetTree().GetNodesInGroup("PlayerUnit").Cast<Unit>();
-        foreach (var unit in playerUnits)
-		{
-			unit.Deselect();
-		}   
-	}
-
 
 	
 }

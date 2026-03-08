@@ -22,7 +22,9 @@ animations = [{
 
 [node name="Unit" type="CharacterBody2D" unique_id=1980137832]
 collision_layer = 2
+input_pickable = true
 script = ExtResource("1_gocqw")
+borderColor = Color(0, 1, 0, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1633008240]
 scale = Vector2(3, 3)

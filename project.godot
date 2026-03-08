@@ -22,6 +22,7 @@ config/icon="uid://c1d0cq36adn3"
 [autoload]
 
 GameEvents="*uid://c0myuil2imqw2"
+UnitManager="*uid://bg38er7nnyp1r"
 
 [display]
 
