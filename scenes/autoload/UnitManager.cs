@@ -42,13 +42,13 @@ public partial class UnitManager : Node2D
 		{
 			if (SelectedRect.HasValue && SelectedRect.Value.HasPoint(unit.GlobalPosition))
 			{
-				unit.Select();
+				//unit.Select();
 				selectedUnits.Add(unit);
 			}
 			else
 			{
 				selectedUnits.Remove(unit);
-				unit.Deselect();
+				//unit.Deselect();
 			}
 		}
 	}

@@ -6,68 +6,62 @@ namespace Game.Units;
 
 public partial class Unit : CharacterBody2D
 {
+	private readonly StringName PLAYER_UNIT_GROUP = "PlayerUnit";
+
+
 	[Export]
 	private Color borderColor;
 	private HealthComponent healthComponent;
 	private Rect2 selectedRect;
 	private int selectedRectWidth = 1;
 
-	private bool _selected = false;
-	private bool Selected 
-	{
-		get => _selected;
-		set
-		{
-			_selected = value;
-			if (_selected)
-			{
-				selectedRect = new Rect2(new Vector2(-8,8), new Vector2(16,16));
-				selectedRectWidth = 2;
-			}
-			else
-			{
-				selectedRect = new Rect2(0,0,0,0);
-				selectedRectWidth = 0;
-			}
-			QueueRedraw();
-		}
-	}
+	public bool IsSelected { get; private set; } = false;
+    private CollisionShape2D  collisionShape;
 
     public override void _Ready()
     {
         healthComponent = GetNode<HealthComponent>(nameof(HealthComponent));
+
+        collisionShape = GetNodeOrNull<CollisionShape2D>("CollisionShape2D");
+
+        // Ensure this unit is in the "units" group so SelectionManager can
+        // find it. You can also add the group in the Godot editor.
+        AddToGroup(PLAYER_UNIT_GROUP);
     }
 
-    public override void _Draw()
+	 public virtual void SetSelected(bool selected)
     {
-        DrawRect(selectedRect, borderColor, filled: false, selectedRectWidth);
+        IsSelected = selected;
+
+        healthComponent.Visible = selected;
+
+        OnSelectionChanged(selected);
     }
 
-    public override void _InputEvent(Viewport viewport, InputEvent evt, int shapeIdx)
+    public bool ContainsPoint(Vector2 worldPoint)
     {
-		if (evt.IsActionPressed(InputMapping.LEFT_CLICK))
-		{
-			Select();
-			foreach(var unit in UnitManager.Instance.selectedUnits)
-			{
-				if(unit != this)
-					unit.Deselect();
-			}
-			UnitManager.Instance.selectedUnits = [this];
-		}
+		GD.Print(collisionShape.Shape);
+        if (collisionShape?.Shape is CircleShape2D circle)
+        {
+			float worldRadius = circle.Radius * collisionShape.GlobalTransform.Scale.X;
+            return collisionShape.GlobalPosition.DistanceTo(worldPoint) <= worldRadius;
+        }
+
+        if (collisionShape?.Shape is RectangleShape2D rect)
+        {
+            // Transform point into local space of the collision shape.
+            Vector2 local = collisionShape.GlobalTransform.AffineInverse() * worldPoint;
+            Rect2 box = new(-rect.Size / 2f, rect.Size);
+            return box.HasPoint(local);
+        }
+
+        Vector2 center = collisionShape?.GlobalPosition ?? GlobalPosition;
+		return center.DistanceTo(worldPoint) <= 24f;
     }
 
-	public void Select()
-	{
-		Selected = true;
-		healthComponent.Visible = true;
-		AddToGroup("SelectedUnits");
-	}
+    protected virtual void OnSelectionChanged(bool selected)
+    {
+        GD.Print($"{Name} selected={selected}");
+    }
 
-	public void Deselect()
-	{
-		Selected = false;
-		healthComponent.Visible = false;
-		RemoveFromGroup("SelectedUnits");
-	}
 }
