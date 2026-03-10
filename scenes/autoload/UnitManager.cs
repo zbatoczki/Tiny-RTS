@@ -47,6 +47,7 @@ public partial class UnitManager : Node2D
 			}
 			else
 			{
+				selectedUnits.Remove(unit);
 				unit.Deselect();
 			}
 		}

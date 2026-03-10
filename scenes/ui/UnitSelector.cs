@@ -8,6 +8,8 @@ namespace Game.UI;
 
 public partial class UnitSelector : Control
 {
+	private const float DRAG_THRESHOLD = 10f;
+
 	[Export]
 	private Color borderColor;
 	[Export]
@@ -42,6 +44,13 @@ public partial class UnitSelector : Control
 		{
 			borderWidth = 0;
 			selecting = false;
+
+			float dragDistance = dragStart.DistanceTo(mousePosition);
+			if(dragDistance < DRAG_THRESHOLD)
+			{
+				UnitManager.Instance.SelectedRect = null;
+			}
+
 			dragStart = Vector2.Zero;
 			dragEnd = Vector2.Zero;
 			QueueRedraw();
