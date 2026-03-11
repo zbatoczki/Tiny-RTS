@@ -12,6 +12,9 @@ public partial class SelectionManager : Control
 
 	[Export] public float DragThreshold = 6f;
 
+    [Export] public TileMapLayer TileMapLayer;
+    private const float TILE_SIZE = 64f;
+
 	private bool isDragging = false;
     private bool mouseDown = false;
     private Vector2 dragStart = Vector2.Zero;
@@ -24,6 +27,9 @@ public partial class SelectionManager : Control
         // Make sure mouse events reach this Control even when nothing is
         // visually "underneath" the cursor.
         MouseFilter = MouseFilterEnum.Ignore;
+
+        if (TileMapLayer == null)
+            GD.PushWarning("SelectionManager: TileMapLayer export is not assigned. Right-click movement will use raw world position.");
     }
 
 	public override void _Input(InputEvent evt)
@@ -46,6 +52,13 @@ public partial class SelectionManager : Control
 
 	private void HandleMouseButton(InputEventMouseButton e)
     {
+        if (e.ButtonIndex == MouseButton.Right && e.Pressed)
+        {
+            if (selectedUnits.Count > 0)
+                IssueMovementOrder(e.Position);
+            return;
+        }
+
         if (e.ButtonIndex != MouseButton.Left) return;
 
         if (e.Pressed)
@@ -80,6 +93,76 @@ public partial class SelectionManager : Control
         if (isDragging)
             QueueRedraw();
     }
+
+    /// Converts the right-click screen position to the nearest tile centre,
+    /// then dispatches staggered formation targets to each selected unit.
+    private void IssueMovementOrder(Vector2 screenPos)
+    {
+        Vector2 worldPos   = ScreenToWorld(screenPos);
+        Vector2 tileCenter = SnapToTileCenter(worldPos);
+
+        List<Vector2> offsets = GetFormationOffsets(selectedUnits.Count);
+
+        for (int i = 0; i < selectedUnits.Count; i++)
+        {
+            if (IsInstanceValid(selectedUnits[i]))
+                selectedUnits[i].MoveTo(tileCenter + offsets[i]);
+        }
+    }
+
+    /// Snaps a world-space position to the centre of the nearest tile.
+    /// Falls back to the raw world position if no TileMapLayer is assigned.
+    private Vector2 SnapToTileCenter(Vector2 worldPos)
+    {
+        if (TileMapLayer == null)
+            return worldPos;
+
+        // Convert to TileMapLayer local space, get tile coords, convert back.
+        Vector2  localPos   = TileMapLayer.ToLocal(worldPos);
+        Vector2I tileCoords = TileMapLayer.LocalToMap(localPos);
+        Vector2  tileLocal  = TileMapLayer.MapToLocal(tileCoords);
+        return TileMapLayer.ToGlobal(tileLocal);
+    }
+
+    /// Returns a list of world-space offsets for a formation of <paramref name="unitCount"/>
+    /// units, radiating outward from the centre in tile-sized steps.
+    ///
+    /// Ring 0 → centre tile (0, 0)
+    /// Ring 1 → the 8 adjacent tiles
+    /// Ring 2 → the next 16 tiles, and so on.
+    private List<Vector2> GetFormationOffsets(int unitCount)
+    {
+        var offsets = new List<Vector2>(unitCount);
+        int ring    = 0;
+
+        while (offsets.Count < unitCount)
+        {
+            if (ring == 0)
+            {
+                offsets.Add(Vector2.Zero);
+            }
+            else
+            {
+                // Walk the perimeter of the square ring clockwise.
+                for (int x = -ring; x <= ring && offsets.Count < unitCount; x++)
+                    offsets.Add(new Vector2(x, -ring) * TILE_SIZE);
+
+                for (int y = -ring + 1; y <= ring && offsets.Count < unitCount; y++)
+                    offsets.Add(new Vector2(ring, y) * TILE_SIZE);
+
+                for (int x = ring - 1; x >= -ring && offsets.Count < unitCount; x--)
+                    offsets.Add(new Vector2(x, ring) * TILE_SIZE);
+
+                for (int y = ring - 1; y > -ring && offsets.Count < unitCount; y--)
+                    offsets.Add(new Vector2(-ring, y) * TILE_SIZE);
+            }
+
+            ring++;
+        }
+
+        return offsets;
+    }
+
 
 	private void FinishClickSelect(Vector2 screenPos)
     {
