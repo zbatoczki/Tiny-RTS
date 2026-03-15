@@ -55,7 +55,9 @@ public partial class SelectionManager : Control
         if (e.ButtonIndex == MouseButton.Right && e.Pressed)
         {
             if (selectedUnits.Count > 0)
+            {
                 IssueMovementOrder(e.Position);
+            }
             return;
         }
 
@@ -98,15 +100,22 @@ public partial class SelectionManager : Control
     /// then dispatches staggered formation targets to each selected unit.
     private void IssueMovementOrder(Vector2 screenPos)
     {
-        Vector2 worldPos   = ScreenToWorld(screenPos);
-        Vector2 tileCenter = SnapToTileCenter(worldPos);
+        //Vector2 worldPos   = ScreenToWorld(screenPos);
+        //Vector2 tileCenter = SnapToTileCenter(worldPos);
+
+        Vector2 mousePosition = GetGlobalMousePosition();
+		var gridPosition = mousePosition / 64;
+		Vector2 tileCenter = gridPosition.Floor() * 64;
 
         List<Vector2> offsets = GetFormationOffsets(selectedUnits.Count);
 
         for (int i = 0; i < selectedUnits.Count; i++)
         {
             if (IsInstanceValid(selectedUnits[i]))
-                selectedUnits[i].MoveTo(tileCenter + offsets[i]);
+            {
+                var finalPosition = tileCenter + offsets[i];
+                selectedUnits[i].MoveTo(finalPosition);
+            }
         }
     }
 

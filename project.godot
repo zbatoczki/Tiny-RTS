@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Tiny RTS"
-run/main_scene="uid://blnqgrr1rchxq"
+run/main_scene="uid://6bbj1ble4hyb"
 config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 config/icon="uid://c1d0cq36adn3"
 

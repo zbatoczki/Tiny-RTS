@@ -129,7 +129,6 @@ public partial class Unit : CharacterBody2D
 
     private void ProcessDirectMovement()
     {
-        GD.Print("Direct Movent to position");
         if (!hasDirectTarget)
         {
             Velocity = Vector2.Zero;
