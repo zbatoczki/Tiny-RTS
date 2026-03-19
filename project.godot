@@ -22,6 +22,7 @@ config/icon="uid://c1d0cq36adn3"
 [autoload]
 
 GameEvents="*uid://c0myuil2imqw2"
+UnitsEvents="*uid://c37xuxrnxdyo4"
 
 [display]
 
@@ -56,6 +57,13 @@ right_click={
 
 [layer_names]
 
+2d_render/layer_1="Terrain"
+2d_render/layer_2="Player Units"
+2d_render/layer_3="Enemy Units"
+2d_render/layer_4="Player Projectiles"
+2d_render/layer_5="Enemy Projectiles"
+2d_render/layer_6="Resource Item"
+2d_render/layer_7="Building"
 2d_physics/layer_2="Units"
 
 [physics]

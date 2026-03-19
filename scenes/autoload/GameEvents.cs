@@ -1,4 +1,3 @@
-using System.Dynamic;
 using Game.Component;
 using Godot;
 
@@ -10,6 +9,8 @@ public partial class GameEvents : Node
 
 	[Signal]
 	public delegate void BuildingPlacedEventHandler(BuildingComponent buildingComponent);
+
+	
 
     public override void _Notification(int what)
     {
@@ -23,5 +24,7 @@ public partial class GameEvents : Node
 	{
 		Instance.EmitSignal(SignalName.BuildingPlaced, buildingComponent);
 	}
+
+	
 
 }

@@ -1,11 +1,16 @@
+using System.Reflection.Metadata.Ecma335;
 using Game.Autoload;
 using Game.InputMap;
+using Game.Manager;
 using Godot;
 
 namespace Game.Units;
 
 public partial class Unit : CharacterBody2D
 {
+    [Signal]
+    public delegate void MovementCompletedEventHandler(Vector2I gridCellPosition);
+
 	private readonly StringName PLAYER_UNIT_GROUP = "PlayerUnit";
 
     [Export] public float MoveSpeed = 150f;
@@ -37,10 +42,14 @@ public partial class Unit : CharacterBody2D
         // Ensure this unit is in the "units" group so SelectionManager can
         // find it. You can also add the group in the Godot editor.
         AddToGroup(PLAYER_UNIT_GROUP);
+
+        UnitsEvents.EmitUnitMovementFinished(GlobalPosition);
     }
 
     public override void _PhysicsProcess(double _)
     {
+        if(!IsMoving) return;
+
         if (UsePathfinding)
             ProcessNavAgentMovement();
         else
@@ -65,6 +74,7 @@ public partial class Unit : CharacterBody2D
             directTarget    = worldTarget;
             hasDirectTarget = true;
         }
+        UnitsEvents.EmitUnitMovementStarted(GlobalPosition);
     }
 
 	 public virtual void SetSelected(bool selected)
@@ -137,11 +147,7 @@ public partial class Unit : CharacterBody2D
 
         if (GlobalPosition.DistanceTo(directTarget) < 4f)
         {
-            GlobalPosition   = directTarget;
-            hasDirectTarget = false;
-            IsMoving         = false;
-            animatedSprite2D.Play("idle");
-            Velocity         = Vector2.Zero;
+            FinishMoving();
             return;
         }
 
@@ -151,4 +157,13 @@ public partial class Unit : CharacterBody2D
         MoveAndSlide();
     }
 
+    private void FinishMoving()
+    {
+        GlobalPosition   = directTarget;
+        hasDirectTarget = false;
+        IsMoving         = false;
+        animatedSprite2D.Play("idle");
+        Velocity         = Vector2.Zero;
+        UnitsEvents.EmitUnitMovementFinished(GlobalPosition);
+    }
 }

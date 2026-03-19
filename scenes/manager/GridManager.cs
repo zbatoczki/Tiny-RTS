@@ -8,6 +8,8 @@ namespace Game.Manager;
 
 public partial class GridManager : Node
 {
+	private const int CELL_SIZE = 64;
+	
 	private HashSet<Vector2I> occupiedCells = [];
 
 	[Export]
@@ -20,6 +22,9 @@ public partial class GridManager : Node
 	public override void _Ready()
 	{
 		GameEvents.Instance.BuildingPlaced += OnBuildingPlaced;
+		UnitsEvents.Instance.UnitMovementFinsished += OnUnitMovementFinished;
+		UnitsEvents.Instance.UnitMovementStarted += OnUnitMovementStarted;
+
 		allTilemapLayers = GetAllTilemapLayers(baseTerrainTilemapLayer);
 	}
 
@@ -34,10 +39,11 @@ public partial class GridManager : Node
 		return false;
 	}
 
-	public void MarkTileAsOccupied(Vector2I tilePosition)
-	{
-		occupiedCells.Add(tilePosition);
-	}
+	public void MarkTileAsOccupied(Vector2I tilePosition) => occupiedCells.Add(tilePosition);
+
+	public void MarkTileAsUnoccupied(Vector2I tilePosition) => occupiedCells.Remove(tilePosition);
+
+	public bool IsTileOccupied(Vector2I cellPosition) => occupiedCells.Contains(cellPosition);
 
 	public void HighlightBuildableTiles()
 	{
@@ -57,8 +63,13 @@ public partial class GridManager : Node
 	public Vector2I GetMouseGridCellPosition()
 	{
 		Vector2 mousePosition = highlightTilemapLayer.GetGlobalMousePosition();
-		var gridPosition = (mousePosition / 64).Floor();
-		return new Vector2I((int)gridPosition.X, (int)gridPosition.Y);
+		return ConvertWorldPositionToTilePosition(mousePosition);
+	}
+
+	public static Vector2I ConvertWorldPositionToTilePosition(Vector2 worldPosition)
+	{
+		Vector2 tilePosition = (worldPosition / 64).Floor();
+		return new Vector2I((int)tilePosition.X, (int)tilePosition.Y);
 	}
 
 	private List<TileMapLayer> GetAllTilemapLayers(TileMapLayer rootTilemapLayer)
@@ -96,6 +107,16 @@ public partial class GridManager : Node
 	private void OnBuildingPlaced(BuildingComponent buildingComponent)
 	{
 		MarkTileAsOccupied(buildingComponent.GetGridCellPosition());
+	}
+
+	private void OnUnitMovementFinished(Vector2 globalPosition)
+	{
+		MarkTileAsOccupied(ConvertWorldPositionToTilePosition(globalPosition));
+	}
+
+	private void OnUnitMovementStarted(Vector2 globalPosition)
+	{
+		MarkTileAsUnoccupied(ConvertWorldPositionToTilePosition(globalPosition));
 	}
 
 }
