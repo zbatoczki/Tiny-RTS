@@ -117,17 +117,12 @@ animations = [{
 }]
 
 [node name="Worker" unique_id=1980137832 groups=["PlayerUnit"] instance=ExtResource("1_ir85n")]
-y_sort_enabled = true
 
 [node name="CollisionShape2D" parent="." index="0" unique_id=1633008240]
-position = Vector2(33, 31)
 scale = Vector2(4.415, 4.415)
 
 [node name="AnimatedSprite2D" parent="." index="1" unique_id=290410313]
-position = Vector2(32, 39)
+y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_nowm4")
 autoplay = "idle"
 offset = Vector2(-96, -110)
-
-[node name="HealthComponent" parent="." index="2" unique_id=1944934705]
-position = Vector2(0, -32)

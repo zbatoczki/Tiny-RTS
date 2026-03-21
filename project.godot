@@ -64,7 +64,8 @@ right_click={
 2d_render/layer_5="Enemy Projectiles"
 2d_render/layer_6="Resource Item"
 2d_render/layer_7="Building"
-2d_physics/layer_2="Units"
+2d_physics/layer_2="Player Units"
+2d_physics/layer_3="Enemy units"
 
 [physics]
 
