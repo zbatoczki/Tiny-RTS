@@ -1,5 +1,5 @@
 using Godot;
-
+namespace Game.Component;
 public partial class HealthComponent : Node2D
 {
 	private ProgressBar healthProgressBar;

@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://br8m4v3ew4uej"]
+
+[ext_resource type="Script" uid="uid://c10ack33k727s" path="res://scenes/component/finite_state_machine/StateMachine.cs" id="1_8aymy"]
+[ext_resource type="Script" uid="uid://dj3oojc85mtis" path="res://scenes/component/finite_state_machine/Idle.cs" id="2_lig8y"]
+[ext_resource type="Script" uid="uid://bvodvxqyrl3oj" path="res://scenes/component/finite_state_machine/Move.cs" id="3_oagee"]
+
+[node name="FiniteStateMachine" type="Node" unique_id=1526190014 node_paths=PackedStringArray("InitialState")]
+script = ExtResource("1_8aymy")
+InitialState = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="." unique_id=404432607 node_paths=PackedStringArray("moveState")]
+script = ExtResource("2_lig8y")
+moveState = NodePath("../Move")
+
+[node name="Move" type="Node" parent="." unique_id=958505738 node_paths=PackedStringArray("idleState")]
+script = ExtResource("3_oagee")
+idleState = NodePath("../Idle")

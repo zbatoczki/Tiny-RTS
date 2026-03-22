@@ -1,8 +1,26 @@
 [gd_scene format=3 uid="uid://bxo4obx7s5dql"]
 
 [ext_resource type="PackedScene" uid="uid://c8oo8lg1yuu6f" path="res://scenes/units/Unit.tscn" id="1_ir85n"]
+[ext_resource type="Texture2D" uid="uid://bsiqyoumidgco" path="res://assets/units/player/pawn/pawn_interact_knife.png" id="2_3j8ay"]
 [ext_resource type="Texture2D" uid="uid://ca775ksc530rm" path="res://assets/units/player/pawn/pawn_idle.png" id="2_nowm4"]
 [ext_resource type="Texture2D" uid="uid://dsfgxp5fsj28e" path="res://assets/units/player/pawn/pawn_run.png" id="3_3j8ay"]
+[ext_resource type="PackedScene" uid="uid://0qknudhrbrjf" path="res://scenes/component/DamageComponent.tscn" id="5_g17u7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b3epq"]
+atlas = ExtResource("2_3j8ay")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g15bi"]
+atlas = ExtResource("2_3j8ay")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0gqqb"]
+atlas = ExtResource("2_3j8ay")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o8sua"]
+atlas = ExtResource("2_3j8ay")
+region = Rect2(576, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nowm4"]
 atlas = ExtResource("2_nowm4")
@@ -60,9 +78,26 @@ region = Rect2(768, 0, 192, 192)
 atlas = ExtResource("3_3j8ay")
 region = Rect2(960, 0, 192, 192)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_nowm4"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_g17u7"]
 resource_local_to_scene = true
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b3epq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g15bi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0gqqb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o8sua")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 10.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nowm4")
@@ -123,6 +158,14 @@ scale = Vector2(4.415, 4.415)
 
 [node name="AnimatedSprite2D" parent="." index="1" unique_id=290410313]
 y_sort_enabled = true
-sprite_frames = SubResource("SpriteFrames_nowm4")
+sprite_frames = SubResource("SpriteFrames_g17u7")
+animation = &"idle"
 autoplay = "idle"
+frame_progress = 0.8315116
 offset = Vector2(-96, -110)
+
+[node name="DamageComponent" parent="." index="3" unique_id=1927849053 node_paths=PackedStringArray("animatedSprite2D") instance=ExtResource("5_g17u7")]
+animatedSprite2D = NodePath("../AnimatedSprite2D")
+targetGroup = &"EnemyUnit"
+
+[editable path="DamageComponent"]

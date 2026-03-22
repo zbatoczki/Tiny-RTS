@@ -1,6 +1,5 @@
-using Game.Autoload;
 using Godot;
-
+using Game.Component;
 namespace Game.Units;
 
 public partial class Unit : CharacterBody2D
@@ -8,29 +7,25 @@ public partial class Unit : CharacterBody2D
     [Signal]
     public delegate void MovementCompletedEventHandler(Vector2I gridCellPosition);
 
-	private readonly StringName PLAYER_UNIT_GROUP = "PlayerUnit";
-
     [Export] public float MoveSpeed = 150f;
 
 	private HealthComponent healthComponent;
 
-	public bool IsSelected { get; private set; } = false;
-
     private Vector2 directTarget    = Vector2.Zero;
-
     private CollisionShape2D  collisionShape;
     private AnimatedSprite2D animatedSprite2D;
+    private DamageComponent damageComponent;
+
 
     public override void _Ready()
     {
         healthComponent = GetNode<HealthComponent>(nameof(HealthComponent));
 
-        collisionShape = GetNodeOrNull<CollisionShape2D>("CollisionShape2D");
+        collisionShape = GetNodeOrNull<CollisionShape2D>(nameof(CollisionShape2D));
         animatedSprite2D = GetNode<AnimatedSprite2D>(nameof(AnimatedSprite2D));
+        damageComponent = GetNode<DamageComponent>(nameof(DamageComponent));
 
-        AddToGroup(PLAYER_UNIT_GROUP);
-
-        UnitsEvents.EmitUnitMovementFinished(GlobalPosition);
+        damageComponent.AttackingTarget += OnAttackingTarget;
     }
 
     public override void _PhysicsProcess(double _)
@@ -40,25 +35,24 @@ public partial class Unit : CharacterBody2D
         ProcessDirectMovement();
     }
 
-    public void MoveTo(Vector2 worldTarget)
+#region SELECTION
+    public virtual void SetSelected(bool selected)
     {
-        animatedSprite2D.Play("move");
-        directTarget    = worldTarget;
-        UnitsEvents.EmitUnitMovementStarted(GlobalPosition);
-    }
-
-	 public virtual void SetSelected(bool selected)
-    {
-        IsSelected = selected;
-
         healthComponent.Visible = selected;
-
         OnSelectionChanged(selected);
     }
 
     protected virtual void OnSelectionChanged(bool selected)
     {
         GD.Print($"{Name} selected={selected}");
+    }
+#endregion
+
+#region MOVEMENT
+    public void MoveTo(Vector2 worldTarget)
+    {
+        animatedSprite2D.Play("move");
+        directTarget    = worldTarget;
     }
 
     private void ProcessDirectMovement()
@@ -78,6 +72,7 @@ public partial class Unit : CharacterBody2D
         var direction = (directTarget - GlobalPosition).Normalized();
         Velocity = direction * MoveSpeed;
         animatedSprite2D.FlipH = direction.X < 0;
+        damageComponent.FlipH(animatedSprite2D.FlipH);
         MoveAndSlide();
     }
 
@@ -87,6 +82,13 @@ public partial class Unit : CharacterBody2D
         directTarget = Vector2.Zero;
         Velocity         = Vector2.Zero;
         animatedSprite2D.Play("idle");
-        UnitsEvents.EmitUnitMovementFinished(GlobalPosition);
     }
+
+    private void OnAttackingTarget()
+    {
+        directTarget = Vector2.Zero;
+        Velocity         = Vector2.Zero;
+        animatedSprite2D.Play("attack");
+    }
+#endregion
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Game.InputMap;
 using Game.Units;
@@ -57,17 +56,28 @@ public partial class Test : Node2D
 			}
 		}
 
-		if (evt.IsActionPressed(InputMapping.RIGHT_CLICK))
+		if (evt.IsActionPressed(InputMapping.RIGHT_CLICK) && !Input.IsActionPressed(InputMapping.LEFT_CLICK))
 		{
-			List<Vector2> targetPositions = GetTargetPositions(GetGlobalMousePosition());
-			int targetPositionIndex = 0;
-			foreach(Unit unit in selectedUnits)
-			{
-				unit.MoveTo(targetPositions[targetPositionIndex]);
-				targetPositionIndex++;
-			}
+			//get mouse position
+			Vector2 mousePosition = GetGlobalMousePosition();
+			//check what is at mouse position
+			Array<Dictionary> results = CheckAtMousePosition(mousePosition);
+			//handle action based on what is at position and what units are selected
+
+			MoveUnitsToPosition(mousePosition);
 		}
     }
+
+	private Array<Dictionary> CheckAtMousePosition(Vector2 mousePosition)
+	{
+		PhysicsDirectSpaceState2D spaceState = GetWorld2D().DirectSpaceState;
+		var query = new PhysicsPointQueryParameters2D()
+		{
+			Position = mousePosition
+		};
+
+		return spaceState.IntersectPoint(query);
+	} 
 
 	private void DeselectUnits()
 	{
@@ -113,6 +123,17 @@ public partial class Test : Node2D
 		}
 
 		return positions;
+	}
+
+	private void MoveUnitsToPosition(Vector2 mousePosition)
+	{
+		List<Vector2> targetPositions = GetTargetPositions(mousePosition);
+		int targetPositionIndex = 0;
+		foreach(Unit unit in selectedUnits)
+		{
+			unit.MoveTo(targetPositions[targetPositionIndex]);
+			targetPositionIndex++;
+		}
 	}
 
 }

@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://0qknudhrbrjf"]
+
+[ext_resource type="Script" uid="uid://o1j6yopotdsb" path="res://scenes/component/DamageComponent.cs" id="1_kqscm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3j8ay"]
+size = Vector2(24, 49)
+
+[node name="DamageComponent" type="Node2D" unique_id=1927849053 node_paths=PackedStringArray("animatedSprite2D")]
+script = ExtResource("1_kqscm")
+animatedSprite2D = NodePath("")
+
+[node name="HitBox" type="Area2D" parent="." unique_id=341774930]
+collision_layer = 0
+collision_mask = 4
+input_pickable = false
+monitorable = false
+
+[node name="HitBoxArea" type="CollisionShape2D" parent="HitBox" unique_id=502953773]
+unique_name_in_owner = true
+position = Vector2(38, -0.5)
+shape = SubResource("RectangleShape2D_3j8ay")
+debug_color = Color(0.9917123, 0, 0.268039, 0.41960785)

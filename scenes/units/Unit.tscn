@@ -11,6 +11,16 @@ resource_local_to_scene = true
 animations = [{
 "frames": [],
 "loop": true,
+"name": &"attack",
+"speed": 10.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"death",
+"speed": 10.0
+}, {
+"frames": [],
+"loop": true,
 "name": &"idle",
 "speed": 10.0
 }, {
@@ -31,7 +41,7 @@ shape = SubResource("CircleShape2D_e0hnn")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=290410313]
 sprite_frames = SubResource("SpriteFrames_e3b5r")
-animation = &"idle"
+animation = &"death"
 centered = false
 
 [node name="HealthComponent" parent="." unique_id=1944934705 instance=ExtResource("13_kflat")]

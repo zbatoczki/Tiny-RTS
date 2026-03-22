@@ -1,5 +1,5 @@
 using Godot;
-
+namespace Game.Component;
 public partial class DeadComponent : Node2D
 {
 	[Export]
