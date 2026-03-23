@@ -11,10 +11,21 @@ public partial class Unit : CharacterBody2D
 
 	private HealthComponent healthComponent;
 
-    private Vector2 directTarget    = Vector2.Zero;
+    private Vector2 targetPosition    = Vector2.Zero;
     private CollisionShape2D  collisionShape;
     private AnimatedSprite2D animatedSprite2D;
     private DamageComponent damageComponent;
+    private Node2D attackTarget;
+    private Timer attackTimer;
+    
+    enum UnitState
+    {
+        Idle,
+        Moving,
+        Attacking,
+        Dead
+    }
+    private UnitState currentState = UnitState.Idle;
 
 
     public override void _Ready()
@@ -25,17 +36,74 @@ public partial class Unit : CharacterBody2D
         animatedSprite2D = GetNode<AnimatedSprite2D>(nameof(AnimatedSprite2D));
         damageComponent = GetNode<DamageComponent>(nameof(DamageComponent));
 
-        damageComponent.AttackingTarget += OnAttackingTarget;
+        animatedSprite2D.AnimationFinished += OnAnimationFinsihed;
+
+        damageComponent.BodyEntered += OnEnemyEntered;
+        damageComponent.BodyExited += OnEnemyExit;
+
+        attackTimer = new();
+        attackTimer.Timeout += Attack;
+        AddChild(attackTimer);
     }
 
     public override void _PhysicsProcess(double _)
     {
-        if(directTarget == Vector2.Zero) return;
-
-        ProcessDirectMovement();
+        switch (currentState)
+        {
+            case UnitState.Moving:
+                ProcessDirectMovement();
+                break;
+            
+            case UnitState.Attacking:
+                if(IsInstanceValid(attackTarget))
+                    FaceRight(GlobalPosition - attackTarget.GlobalPosition > Vector2.Zero);
+                break;
+        }
     }
 
+#region STATE MANAGEMENT
+
+    private void SetState(UnitState newState)
+    {
+        currentState = newState;
+
+        switch (currentState)
+        {
+            case UnitState.Idle:
+                targetPosition = Vector2.Zero;
+                Velocity = Vector2.Zero;
+                attackTimer.Stop();
+                animatedSprite2D.Play("idle");
+                break;
+
+            case UnitState.Moving:
+                attackTimer.Stop();
+                animatedSprite2D.Play("move");
+                break;
+            
+            case UnitState.Attacking:
+                targetPosition = Vector2.Zero;
+                Velocity = Vector2.Zero;
+                Attack();
+                break;
+        }
+    }
+
+#endregion
+
+#region POSITIONING
+
+    private void FaceRight(bool faceRight)
+    {
+        animatedSprite2D.FlipH = faceRight;
+        damageComponent.FlipH(faceRight);
+    }
+
+#endregion
+
+
 #region SELECTION
+
     public virtual void SetSelected(bool selected)
     {
         healthComponent.Visible = selected;
@@ -46,49 +114,84 @@ public partial class Unit : CharacterBody2D
     {
         GD.Print($"{Name} selected={selected}");
     }
+
 #endregion
 
+
 #region MOVEMENT
+
     public void MoveTo(Vector2 worldTarget)
     {
-        animatedSprite2D.Play("move");
-        directTarget    = worldTarget;
+        targetPosition = worldTarget;
+        SetState(UnitState.Moving);
     }
 
     private void ProcessDirectMovement()
     {
-        if (directTarget == Vector2.Zero)
+        var direction = targetPosition - GlobalPosition;
+
+        FaceRight(direction.X < 0);
+
+        if(direction.Length() <= 5f)
         {
-            Velocity = Vector2.Zero;
+            
+            SetState(UnitState.Idle);
             return;
         }
 
-        if (GlobalPosition.DistanceTo(directTarget) < 4f)
-        {
-            FinishMoving();
-            return;
-        }
-
-        var direction = (directTarget - GlobalPosition).Normalized();
-        Velocity = direction * MoveSpeed;
-        animatedSprite2D.FlipH = direction.X < 0;
-        damageComponent.FlipH(animatedSprite2D.FlipH);
+        Velocity = direction.Normalized() * MoveSpeed;
         MoveAndSlide();
+
+        
+    } 
+
+#endregion
+
+
+#region ATTACK
+
+    private void OnEnemyEntered(Node2D body)
+    {
+        if(attackTarget != null) return;
+
+        attackTarget = body;
+        SetState(UnitState.Attacking);
     }
 
-    private void FinishMoving()
+    private void OnEnemyExit(Node2D body)
     {
-        GlobalPosition   = directTarget;
-        directTarget = Vector2.Zero;
-        Velocity         = Vector2.Zero;
-        animatedSprite2D.Play("idle");
+        if(body != attackTarget) return;
+        attackTarget = null;
+        if(targetPosition == Vector2.Zero)
+            SetState(UnitState.Idle);
+        else
+            SetState(UnitState.Moving);
     }
 
-    private void OnAttackingTarget()
-    {
-        directTarget = Vector2.Zero;
-        Velocity         = Vector2.Zero;
+    private void Attack()
+    {   
+        attackTimer.Start();
+        //play the attack animation
         animatedSprite2D.Play("attack");
+        //send signal to damage target
+        GD.Print($"{Name} unit did damage to target {attackTarget.Name}");
+        //start cool down on attack before attacking again
+        
     }
+
+#endregion
+
+#region ANIMATION
+
+    private void OnAnimationFinsihed()
+    {
+        if(animatedSprite2D.Animation != "attack") return;
+
+        if(currentState == UnitState.Attacking)
+        {
+            animatedSprite2D.Play("idle");
+        }
+    }
+
 #endregion
 }

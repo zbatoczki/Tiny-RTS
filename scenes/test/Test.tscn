@@ -91,7 +91,7 @@ region = Rect2(768, 0, 192, 192)
 atlas = ExtResource("6_hnei2")
 region = Rect2(960, 0, 192, 192)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_kqit8"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_byche"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -177,7 +177,7 @@ animations = [{
 script = ExtResource("1_ty0m6")
 
 [node name="Worker" parent="." unique_id=1980137832 instance=ExtResource("3_uh2h0")]
-position = Vector2(90, 375)
+position = Vector2(456, 352)
 input_pickable = true
 
 [node name="SelectionBox" type="ReferenceRect" parent="." unique_id=80550031]
@@ -191,6 +191,7 @@ editor_only = false
 position = Vector2(672, 348)
 
 [node name="AnimatedSprite2D" parent="Skeleton" index="1" unique_id=290410313]
-sprite_frames = SubResource("SpriteFrames_kqit8")
+sprite_frames = SubResource("SpriteFrames_byche")
 
 [editable path="Skeleton"]
+[editable path="Skeleton/DamageComponent"]

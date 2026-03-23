@@ -94,7 +94,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_o8sua")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack",
 "speed": 10.0
 }, {
@@ -158,14 +158,13 @@ scale = Vector2(4.415, 4.415)
 
 [node name="AnimatedSprite2D" parent="." index="1" unique_id=290410313]
 y_sort_enabled = true
+position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_g17u7")
-animation = &"idle"
+animation = &"attack"
 autoplay = "idle"
-frame_progress = 0.8315116
 offset = Vector2(-96, -110)
 
-[node name="DamageComponent" parent="." index="3" unique_id=1927849053 node_paths=PackedStringArray("animatedSprite2D") instance=ExtResource("5_g17u7")]
-animatedSprite2D = NodePath("../AnimatedSprite2D")
+[node name="DamageComponent" parent="." index="3" unique_id=341774930 instance=ExtResource("5_g17u7")]
 targetGroup = &"EnemyUnit"
 
-[editable path="DamageComponent"]
+[node name="Timer" type="Timer" parent="." index="4" unique_id=2117446712]

@@ -90,7 +90,7 @@ region = Rect2(768, 0, 192, 192)
 atlas = ExtResource("4_pwwfl")
 region = Rect2(960, 0, 192, 192)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_itahj"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_6mirp"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -174,23 +174,19 @@ animations = [{
 
 [node name="Skeleton" unique_id=1980137832 groups=["EnemyUnit"] instance=ExtResource("1_5nh5i")]
 collision_layer = 4
-collision_mask = 3
 
 [node name="CollisionShape2D" parent="." index="0" unique_id=1633008240]
 scale = Vector2(4, 4)
 
 [node name="AnimatedSprite2D" parent="." index="1" unique_id=290410313]
-sprite_frames = SubResource("SpriteFrames_itahj")
+sprite_frames = SubResource("SpriteFrames_6mirp")
 animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.19782059
 offset = Vector2(-96, -96)
 
-[node name="DamageComponent" parent="." index="3" unique_id=1927849053 node_paths=PackedStringArray("animatedSprite2D") instance=ExtResource("5_6mirp")]
-animatedSprite2D = NodePath("../AnimatedSprite2D")
-targetGroup = &"PlayerUnit"
-
-[node name="HitBox" parent="DamageComponent" index="0" unique_id=341774930]
+[node name="DamageComponent" parent="." index="3" unique_id=1927849053 instance=ExtResource("5_6mirp")]
 collision_mask = 2
+targetGroup = &"PlayerUnit"
 
 [editable path="DamageComponent"]
