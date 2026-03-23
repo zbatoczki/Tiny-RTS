@@ -3,7 +3,7 @@ namespace Game.Component;
 public partial class DeadComponent : Node2D
 {
 	[Export]
-	private float decomposeDelayInSeconds = 5.0f;
+	private float decomposeDelayInSeconds = 1.5f;
 	private AnimatedSprite2D sprite;
 
 	public override async void _Ready()

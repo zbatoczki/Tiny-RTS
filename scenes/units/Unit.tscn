@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c8oo8lg1yuu6f"]
 
 [ext_resource type="Script" uid="uid://c0wxnruj1snwt" path="res://scenes/units/Unit.cs" id="1_gocqw"]
+[ext_resource type="PackedScene" uid="uid://sbqmrlasoeax" path="res://scenes/component/DeadComponent.tscn" id="2_nlg77"]
 [ext_resource type="PackedScene" uid="uid://ldhygolivtsg" path="res://scenes/component/HealthComponent.tscn" id="13_kflat"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e0hnn"]
@@ -12,11 +13,6 @@ animations = [{
 "frames": [],
 "loop": true,
 "name": &"attack",
-"speed": 10.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"death",
 "speed": 10.0
 }, {
 "frames": [],
@@ -34,6 +30,7 @@ animations = [{
 y_sort_enabled = true
 collision_layer = 2
 script = ExtResource("1_gocqw")
+deadComponent = ExtResource("2_nlg77")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1633008240]
 scale = Vector2(3, 3)
@@ -41,7 +38,7 @@ shape = SubResource("CircleShape2D_e0hnn")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=290410313]
 sprite_frames = SubResource("SpriteFrames_e3b5r")
-animation = &"death"
+animation = &"attack"
 centered = false
 
 [node name="HealthComponent" parent="." unique_id=1944934705 instance=ExtResource("13_kflat")]

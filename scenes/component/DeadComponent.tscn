@@ -116,7 +116,6 @@ animations = [{
 
 [node name="DeadComponent" type="Node2D" unique_id=829852863]
 script = ExtResource("1_p2r2k")
-decomposeDelayInSeconds = 3.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1689977464]
 sprite_frames = SubResource("SpriteFrames_6s5iu")

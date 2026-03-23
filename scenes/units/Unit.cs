@@ -4,10 +4,8 @@ namespace Game.Units;
 
 public partial class Unit : CharacterBody2D
 {
-    [Signal]
-    public delegate void MovementCompletedEventHandler(Vector2I gridCellPosition);
-
     [Export] public float MoveSpeed = 150f;
+    [Export] private PackedScene deadComponent;
 
 	private HealthComponent healthComponent;
 
@@ -15,8 +13,10 @@ public partial class Unit : CharacterBody2D
     private CollisionShape2D  collisionShape;
     private AnimatedSprite2D animatedSprite2D;
     private DamageComponent damageComponent;
-    private Node2D attackTarget;
+    private Unit attackTarget;
     private Timer attackTimer;
+    
+    private int health = 1;
     
     enum UnitState
     {
@@ -86,6 +86,11 @@ public partial class Unit : CharacterBody2D
                 Velocity = Vector2.Zero;
                 Attack();
                 break;
+
+            case UnitState.Dead:
+                attackTimer.Stop();
+                Die();
+                break;
         }
     }
 
@@ -113,6 +118,17 @@ public partial class Unit : CharacterBody2D
     protected virtual void OnSelectionChanged(bool selected)
     {
         GD.Print($"{Name} selected={selected}");
+    }
+
+#endregion
+
+#region Health
+
+    public void TakeDamage(int incomingDamage)
+    {
+        health -= incomingDamage;
+        if(health < 1)
+            SetState(UnitState.Dead);
     }
 
 #endregion
@@ -148,13 +164,14 @@ public partial class Unit : CharacterBody2D
 #endregion
 
 
-#region ATTACK
+#region ATTACK STATE
 
     private void OnEnemyEntered(Node2D body)
     {
         if(attackTarget != null) return;
 
-        attackTarget = body;
+        attackTarget = body as Unit;
+        GD.Print($"{Name} targeting {attackTarget.Name}");
         SetState(UnitState.Attacking);
     }
 
@@ -174,9 +191,20 @@ public partial class Unit : CharacterBody2D
         //play the attack animation
         animatedSprite2D.Play("attack");
         //send signal to damage target
-        GD.Print($"{Name} unit did damage to target {attackTarget.Name}");
-        //start cool down on attack before attacking again
         
+    }
+
+#endregion
+
+#region DEATH STATE
+    
+    private void Die()
+    {
+        var deadScene = deadComponent.Instantiate<Node2D>();
+        deadScene.GlobalPosition = GlobalPosition;
+        Owner.AddChild(deadScene);
+        GD.Print($"{Name} dead");
+        QueueFree();
     }
 
 #endregion
@@ -190,6 +218,7 @@ public partial class Unit : CharacterBody2D
         if(currentState == UnitState.Attacking)
         {
             animatedSprite2D.Play("idle");
+            attackTarget.TakeDamage(1);  
         }
     }
 
