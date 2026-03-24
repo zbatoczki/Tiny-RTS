@@ -6,7 +6,7 @@ using Godot.Collections;
 
 namespace Game.Test;
 
-public partial class Test : Node2D
+public partial class SelectionManager : Node2D
 {
 	private Vector2 startPosition;
 	private List<Unit> selectedUnits = [];
@@ -62,7 +62,7 @@ public partial class Test : Node2D
 			Vector2 mousePosition = GetGlobalMousePosition();
 			//check what is at mouse position
 			Array<Dictionary> results = CheckAtMousePosition(mousePosition);
-			//handle action based on what is at position and what units are selected
+			//TODO handle action based on what is at position and what units are selected
 
 			MoveUnitsToPosition(mousePosition);
 		}

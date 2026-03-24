@@ -151,6 +151,9 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ejp7h"]
+size = Vector2(41.875, 293.705)
+
 [node name="Worker" unique_id=1980137832 groups=["PlayerUnit"] instance=ExtResource("1_ir85n")]
 
 [node name="CollisionShape2D" parent="." index="0" unique_id=1633008240]
@@ -167,3 +170,7 @@ offset = Vector2(-96, -110)
 targetGroup = &"EnemyUnit"
 
 [node name="Timer" type="Timer" parent="." index="4" unique_id=2117446712]
+
+[node name="ShapeCast2D" type="ShapeCast2D" parent="." index="5" unique_id=1053324112]
+shape = SubResource("RectangleShape2D_ejp7h")
+target_position = Vector2(0, 171.05)

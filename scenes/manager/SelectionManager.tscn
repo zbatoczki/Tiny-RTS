@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://6bbj1ble4hyb"]
+
+[ext_resource type="Script" uid="uid://ccjows72sak1h" path="res://scenes/manager/SelectionManager.cs" id="1_s4c4k"]
+
+[node name="SelectionManager" type="Node2D" unique_id=588987418]
+script = ExtResource("1_s4c4k")
+
+[node name="SelectionBox" type="ReferenceRect" parent="." unique_id=80550031]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+border_color = Color(0.2784314, 1, 0, 1)
+editor_only = false

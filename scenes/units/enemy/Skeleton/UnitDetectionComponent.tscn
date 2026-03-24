@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dggm7qkrau8nx"]
+
+[ext_resource type="Script" uid="uid://d0vxiq7nf8srk" path="res://scenes/units/enemy/Skeleton/UnitDetectionComponent.cs" id="1_wh183"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0uboq"]
+
+[node name="UnitDetectionComponent" type="Area2D" unique_id=1331689136]
+monitorable = false
+script = ExtResource("1_wh183")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=947036371]
+scale = Vector2(34, 34)
+shape = SubResource("CircleShape2D_0uboq")
+debug_color = Color(0.8591321, 0.0007023239, 0.8792253, 0.41960785)
