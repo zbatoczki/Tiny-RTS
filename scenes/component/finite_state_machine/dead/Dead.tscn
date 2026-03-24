@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://c2v03up3w3qe"]
+
+[ext_resource type="Script" uid="uid://bq31ksuiytlik" path="res://scenes/component/finite_state_machine/dead/Dead.cs" id="1_uvjle"]
+
+[node name="Dead" type="Node" unique_id=675850164]
+script = ExtResource("1_uvjle")

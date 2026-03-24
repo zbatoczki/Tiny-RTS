@@ -1,9 +1,16 @@
 [gd_scene format=3 uid="uid://bxo4obx7s5dql"]
 
 [ext_resource type="PackedScene" uid="uid://c8oo8lg1yuu6f" path="res://scenes/units/Unit.tscn" id="1_ir85n"]
+[ext_resource type="Script" uid="uid://bxkep8ruqhx36" path="res://scenes/units/player/worker/Worker.cs" id="2_2rd3q"]
 [ext_resource type="Texture2D" uid="uid://bsiqyoumidgco" path="res://assets/units/player/pawn/pawn_interact_knife.png" id="2_3j8ay"]
+[ext_resource type="PackedScene" uid="uid://cp3r6nh3o4qgb" path="res://scenes/component/finite_state_machine/idle/Idle.tscn" id="2_fkppf"]
 [ext_resource type="Texture2D" uid="uid://ca775ksc530rm" path="res://assets/units/player/pawn/pawn_idle.png" id="2_nowm4"]
+[ext_resource type="PackedScene" uid="uid://duuq7m2why15q" path="res://scenes/component/finite_state_machine/move/Move.tscn" id="3_2rd3q"]
 [ext_resource type="Texture2D" uid="uid://dsfgxp5fsj28e" path="res://assets/units/player/pawn/pawn_run.png" id="3_3j8ay"]
+[ext_resource type="Resource" uid="uid://1t4poprufd14" path="res://resources/unit/player/Worker.tres" id="3_phryt"]
+[ext_resource type="PackedScene" uid="uid://sbqmrlasoeax" path="res://scenes/component/DeadComponent.tscn" id="4_eadu0"]
+[ext_resource type="PackedScene" uid="uid://cvt2y8xw4fqho" path="res://scenes/component/finite_state_machine/attack/Attack.tscn" id="4_phryt"]
+[ext_resource type="PackedScene" uid="uid://c2v03up3w3qe" path="res://scenes/component/finite_state_machine/dead/Dead.tscn" id="5_eadu0"]
 [ext_resource type="PackedScene" uid="uid://0qknudhrbrjf" path="res://scenes/component/DamageComponent.tscn" id="5_g17u7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b3epq"]
@@ -78,7 +85,7 @@ region = Rect2(768, 0, 192, 192)
 atlas = ExtResource("3_3j8ay")
 region = Rect2(960, 0, 192, 192)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_g17u7"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_h1fsp"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -151,26 +158,40 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ejp7h"]
-size = Vector2(41.875, 293.705)
-
 [node name="Worker" unique_id=1980137832 groups=["PlayerUnit"] instance=ExtResource("1_ir85n")]
+script = ExtResource("2_2rd3q")
+stats = ExtResource("3_phryt")
+deadComponent = ExtResource("4_eadu0")
 
-[node name="CollisionShape2D" parent="." index="0" unique_id=1633008240]
+[node name="StateMachine" parent="." index="0" unique_id=1526190014 node_paths=PackedStringArray("StartingState")]
+StartingState = NodePath("Idle")
+
+[node name="Idle" parent="StateMachine" index="0" unique_id=1748082814 node_paths=PackedStringArray("MoveState", "AttackState", "DeadState") instance=ExtResource("2_fkppf")]
+MoveState = NodePath("../Move")
+AttackState = NodePath("../Attack")
+DeadState = NodePath("../Dead")
+
+[node name="Move" parent="StateMachine" index="1" unique_id=2013647738 node_paths=PackedStringArray("IdleState", "DeadState", "AttackState") instance=ExtResource("3_2rd3q")]
+IdleState = NodePath("../Idle")
+DeadState = NodePath("../Dead")
+AttackState = NodePath("../Attack")
+
+[node name="Attack" parent="StateMachine" index="2" unique_id=1625647871 node_paths=PackedStringArray("IdleState", "MoveState", "DeadState") instance=ExtResource("4_phryt")]
+IdleState = NodePath("../Idle")
+MoveState = NodePath("../Move")
+DeadState = NodePath("../Dead")
+
+[node name="Dead" parent="StateMachine" index="3" unique_id=675850164 instance=ExtResource("5_eadu0")]
+
+[node name="CollisionShape2D" parent="." index="1" unique_id=1633008240]
 scale = Vector2(4.415, 4.415)
 
-[node name="AnimatedSprite2D" parent="." index="1" unique_id=290410313]
+[node name="AnimatedSprite2D" parent="." index="2" unique_id=290410313]
 y_sort_enabled = true
 position = Vector2(2, 0)
-sprite_frames = SubResource("SpriteFrames_g17u7")
+sprite_frames = SubResource("SpriteFrames_h1fsp")
 autoplay = "idle"
 offset = Vector2(-96, -110)
 
 [node name="DamageComponent" parent="." index="3" unique_id=341774930 instance=ExtResource("5_g17u7")]
 targetGroup = &"EnemyUnit"
-
-[node name="Timer" type="Timer" parent="." index="4" unique_id=2117446712]
-
-[node name="ShapeCast2D" type="ShapeCast2D" parent="." index="5" unique_id=1053324112]
-shape = SubResource("RectangleShape2D_ejp7h")
-target_position = Vector2(0, 171.05)

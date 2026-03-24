@@ -1,23 +1,22 @@
 using Godot;
 using Game.Component;
+using Game.Resources.Unit;
+using Game.FSM;
 namespace Game.Units;
 
-public partial class Unit : CharacterBody2D
+public abstract partial class Unit : CharacterBody2D
 {
-    [Export] public float MoveSpeed = 150f;
-    [Export] private PackedScene deadComponent;
+    [Export] public UnitStats stats;
 
-	private HealthComponent healthComponent;
+    public Vector2 targetPosition    = Vector2.Zero;
+    public CollisionShape2D  collisionShape;
+    public AnimatedSprite2D animatedSprite2D;
+    public DamageComponent damageComponent;
+    public Unit attackTarget;
+    
+    private StateMachine stateMachine;
+    private HealthComponent healthComponent;
 
-    private Vector2 targetPosition    = Vector2.Zero;
-    private CollisionShape2D  collisionShape;
-    private AnimatedSprite2D animatedSprite2D;
-    private DamageComponent damageComponent;
-    private Unit attackTarget;
-    private Timer attackTimer;
-    
-    private int health = 1;
-    
     enum UnitState
     {
         Idle,
@@ -31,74 +30,36 @@ public partial class Unit : CharacterBody2D
     public override void _Ready()
     {
         healthComponent = GetNode<HealthComponent>(nameof(HealthComponent));
-
         collisionShape = GetNodeOrNull<CollisionShape2D>(nameof(CollisionShape2D));
         animatedSprite2D = GetNode<AnimatedSprite2D>(nameof(AnimatedSprite2D));
         damageComponent = GetNode<DamageComponent>(nameof(DamageComponent));
+
+        stateMachine = GetNode<StateMachine>(nameof(StateMachine));
+        stateMachine.Init(this);
 
         animatedSprite2D.AnimationFinished += OnAnimationFinsihed;
 
         damageComponent.BodyEntered += OnEnemyEntered;
         damageComponent.BodyExited += OnEnemyExit;
 
-        attackTimer = new();
-        attackTimer.Timeout += Attack;
-        AddChild(attackTimer);
+        
     }
 
-    public override void _PhysicsProcess(double _)
+    public override void _Process(double delta)
     {
-        switch (currentState)
-        {
-            case UnitState.Moving:
-                ProcessDirectMovement();
-                break;
-            
-            case UnitState.Attacking:
-                if(IsInstanceValid(attackTarget))
-                    FaceRight(GlobalPosition - attackTarget.GlobalPosition > Vector2.Zero);
-                break;
-        }
+        stateMachine.UpdateFrame(delta);
     }
 
-#region STATE MANAGEMENT
 
-    private void SetState(UnitState newState)
+    public override void _PhysicsProcess(double delta)
     {
-        currentState = newState;
-
-        switch (currentState)
-        {
-            case UnitState.Idle:
-                targetPosition = Vector2.Zero;
-                Velocity = Vector2.Zero;
-                attackTimer.Stop();
-                animatedSprite2D.Play("idle");
-                break;
-
-            case UnitState.Moving:
-                attackTimer.Stop();
-                animatedSprite2D.Play("move");
-                break;
-            
-            case UnitState.Attacking:
-                targetPosition = Vector2.Zero;
-                Velocity = Vector2.Zero;
-                Attack();
-                break;
-
-            case UnitState.Dead:
-                attackTimer.Stop();
-                Die();
-                break;
-        }
+        stateMachine.UpdatePhysicsFrame(delta);
     }
 
-#endregion
 
 #region POSITIONING
 
-    private void FaceRight(bool faceRight)
+    public void FaceRight(bool faceRight)
     {
         animatedSprite2D.FlipH = faceRight;
         damageComponent.FlipH(faceRight);
@@ -126,9 +87,9 @@ public partial class Unit : CharacterBody2D
 
     public void TakeDamage(int incomingDamage)
     {
-        health -= incomingDamage;
-        if(health < 1)
-            SetState(UnitState.Dead);
+        stats.Health -= incomingDamage;
+        if(stats.Health < 1)
+            stateMachine.ForceToState<Dead>();
     }
 
 #endregion
@@ -139,27 +100,8 @@ public partial class Unit : CharacterBody2D
     public void MoveTo(Vector2 worldTarget)
     {
         targetPosition = worldTarget;
-        SetState(UnitState.Moving);
+        stateMachine.ForceToState<Move>();
     }
-
-    private void ProcessDirectMovement()
-    {
-        var direction = targetPosition - GlobalPosition;
-
-        FaceRight(direction.X < 0);
-
-        if(direction.Length() <= 5f)
-        {
-            
-            SetState(UnitState.Idle);
-            return;
-        }
-
-        Velocity = direction.Normalized() * MoveSpeed;
-        MoveAndSlide();
-
-        
-    } 
 
 #endregion
 
@@ -172,7 +114,7 @@ public partial class Unit : CharacterBody2D
 
         attackTarget = body as Unit;
         GD.Print($"{Name} targeting {attackTarget.Name}");
-        SetState(UnitState.Attacking);
+        stateMachine.ForceToState<Attack>();
     }
 
     private void OnEnemyExit(Node2D body)
@@ -180,42 +122,28 @@ public partial class Unit : CharacterBody2D
         if(body != attackTarget) return;
         attackTarget = null;
         if(targetPosition == Vector2.Zero)
-            SetState(UnitState.Idle);
+            stateMachine.ForceToState<Idle>();
         else
-            SetState(UnitState.Moving);
+            stateMachine.ForceToState<Move>();
     }
 
-    private void Attack()
-    {   
-        attackTimer.Start();
-        //play the attack animation
-        animatedSprite2D.Play("attack");
-        //send signal to damage target
-        
-    }
-
-#endregion
-
-#region DEATH STATE
     
-    private void Die()
-    {
-        var deadScene = deadComponent.Instantiate<Node2D>();
-        deadScene.GlobalPosition = GlobalPosition;
-        Owner.AddChild(deadScene);
-        GD.Print($"{Name} dead");
-        QueueFree();
-    }
 
 #endregion
+
 
 #region ANIMATION
+
+    public void PlayAnimation(StringName animation)
+    {
+        animatedSprite2D.Play(animation);
+    }
 
     private void OnAnimationFinsihed()
     {
         if(animatedSprite2D.Animation != "attack") return;
 
-        if(currentState == UnitState.Attacking)
+        if(stateMachine.currentState is Attack)
         {
             animatedSprite2D.Play("idle");
             attackTarget.TakeDamage(1);  

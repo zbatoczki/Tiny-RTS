@@ -1,3 +1,4 @@
+using Game.Units;
 using Godot;
 using System;
 
@@ -6,17 +7,13 @@ namespace Game.FSM;
 [GlobalClass]
 public abstract partial class State : Node
 {
-	[Signal]
-	public delegate void StateFinishedEventHandler(State targetState);
+	public Unit unit;
 
-	[Export]
-	public AnimatedSprite2D animatedSprite2D;
-	[Export]
-	public StringName AnimationName;
+	protected StringName AnimationName;
 
 	public virtual void Enter()
 	{
-		animatedSprite2D.Play(AnimationName);
+		unit.PlayAnimation(AnimationName);
 	}
 
 	public virtual void Exit()
@@ -29,12 +26,12 @@ public abstract partial class State : Node
 		return null;
 	}
 
-	public virtual State UpdateFrame(float delta)
+	public virtual State UpdateFrame(double delta)
 	{
 		return null;
 	}
 
-	public virtual State UpdatePhysicsFrame(float delta)
+	public virtual State UpdatePhysicsFrame(double delta)
 	{
 		return null;
 	}

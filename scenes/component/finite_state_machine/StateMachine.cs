@@ -1,3 +1,4 @@
+using Game.Units;
 using Godot;
 using System.Linq;
 
@@ -6,36 +7,26 @@ namespace Game.FSM;
 public partial class StateMachine : Node
 {
 	[Export]
-	private State InitialState = null;
+	private State StartingState = null;
 
-	private State currentState = null;
+	public State currentState {get; private set;} = null;
 
-    public override void _Ready()
-    {
-        currentState = InitialState ?? GetChild(0) as State;
-
-		foreach(var state in GetChildren().Cast<State>())
-		{
-			state.StateFinished += ChangeToState;
-		}
-
-		Owner.Ready += () => currentState.Enter();
-    }
-
-	private void ChangeToState(State newState)
+	public void Init(Unit parent)
 	{
-		currentState?.Exit();
-		currentState = newState;
-		currentState.Enter();
+		foreach(State state in GetChildren().Cast<State>())
+		{
+			state.unit = parent;
+		}
+		ChangeToState(StartingState);
 	}
 
-	public void UpdateFrame(float delta)
+	public void UpdateFrame(double delta)
 	{
 		State newState = currentState.UpdateFrame(delta);
 		if(newState != null) ChangeToState(newState);
 	}
 
-	public void UpdatePhysicsFrame(float delta)
+	public void UpdatePhysicsFrame(double delta)
 	{
 		State newState = currentState.UpdatePhysicsFrame(delta);
 		if(newState != null) ChangeToState(newState);
@@ -45,6 +36,26 @@ public partial class StateMachine : Node
 	{
 		State newState = currentState.ProcessInput(inputEvent);
 		if(newState != null) ChangeToState(newState);
+	}
+
+	public void ForceToState<T>() where T : State
+	{
+		State targetState = GetChildren().OfType<T>().FirstOrDefault();
+		if(targetState != null)
+		{
+			ChangeToState(targetState);
+		}
+		else
+		{
+			GD.PushWarning($"StateMachine: No state of type {typeof(T).Name} found.");
+		}
+	}
+
+	private void ChangeToState(State newState)
+	{
+		currentState?.Exit();
+		currentState = newState;
+		currentState.Enter();
 	}
 
 }

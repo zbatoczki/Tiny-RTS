@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cvt2y8xw4fqho"]
+
+[ext_resource type="Script" uid="uid://bi8ef6d3wd0wj" path="res://scenes/component/finite_state_machine/attack/Attack.cs" id="1_rhkpf"]
+
+[node name="Attack" type="Node" unique_id=1625647871]
+script = ExtResource("1_rhkpf")

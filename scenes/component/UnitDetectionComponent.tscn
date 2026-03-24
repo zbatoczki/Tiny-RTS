@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dggm7qkrau8nx"]
 
-[ext_resource type="Script" uid="uid://d0vxiq7nf8srk" path="res://scenes/units/enemy/Skeleton/UnitDetectionComponent.cs" id="1_wh183"]
+[ext_resource type="Script" uid="uid://d0vxiq7nf8srk" path="res://scenes/component/UnitDetectionComponent.cs" id="1_wh183"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0uboq"]
 

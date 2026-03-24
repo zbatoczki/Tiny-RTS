@@ -2,9 +2,16 @@
 
 [ext_resource type="PackedScene" uid="uid://c8oo8lg1yuu6f" path="res://scenes/units/Unit.tscn" id="1_5nh5i"]
 [ext_resource type="Texture2D" uid="uid://cmr0d4otg4lgp" path="res://assets/units/enemy/skeleton/skull_attack.png" id="2_6mirp"]
+[ext_resource type="Script" uid="uid://b7orlyrryypfu" path="res://scenes/units/enemy/Skeleton/Skeleton.cs" id="2_8ojr3"]
+[ext_resource type="PackedScene" uid="uid://cp3r6nh3o4qgb" path="res://scenes/component/finite_state_machine/idle/Idle.tscn" id="2_jas41"]
+[ext_resource type="Resource" uid="uid://mtxgfkstm5np" path="res://resources/unit/enemy/SkeletonWarrior.tres" id="3_5g3pi"]
+[ext_resource type="PackedScene" uid="uid://duuq7m2why15q" path="res://scenes/component/finite_state_machine/move/Move.tscn" id="3_8ojr3"]
 [ext_resource type="Texture2D" uid="uid://dw1qsvwteh6ij" path="res://assets/units/enemy/skeleton/skull_idle.png" id="3_itahj"]
+[ext_resource type="PackedScene" uid="uid://cvt2y8xw4fqho" path="res://scenes/component/finite_state_machine/attack/Attack.tscn" id="4_5g3pi"]
 [ext_resource type="Texture2D" uid="uid://drr0ctr8d4kf0" path="res://assets/units/enemy/skeleton/skull_run.png" id="4_pwwfl"]
 [ext_resource type="PackedScene" uid="uid://0qknudhrbrjf" path="res://scenes/component/DamageComponent.tscn" id="5_6mirp"]
+[ext_resource type="PackedScene" uid="uid://c2v03up3w3qe" path="res://scenes/component/finite_state_machine/dead/Dead.tscn" id="5_jghrl"]
+[ext_resource type="PackedScene" uid="uid://dggm7qkrau8nx" path="res://scenes/component/UnitDetectionComponent.tscn" id="6_itahj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6y8hu"]
 atlas = ExtResource("2_6mirp")
@@ -90,7 +97,7 @@ region = Rect2(768, 0, 192, 192)
 atlas = ExtResource("4_pwwfl")
 region = Rect2(960, 0, 192, 192)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_6mirp"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_5g3pi"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -174,12 +181,34 @@ animations = [{
 
 [node name="Skeleton" unique_id=1980137832 groups=["EnemyUnit"] instance=ExtResource("1_5nh5i")]
 collision_layer = 4
+script = ExtResource("2_8ojr3")
+stats = ExtResource("3_5g3pi")
 
-[node name="CollisionShape2D" parent="." index="0" unique_id=1633008240]
+[node name="StateMachine" parent="." index="0" unique_id=1526190014 node_paths=PackedStringArray("StartingState")]
+StartingState = NodePath("Idle")
+
+[node name="Idle" parent="StateMachine" index="0" unique_id=1748082814 node_paths=PackedStringArray("MoveState", "AttackState", "DeadState") instance=ExtResource("2_jas41")]
+MoveState = NodePath("../Move")
+AttackState = NodePath("../Attack")
+DeadState = NodePath("../Dead")
+
+[node name="Move" parent="StateMachine" index="1" unique_id=2013647738 node_paths=PackedStringArray("IdleState", "DeadState", "AttackState") instance=ExtResource("3_8ojr3")]
+IdleState = NodePath("../Idle")
+DeadState = NodePath("../Dead")
+AttackState = NodePath("../Attack")
+
+[node name="Attack" parent="StateMachine" index="2" unique_id=1625647871 node_paths=PackedStringArray("IdleState", "MoveState", "DeadState") instance=ExtResource("4_5g3pi")]
+IdleState = NodePath("../Idle")
+MoveState = NodePath("../Move")
+DeadState = NodePath("../Dead")
+
+[node name="Dead" parent="StateMachine" index="3" unique_id=675850164 instance=ExtResource("5_jghrl")]
+
+[node name="CollisionShape2D" parent="." index="1" unique_id=1633008240]
 scale = Vector2(4, 4)
 
-[node name="AnimatedSprite2D" parent="." index="1" unique_id=290410313]
-sprite_frames = SubResource("SpriteFrames_6mirp")
+[node name="AnimatedSprite2D" parent="." index="2" unique_id=290410313]
+sprite_frames = SubResource("SpriteFrames_5g3pi")
 animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.19782059
@@ -188,5 +217,8 @@ offset = Vector2(-96, -96)
 [node name="DamageComponent" parent="." index="3" unique_id=1927849053 instance=ExtResource("5_6mirp")]
 collision_mask = 2
 targetGroup = &"PlayerUnit"
+
+[node name="UnitDetectionComponent" parent="." index="4" unique_id=1331689136 instance=ExtResource("6_itahj")]
+visible = false
 
 [editable path="DamageComponent"]

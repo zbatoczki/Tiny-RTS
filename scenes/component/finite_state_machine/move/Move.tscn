@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://duuq7m2why15q"]
+
+[ext_resource type="Script" uid="uid://bvodvxqyrl3oj" path="res://scenes/component/finite_state_machine/Move.cs" id="1_lb764"]
+
+[node name="Move" type="Node" unique_id=2013647738 node_paths=PackedStringArray("idleState")]
+script = ExtResource("1_lb764")
+idleState = NodePath("")
