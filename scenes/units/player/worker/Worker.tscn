@@ -8,10 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://duuq7m2why15q" path="res://scenes/component/finite_state_machine/move/Move.tscn" id="3_2rd3q"]
 [ext_resource type="Texture2D" uid="uid://dsfgxp5fsj28e" path="res://assets/units/player/pawn/pawn_run.png" id="3_3j8ay"]
 [ext_resource type="Resource" uid="uid://1t4poprufd14" path="res://resources/unit/player/Worker.tres" id="3_phryt"]
-[ext_resource type="PackedScene" uid="uid://sbqmrlasoeax" path="res://scenes/component/DeadComponent.tscn" id="4_eadu0"]
 [ext_resource type="PackedScene" uid="uid://cvt2y8xw4fqho" path="res://scenes/component/finite_state_machine/attack/Attack.tscn" id="4_phryt"]
 [ext_resource type="PackedScene" uid="uid://c2v03up3w3qe" path="res://scenes/component/finite_state_machine/dead/Dead.tscn" id="5_eadu0"]
-[ext_resource type="PackedScene" uid="uid://0qknudhrbrjf" path="res://scenes/component/DamageComponent.tscn" id="5_g17u7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b3epq"]
 atlas = ExtResource("2_3j8ay")
@@ -85,7 +83,7 @@ region = Rect2(768, 0, 192, 192)
 atlas = ExtResource("3_3j8ay")
 region = Rect2(960, 0, 192, 192)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_h1fsp"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_2rd3q"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -161,7 +159,6 @@ animations = [{
 [node name="Worker" unique_id=1980137832 groups=["PlayerUnit"] instance=ExtResource("1_ir85n")]
 script = ExtResource("2_2rd3q")
 stats = ExtResource("3_phryt")
-deadComponent = ExtResource("4_eadu0")
 
 [node name="StateMachine" parent="." index="0" unique_id=1526190014 node_paths=PackedStringArray("StartingState")]
 StartingState = NodePath("Idle")
@@ -189,9 +186,9 @@ scale = Vector2(4.415, 4.415)
 [node name="AnimatedSprite2D" parent="." index="2" unique_id=290410313]
 y_sort_enabled = true
 position = Vector2(2, 0)
-sprite_frames = SubResource("SpriteFrames_h1fsp")
+sprite_frames = SubResource("SpriteFrames_2rd3q")
 autoplay = "idle"
 offset = Vector2(-96, -110)
 
-[node name="DamageComponent" parent="." index="3" unique_id=341774930 instance=ExtResource("5_g17u7")]
+[node name="DamageComponent" parent="." index="4" unique_id=341774930]
 targetGroup = &"EnemyUnit"

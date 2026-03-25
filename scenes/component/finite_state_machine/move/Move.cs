@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 namespace Game.FSM;
 
@@ -16,12 +15,15 @@ public partial class Move : State
 	public override void Enter()
     {
         AnimationName = "move";
+        unit.damageComponent.Monitoring = unit.attackTarget != null;
         base.Enter();
     }
 
     public override State UpdatePhysicsFrame(double delta)
 	{
-		var direction = unit.targetPosition - unit.GlobalPosition;
+        var goToPosition = unit.attackTarget != null ? unit.attackTarget.GlobalPosition : unit.targetPosition;
+        
+		var direction = goToPosition - unit.GlobalPosition;
 
         unit.FaceRight(direction.X < 0);
 

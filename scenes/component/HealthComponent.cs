@@ -11,21 +11,22 @@ public partial class HealthComponent : Node2D
 	{
 		healthProgressBar = GetNode<ProgressBar>("%HealthProgressBar");
 		Visible = false;
+		healthProgressBar.Value = healthProgressBar.MaxValue;
 	}
 
-	public void SetMaxValue(int health)
+	public void SetMaxValue(float health)
 	{
 		healthProgressBar.MaxValue = health;
 		SetHealthBarVisibility();
 	}
 
-	public void SetCurrentHealth(int currentHealth)
+	public void SetCurrentHealth(float currentHealth)
 	{
 		healthProgressBar.Value = currentHealth;
 		SetHealthBarVisibility();
 	}
 
-	public void AddToCurrentHealth(int healthToAdd)
+	public void AddToCurrentHealth(float healthToAdd)
 	{
 		healthProgressBar.Value += healthToAdd;
 		SetHealthBarVisibility();

@@ -1,3 +1,4 @@
+using Game.Groups;
 using Game.Units;
 using Godot;
 
@@ -16,7 +17,7 @@ public partial class UnitDetectionComponent : Area2D
 
 	private void OnBodyEntered(Node2D body)
 	{
-		if(body is Unit)
+		if(body is Unit && body.IsInGroup(GlobalGroups.PLAYER_UNIT))
 		{
 			EmitSignal(SignalName.UnitDetected, body as Unit);
 		}

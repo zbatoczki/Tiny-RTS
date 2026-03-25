@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://c8oo8lg1yuu6f"]
 
+[ext_resource type="PackedScene" uid="uid://0qknudhrbrjf" path="res://scenes/component/DamageComponent.tscn" id="3_nlg77"]
 [ext_resource type="PackedScene" uid="uid://br8m4v3ew4uej" path="res://scenes/component/finite_state_machine/StateMachine.tscn" id="3_ty2l4"]
 [ext_resource type="PackedScene" uid="uid://ldhygolivtsg" path="res://scenes/component/HealthComponent.tscn" id="13_kflat"]
 
@@ -45,3 +46,5 @@ z_index = 1
 y_sort_enabled = true
 position = Vector2(-32, -70)
 scale = Vector2(0.5, 0.5)
+
+[node name="DamageComponent" parent="." unique_id=341774930 instance=ExtResource("3_nlg77")]

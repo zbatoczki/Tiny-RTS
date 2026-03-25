@@ -5,6 +5,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_0uboq"]
 
 [node name="UnitDetectionComponent" type="Area2D" unique_id=1331689136]
+input_pickable = false
 monitorable = false
 script = ExtResource("1_wh183")
 

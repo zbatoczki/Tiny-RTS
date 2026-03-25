@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game.Groups;
 using Game.Units;
 using Godot;
 
@@ -37,7 +38,7 @@ public partial class UnitManager : Node2D
 
 	public void CheckUnit()
 	{
-		var units = GetTree().GetNodesInGroup("PlayerUnit").Cast<Unit>();
+		var units = GetTree().GetNodesInGroup(GlobalGroups.PLAYER_UNIT).Cast<Unit>();
 		foreach (var unit in units)
 		{
 			if (SelectedRect.HasValue && SelectedRect.Value.HasPoint(unit.GlobalPosition))

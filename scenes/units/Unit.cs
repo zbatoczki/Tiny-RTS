@@ -16,16 +16,7 @@ public abstract partial class Unit : CharacterBody2D
     
     private StateMachine stateMachine;
     private HealthComponent healthComponent;
-
-    enum UnitState
-    {
-        Idle,
-        Moving,
-        Attacking,
-        Dead
-    }
-    private UnitState currentState = UnitState.Idle;
-
+    private float currentHealth;
 
     public override void _Ready()
     {
@@ -37,12 +28,11 @@ public abstract partial class Unit : CharacterBody2D
         stateMachine = GetNode<StateMachine>(nameof(StateMachine));
         stateMachine.Init(this);
 
-        animatedSprite2D.AnimationFinished += OnAnimationFinsihed;
-
         damageComponent.BodyEntered += OnEnemyEntered;
         damageComponent.BodyExited += OnEnemyExit;
 
-        
+        currentHealth = stats.MaxHealth;
+        healthComponent.SetMaxValue(stats.MaxHealth);
     }
 
     public override void _Process(double delta)
@@ -85,10 +75,12 @@ public abstract partial class Unit : CharacterBody2D
 
 #region Health
 
-    public void TakeDamage(int incomingDamage)
+    public void TakeDamage(float incomingDamage)
     {
-        stats.Health -= incomingDamage;
-        if(stats.Health < 1)
+        currentHealth -= incomingDamage;
+        if(Name == "Worker") GD.Print(currentHealth);
+        healthComponent.SetCurrentHealth(currentHealth);
+        if(currentHealth < 1)
             stateMachine.ForceToState<Dead>();
     }
 
@@ -110,10 +102,12 @@ public abstract partial class Unit : CharacterBody2D
 
     private void OnEnemyEntered(Node2D body)
     {
-        if(attackTarget != null) return;
+        if(attackTarget == null)
+        {
+            attackTarget = body as Unit;
+        }
 
-        attackTarget = body as Unit;
-        GD.Print($"{Name} targeting {attackTarget.Name}");
+        GD.Print($"{Name} attacking {attackTarget.Name}");
         stateMachine.ForceToState<Attack>();
     }
 
@@ -141,8 +135,8 @@ public abstract partial class Unit : CharacterBody2D
 
     private void OnAnimationFinsihed()
     {
+        GD.Print("On animation finished");
         if(animatedSprite2D.Animation != "attack") return;
-
         if(stateMachine.currentState is Attack)
         {
             animatedSprite2D.Play("idle");
