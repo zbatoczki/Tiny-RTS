@@ -1,10 +1,10 @@
+using Game.Units;
 using Godot;
 
 namespace Game.FSM;
 
 public partial class Dead : State
 {
-
 	private Node2D deadScene;
 
     public override void _Ready()
@@ -16,6 +16,7 @@ public partial class Dead : State
 	// Called when the node enters the scene tree for the first time.
 	public override void Enter()
 	{
+        unit.EmitSignal(Unit.SignalName.UnitDied, unit);
 		Die();
 	}
 

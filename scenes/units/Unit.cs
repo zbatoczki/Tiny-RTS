@@ -6,6 +6,9 @@ namespace Game.Units;
 
 public abstract partial class Unit : CharacterBody2D
 {
+    [Signal]
+    public delegate void UnitDiedEventHandler(Unit unit);
+
     [Export] public UnitStats stats;
 
     public Vector2 targetPosition    = Vector2.Zero;

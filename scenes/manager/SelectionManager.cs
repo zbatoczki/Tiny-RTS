@@ -54,6 +54,7 @@ public partial class SelectionManager : Node2D
 				Unit unit = r["collider"].As<Unit>();
 				unit.SetSelected(true);
 				selectedUnits.Add(unit);
+				unit.UnitDied += OnUnitDied;
 			}
 		}
 
@@ -141,6 +142,12 @@ public partial class SelectionManager : Node2D
 			unit.MoveTo(targetPositions[targetPositionIndex]);
 			targetPositionIndex++;
 		}
+	}
+
+	private void OnUnitDied(Unit unit)
+	{
+		unit.UnitDied -= OnUnitDied;
+		selectedUnits.Remove(unit);
 	}
 
 }
