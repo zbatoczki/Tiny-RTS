@@ -11,7 +11,7 @@ radius = 6.596229
 resource_local_to_scene = true
 animations = [{
 "frames": [],
-"loop": true,
+"loop": false,
 "name": &"attack",
 "speed": 10.0
 }, {

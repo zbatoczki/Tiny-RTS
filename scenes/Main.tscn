@@ -2,176 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://6bbj1ble4hyb" path="res://scenes/manager/SelectionManager.tscn" id="1_0bbpv"]
 [ext_resource type="PackedScene" uid="uid://cetw1rdssdyyd" path="res://scenes/units/enemy/Skeleton/Skeleton.tscn" id="3_rarhs"]
-[ext_resource type="Texture2D" uid="uid://cmr0d4otg4lgp" path="res://assets/units/enemy/skeleton/skull_attack.png" id="4_c01mt"]
-[ext_resource type="Texture2D" uid="uid://dw1qsvwteh6ij" path="res://assets/units/enemy/skeleton/skull_idle.png" id="5_nxtc6"]
-[ext_resource type="Texture2D" uid="uid://drr0ctr8d4kf0" path="res://assets/units/enemy/skeleton/skull_run.png" id="6_jlsqs"]
 [ext_resource type="PackedScene" uid="uid://bxo4obx7s5dql" path="res://scenes/units/player/worker/Worker.tscn" id="6_nxtc6"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6y8hu"]
-atlas = ExtResource("4_c01mt")
-region = Rect2(0, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_o3fwb"]
-atlas = ExtResource("4_c01mt")
-region = Rect2(192, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jas41"]
-atlas = ExtResource("4_c01mt")
-region = Rect2(384, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8ojr3"]
-atlas = ExtResource("4_c01mt")
-region = Rect2(576, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5g3pi"]
-atlas = ExtResource("4_c01mt")
-region = Rect2(768, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jghrl"]
-atlas = ExtResource("4_c01mt")
-region = Rect2(960, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_t7sa5"]
-atlas = ExtResource("4_c01mt")
-region = Rect2(1152, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3arln"]
-atlas = ExtResource("5_nxtc6")
-region = Rect2(0, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_arfu7"]
-atlas = ExtResource("5_nxtc6")
-region = Rect2(192, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xgqqe"]
-atlas = ExtResource("5_nxtc6")
-region = Rect2(384, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4hnmf"]
-atlas = ExtResource("5_nxtc6")
-region = Rect2(576, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hbnax"]
-atlas = ExtResource("5_nxtc6")
-region = Rect2(768, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dmo70"]
-atlas = ExtResource("5_nxtc6")
-region = Rect2(960, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nryhg"]
-atlas = ExtResource("5_nxtc6")
-region = Rect2(1152, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_56nij"]
-atlas = ExtResource("5_nxtc6")
-region = Rect2(1344, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_te741"]
-atlas = ExtResource("6_jlsqs")
-region = Rect2(0, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_h5jil"]
-atlas = ExtResource("6_jlsqs")
-region = Rect2(192, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0r7s4"]
-atlas = ExtResource("6_jlsqs")
-region = Rect2(384, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sc8dp"]
-atlas = ExtResource("6_jlsqs")
-region = Rect2(576, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xl38h"]
-atlas = ExtResource("6_jlsqs")
-region = Rect2(768, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7fb31"]
-atlas = ExtResource("6_jlsqs")
-region = Rect2(960, 0, 192, 192)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_q8u5g"]
-resource_local_to_scene = true
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6y8hu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_o3fwb")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jas41")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8ojr3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5g3pi")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jghrl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_t7sa5")
-}],
-"loop": true,
-"name": &"attack",
-"speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3arln")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_arfu7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xgqqe")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4hnmf")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hbnax")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dmo70")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_nryhg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_56nij")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_te741")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_h5jil")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0r7s4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sc8dp")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xl38h")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7fb31")
-}],
-"loop": true,
-"name": &"move",
-"speed": 10.0
-}]
+[ext_resource type="Script" uid="uid://dhhqge6ld1u72" path="res://scenes/LabelTest.cs" id="7_nxtc6"]
 
 [node name="Main" type="Node" unique_id=330848765]
 
@@ -180,14 +12,14 @@ animations = [{
 [node name="Worker" parent="." unique_id=1980137832 instance=ExtResource("6_nxtc6")]
 position = Vector2(128, 192)
 
-[node name="Skeleton" parent="." unique_id=1739421818 instance=ExtResource("3_rarhs")]
-position = Vector2(704, 320)
+[node name="Label" type="Label" parent="." unique_id=2012113887 node_paths=PackedStringArray("worker", "skeleton")]
+offset_left = 128.0
+offset_right = 186.0
+offset_bottom = 23.0
+text = "DEBUG TEXT HERE"
+script = ExtResource("7_nxtc6")
+worker = NodePath("../Worker")
+skeleton = NodePath("../Skeleton")
 
-[node name="AnimatedSprite2D" parent="Skeleton" index="2" unique_id=290410313]
-sprite_frames = SubResource("SpriteFrames_q8u5g")
-
-[node name="DamageComponent" parent="Skeleton" index="5" unique_id=341774930]
-monitoring = false
-
-[editable path="Skeleton"]
-[editable path="Skeleton/DamageComponent"]
+[node name="Skeleton" parent="." unique_id=1649665855 instance=ExtResource("3_rarhs")]
+position = Vector2(832, 384)

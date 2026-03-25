@@ -12,9 +12,9 @@ public abstract partial class Unit : CharacterBody2D
     public CollisionShape2D  collisionShape;
     public AnimatedSprite2D animatedSprite2D;
     public DamageComponent damageComponent;
-    public Unit attackTarget;
+    public Unit AttackTarget {get; set;}
     
-    private StateMachine stateMachine;
+    public StateMachine stateMachine;
     private HealthComponent healthComponent;
     private float currentHealth;
 
@@ -44,6 +44,11 @@ public abstract partial class Unit : CharacterBody2D
     public override void _PhysicsProcess(double delta)
     {
         stateMachine.UpdatePhysicsFrame(delta);
+    }
+
+    public string GetCurrentState()
+    {
+        return stateMachine.currentState.GetType().ToString();
     }
 
 
@@ -102,23 +107,21 @@ public abstract partial class Unit : CharacterBody2D
 
     private void OnEnemyEntered(Node2D body)
     {
-        if(attackTarget == null)
+        if(AttackTarget == null)
         {
-            attackTarget = body as Unit;
+            AttackTarget = body as Unit;
         }
-
-        GD.Print($"{Name} attacking {attackTarget.Name}");
         stateMachine.ForceToState<Attack>();
     }
 
     private void OnEnemyExit(Node2D body)
     {
-        if(body != attackTarget) return;
-        attackTarget = null;
-        if(targetPosition == Vector2.Zero)
-            stateMachine.ForceToState<Idle>();
-        else
-            stateMachine.ForceToState<Move>();
+        if(body != AttackTarget) return;
+        AttackTarget = null;
+        // if(targetPosition == Vector2.Zero)
+        //     stateMachine.ForceToState<Idle>();
+        // else
+        //     stateMachine.ForceToState<Move>();
     }
 
     
@@ -140,7 +143,7 @@ public abstract partial class Unit : CharacterBody2D
         if(stateMachine.currentState is Attack)
         {
             animatedSprite2D.Play("idle");
-            attackTarget.TakeDamage(1);  
+            AttackTarget.TakeDamage(1);  
         }
     }
 

@@ -191,4 +191,5 @@ autoplay = "idle"
 offset = Vector2(-96, -110)
 
 [node name="DamageComponent" parent="." index="4" unique_id=341774930]
+collision_mask = 4
 targetGroup = &"EnemyUnit"

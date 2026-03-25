@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Game.Groups;
 using Game.InputMap;
 using Game.Units;
 using Godot;
@@ -63,7 +64,13 @@ public partial class SelectionManager : Node2D
 			//check what is at mouse position
 			Array<Dictionary> results = CheckAtMousePosition(mousePosition);
 			//TODO handle action based on what is at position and what units are selected
-
+			foreach(var item in results)
+			{
+				if (item["collider"].Obj is Unit n && n.IsInGroup(GlobalGroups.ENEMY_UNIT))
+				{
+					selectedUnits.ForEach(unit => unit.AttackTarget = n);
+				}
+			}
 			MoveUnitsToPosition(mousePosition);
 		}
     }

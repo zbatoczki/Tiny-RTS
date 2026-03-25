@@ -21,7 +21,7 @@ public partial class Skeleton : Unit
     private void OnUnitDetected(Unit target)
     {
 		GD.Print("unit detected");
-        attackTarget = target;
+        AttackTarget = target;
 		MoveTo(target.GlobalPosition);
     }
 

@@ -1,5 +1,6 @@
-using Game.FSM;
 using Godot;
+
+namespace Game.FSM;
 
 public partial class Dead : State
 {
