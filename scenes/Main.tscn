@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://blnqgrr1rchxq"]
 
 [ext_resource type="PackedScene" uid="uid://6bbj1ble4hyb" path="res://scenes/manager/SelectionManager.tscn" id="1_0bbpv"]
-[ext_resource type="PackedScene" uid="uid://cetw1rdssdyyd" path="res://scenes/units/enemy/Skeleton/Skeleton.tscn" id="3_rarhs"]
+[ext_resource type="PackedScene" uid="uid://dr2a5dv1lisis" path="res://scenes/units/enemy/harpoon fish/HarpoonFish.tscn" id="4_rarhs"]
 [ext_resource type="PackedScene" uid="uid://bxo4obx7s5dql" path="res://scenes/units/player/worker/Worker.tscn" id="6_nxtc6"]
 [ext_resource type="Script" uid="uid://dhhqge6ld1u72" path="res://scenes/LabelTest.cs" id="7_nxtc6"]
 
@@ -12,14 +12,16 @@
 [node name="Worker" parent="." unique_id=1980137832 instance=ExtResource("6_nxtc6")]
 position = Vector2(128, 192)
 
-[node name="Label" type="Label" parent="." unique_id=2012113887 node_paths=PackedStringArray("worker", "skeleton")]
+[node name="Harpoon Fish" parent="." unique_id=2109246591 instance=ExtResource("4_rarhs")]
+position = Vector2(704, 384)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1584375090]
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=2012113887 node_paths=PackedStringArray("worker", "enemy")]
 offset_left = 128.0
-offset_right = 186.0
+offset_right = 269.0
 offset_bottom = 23.0
 text = "DEBUG TEXT HERE"
 script = ExtResource("7_nxtc6")
-worker = NodePath("../Worker")
-skeleton = NodePath("../Skeleton")
-
-[node name="Skeleton" parent="." unique_id=1649665855 instance=ExtResource("3_rarhs")]
-position = Vector2(832, 384)
+worker = NodePath("../../Worker")
+enemy = NodePath("../../Harpoon Fish")

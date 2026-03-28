@@ -1,0 +1,202 @@
+[gd_scene format=3 uid="uid://dr2a5dv1lisis"]
+
+[ext_resource type="PackedScene" uid="uid://c8oo8lg1yuu6f" path="res://scenes/units/Unit.tscn" id="1_asokg"]
+[ext_resource type="Script" uid="uid://bhvo4gohtlwq3" path="res://scenes/units/enemy/harpoon fish/HarpoonFish.cs" id="2_pi0t5"]
+[ext_resource type="Texture2D" uid="uid://ulsygbpjisbj" path="res://assets/units/enemy/harpoon fish/harpoon_fish_throw.png" id="2_qgy4u"]
+[ext_resource type="Resource" uid="uid://bgd4y634x7js7" path="res://resources/unit/enemy/HarpoonFish.tres" id="3_ixigs"]
+[ext_resource type="Texture2D" uid="uid://ex3pbjexdt0w" path="res://assets/units/enemy/harpoon fish/harpoon_fish_idle.png" id="3_pi0t5"]
+[ext_resource type="Texture2D" uid="uid://byarohfqmgkoe" path="res://assets/units/enemy/harpoon fish/harpoon_fish_run.png" id="4_ixigs"]
+[ext_resource type="PackedScene" uid="uid://dggm7qkrau8nx" path="res://scenes/component/UnitDetectionComponent.tscn" id="6_pi0t5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f8me8"]
+atlas = ExtResource("2_qgy4u")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4fiob"]
+atlas = ExtResource("2_qgy4u")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l6gsi"]
+atlas = ExtResource("2_qgy4u")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vsb5n"]
+atlas = ExtResource("2_qgy4u")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_epwbj"]
+atlas = ExtResource("2_qgy4u")
+region = Rect2(768, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0nwxc"]
+atlas = ExtResource("2_qgy4u")
+region = Rect2(960, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_clxaq"]
+atlas = ExtResource("2_qgy4u")
+region = Rect2(1152, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q5h7x"]
+atlas = ExtResource("2_qgy4u")
+region = Rect2(1344, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oyfp1"]
+atlas = ExtResource("3_pi0t5")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_285u5"]
+atlas = ExtResource("3_pi0t5")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lc5fe"]
+atlas = ExtResource("3_pi0t5")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qcxc7"]
+atlas = ExtResource("3_pi0t5")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jsuvh"]
+atlas = ExtResource("3_pi0t5")
+region = Rect2(768, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jox75"]
+atlas = ExtResource("3_pi0t5")
+region = Rect2(960, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rja41"]
+atlas = ExtResource("3_pi0t5")
+region = Rect2(1152, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wv7bw"]
+atlas = ExtResource("3_pi0t5")
+region = Rect2(1344, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kavwl"]
+atlas = ExtResource("4_ixigs")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ktkmu"]
+atlas = ExtResource("4_ixigs")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vt5vq"]
+atlas = ExtResource("4_ixigs")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_esivx"]
+atlas = ExtResource("4_ixigs")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ml8dm"]
+atlas = ExtResource("4_ixigs")
+region = Rect2(768, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u8idc"]
+atlas = ExtResource("4_ixigs")
+region = Rect2(960, 0, 192, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ixigs"]
+resource_local_to_scene = true
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f8me8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4fiob")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l6gsi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vsb5n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_epwbj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0nwxc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_clxaq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q5h7x")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oyfp1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_285u5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lc5fe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qcxc7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jsuvh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jox75")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rja41")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wv7bw")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kavwl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ktkmu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vt5vq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_esivx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ml8dm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u8idc")
+}],
+"loop": true,
+"name": &"move",
+"speed": 10.0
+}]
+
+[node name="Harpoon Fish" unique_id=1980137832 instance=ExtResource("1_asokg")]
+collision_layer = 4
+script = ExtResource("2_pi0t5")
+stats = ExtResource("3_ixigs")
+
+[node name="AnimatedSprite2D" parent="." index="2" unique_id=290410313]
+sprite_frames = SubResource("SpriteFrames_ixigs")
+autoplay = "idle"
+frame = 7
+frame_progress = 1.0
+offset = Vector2(-96, -96)
+
+[node name="DamageComponent" parent="." index="4" unique_id=341774930]
+collision_layer = 4
+collision_mask = 2
+targetGroup = &"PlayerUnit"
+
+[node name="UnitDetectionComponent" parent="." index="5" unique_id=1331689136 instance=ExtResource("6_pi0t5")]
+collision_mask = 2

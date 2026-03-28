@@ -29,8 +29,6 @@ public partial class Attack : State
 
     public override void Exit()
     {
-		if(unit.animatedSprite2D.IsPlaying() && unit.AttackTarget == null)
-
 		unit.animatedSprite2D.AnimationFinished -= OnAnimationFinished;
         attackTimer.Stop();
     }

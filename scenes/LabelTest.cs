@@ -4,7 +4,7 @@ using Godot;
 public partial class LabelTest : Label
 {
 	[Export] private Unit worker;
-	[Export] private Unit skeleton;
+	[Export] private Unit enemy;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -13,6 +13,6 @@ public partial class LabelTest : Label
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		Text = $"Worker State: {worker.GetCurrentState()} | Skelton State: {skeleton.GetCurrentState()}";
+		Text = $"Player State: {worker?.GetCurrentState()} | Enemy State: {enemy?.GetCurrentState()}";
 	}
 }

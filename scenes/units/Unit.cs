@@ -4,6 +4,7 @@ using Game.Resources.Unit;
 using Game.FSM;
 namespace Game.Units;
 
+[GlobalClass]
 public abstract partial class Unit : CharacterBody2D
 {
     [Signal]
@@ -31,6 +32,7 @@ public abstract partial class Unit : CharacterBody2D
         stateMachine = GetNode<StateMachine>(nameof(StateMachine));
         stateMachine.Init(this);
 
+        damageComponent.Scale *= stats.AttackRange;
         damageComponent.BodyEntered += OnEnemyEntered;
         damageComponent.BodyExited += OnEnemyExit;
 
@@ -60,7 +62,6 @@ public abstract partial class Unit : CharacterBody2D
     public void FaceRight(bool faceRight)
     {
         animatedSprite2D.FlipH = faceRight;
-        damageComponent.FlipH(faceRight);
     }
 
 #endregion
@@ -121,10 +122,6 @@ public abstract partial class Unit : CharacterBody2D
     {
         if(body != AttackTarget) return;
         AttackTarget = null;
-        // if(targetPosition == Vector2.Zero)
-        //     stateMachine.ForceToState<Idle>();
-        // else
-        //     stateMachine.ForceToState<Move>();
     }
 
     

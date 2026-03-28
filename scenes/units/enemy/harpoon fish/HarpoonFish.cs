@@ -1,15 +1,11 @@
-using System;
-using Game.Component;
-using Game.Units;
 using Godot;
+using Game.Units;
+using Game.Component;
 
-namespace Game.Units;
-
-public partial class Skeleton : Unit
+public partial class HarpoonFish : Unit
 {
 	private UnitDetectionComponent detectionComponent;
 	
-
 	public override void _Ready()
 	{
 		base._Ready();
@@ -25,5 +21,4 @@ public partial class Skeleton : Unit
         AttackTarget = target;
 		MoveTo(target.GlobalPosition);
     }
-
 }
