@@ -29,6 +29,7 @@ public partial class Attack : State
 
     public override void Exit()
     {
+
 		unit.animatedSprite2D.AnimationFinished -= OnAnimationFinished;
         attackTimer.Stop();
     }
@@ -54,10 +55,7 @@ public partial class Attack : State
 	private void DoAttack()
     {   
 		unit.PlayAnimation(AnimationName);
-		if (IsInstanceValid(unit.AttackTarget))
-		{
-			unit.AttackTarget.TakeDamage(unit.stats.AttackDamage);
-		}
+		unit.Attack();
         attackTimer.Start();
     }
 	

@@ -124,7 +124,11 @@ public abstract partial class Unit : CharacterBody2D
         AttackTarget = null;
     }
 
-    
+    public virtual void Attack()
+    {
+        if (!IsInstanceValid(AttackTarget)) return;	
+        AttackTarget.TakeDamage(stats.AttackDamage);
+    }
 
 #endregion
 

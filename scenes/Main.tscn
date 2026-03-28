@@ -12,8 +12,14 @@
 [node name="Worker" parent="." unique_id=1980137832 instance=ExtResource("6_nxtc6")]
 position = Vector2(128, 192)
 
-[node name="Harpoon Fish" parent="." unique_id=2109246591 instance=ExtResource("4_rarhs")]
-position = Vector2(704, 384)
+[node name="Harpoon Fish" parent="." unique_id=1162308609 instance=ExtResource("4_rarhs")]
+position = Vector2(768, 128)
+
+[node name="Harpoon Fish2" parent="." unique_id=1376140268 instance=ExtResource("4_rarhs")]
+position = Vector2(768, 256)
+
+[node name="Harpoon Fish3" parent="." unique_id=313279947 instance=ExtResource("4_rarhs")]
+position = Vector2(768, 384)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1584375090]
 
@@ -24,4 +30,4 @@ offset_bottom = 23.0
 text = "DEBUG TEXT HERE"
 script = ExtResource("7_nxtc6")
 worker = NodePath("../../Worker")
-enemy = NodePath("../../Harpoon Fish")
+enemy = NodePath("")

@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://v1la88asfxee"]
+
+[ext_resource type="Script" uid="uid://bh2q5awdb3khq" path="res://scenes/component/ProjectileComponent.cs" id="1_rjabi"]
+[ext_resource type="Texture2D" uid="uid://dktk3gwt13e8a" path="res://assets/units/enemy/harpoon fish/harpoon.png" id="1_tpk5c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sgvln"]
+size = Vector2(14, 7)
+
+[node name="Projectile" type="Area2D" unique_id=1112973394]
+z_index = 1
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("1_rjabi")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1241161836]
+rotation = 0.7853982
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("1_tpk5c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=768927424]
+position = Vector2(36, 0.5)
+shape = SubResource("RectangleShape2D_sgvln")

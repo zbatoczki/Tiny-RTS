@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://c8oo8lg1yuu6f" path="res://scenes/units/Unit.tscn" id="1_asokg"]
 [ext_resource type="Script" uid="uid://bhvo4gohtlwq3" path="res://scenes/units/enemy/harpoon fish/HarpoonFish.cs" id="2_pi0t5"]
 [ext_resource type="Texture2D" uid="uid://ulsygbpjisbj" path="res://assets/units/enemy/harpoon fish/harpoon_fish_throw.png" id="2_qgy4u"]
+[ext_resource type="PackedScene" uid="uid://v1la88asfxee" path="res://scenes/component/ProjectileComponent.tscn" id="3_f8me8"]
 [ext_resource type="Resource" uid="uid://bgd4y634x7js7" path="res://resources/unit/enemy/HarpoonFish.tres" id="3_ixigs"]
 [ext_resource type="Texture2D" uid="uid://ex3pbjexdt0w" path="res://assets/units/enemy/harpoon fish/harpoon_fish_idle.png" id="3_pi0t5"]
 [ext_resource type="Texture2D" uid="uid://byarohfqmgkoe" path="res://assets/units/enemy/harpoon fish/harpoon_fish_run.png" id="4_ixigs"]
@@ -96,7 +97,7 @@ region = Rect2(768, 0, 192, 192)
 atlas = ExtResource("4_ixigs")
 region = Rect2(960, 0, 192, 192)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_ixigs"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_4fiob"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -184,19 +185,20 @@ animations = [{
 [node name="Harpoon Fish" unique_id=1980137832 instance=ExtResource("1_asokg")]
 collision_layer = 4
 script = ExtResource("2_pi0t5")
+projectileScene = ExtResource("3_f8me8")
 stats = ExtResource("3_ixigs")
 
 [node name="AnimatedSprite2D" parent="." index="2" unique_id=290410313]
-sprite_frames = SubResource("SpriteFrames_ixigs")
+sprite_frames = SubResource("SpriteFrames_4fiob")
 autoplay = "idle"
 frame = 7
 frame_progress = 1.0
 offset = Vector2(-96, -96)
 
 [node name="DamageComponent" parent="." index="4" unique_id=341774930]
-collision_layer = 4
 collision_mask = 2
 targetGroup = &"PlayerUnit"
 
 [node name="UnitDetectionComponent" parent="." index="5" unique_id=1331689136 instance=ExtResource("6_pi0t5")]
+collision_layer = 0
 collision_mask = 2
