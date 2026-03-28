@@ -1,9 +1,8 @@
 using Godot;
 using Game.Units;
 using Game.Component;
-using System.Runtime.CompilerServices;
 
-public partial class HarpoonFish : Unit
+public partial class RangedUnit : Unit
 {
 	[Export] private PackedScene projectileScene;
 	private UnitDetectionComponent detectionComponent;
@@ -28,8 +27,9 @@ public partial class HarpoonFish : Unit
 
     private void OnUnitDetected(Unit target)
     {
-		GD.Print("unit detected");
-        AttackTarget = target;
+		GD.Print($"{Name} detected unit {target.Name}");
+		if(AttackTarget == null)
+        	AttackTarget = target;
 		MoveTo(target.GlobalPosition);
     }
 }

@@ -6,6 +6,8 @@ namespace Game.Component;
 
 public partial class UnitDetectionComponent : Area2D
 {
+	[Export] private StringName targetGroup;
+
 	[Signal]
 	public delegate void UnitDetectedEventHandler(Unit target);
 
@@ -17,7 +19,9 @@ public partial class UnitDetectionComponent : Area2D
 
 	private void OnBodyEntered(Node2D body)
 	{
-		if(body is Unit && body.IsInGroup(GlobalGroups.PLAYER_UNIT))
+		GD.Print($"target group: {targetGroup}");
+		GD.Print($"body entered | is body type Unit: {body is Unit}");
+		if(body is Unit && body.IsInGroup(targetGroup))
 		{
 			EmitSignal(SignalName.UnitDetected, body as Unit);
 		}

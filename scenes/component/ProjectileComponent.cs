@@ -6,8 +6,6 @@ public partial class ProjectileComponent : Area2D
 	[Export] public float TravelTime = 0.5f;
 	[Export] public float ArcHeight = 80f;
 
-
-
 	private Unit attackTarget;
 	private Vector2 startPosition;
 	private Vector2 endPosition;

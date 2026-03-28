@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bvlm0hhpo8n3b"]
+
+[ext_resource type="PackedScene" uid="uid://v1la88asfxee" path="res://scenes/component/projectiles/ProjectileComponent.tscn" id="1_4nvwx"]
+[ext_resource type="Texture2D" uid="uid://dc5y2nebmkkhp" path="res://assets/units/player/archer/arrow.png" id="2_cfgpy"]
+
+[node name="Arrow" unique_id=1112973394 instance=ExtResource("1_4nvwx")]
+collision_layer = 8
+collision_mask = 4
+monitorable = false
+
+[node name="Sprite2D" parent="." index="0" unique_id=1241161836]
+rotation = 0.0
+texture = ExtResource("2_cfgpy")
+
+[node name="CollisionShape2D" parent="." index="1" unique_id=768927424]
+position = Vector2(17.5, -0.25)
