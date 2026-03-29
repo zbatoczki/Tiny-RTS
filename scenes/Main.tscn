@@ -8,8 +8,6 @@
 
 [node name="Main" type="Node" unique_id=330848765]
 
-[node name="SelectionManager" parent="." unique_id=588987418 instance=ExtResource("1_0bbpv")]
-
 [node name="Worker" parent="." unique_id=1980137832 instance=ExtResource("6_nxtc6")]
 position = Vector2(128, 192)
 
@@ -20,6 +18,8 @@ position = Vector2(832, 256)
 position = Vector2(256, 192)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1584375090]
+
+[node name="SelectionManager" parent="CanvasLayer" unique_id=588987418 instance=ExtResource("1_0bbpv")]
 
 [node name="Label" type="Label" parent="CanvasLayer" unique_id=2012113887 node_paths=PackedStringArray("worker")]
 offset_left = 128.0

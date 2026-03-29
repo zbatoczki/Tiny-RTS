@@ -29,12 +29,6 @@ public partial class RangedUnit : Unit
 		projectile.Launch(GlobalPosition, stats.AttackDamage, AttackTarget);
 	}
 
-    private void OnUnitDetected(Unit target)
-    {
-		GD.Print($"{Name} detected unit {target.Name}");
-		AttackTarget ??= target;
-		MoveTo(target.GlobalPosition);
-    }
 
 	private void OnFrameChanged()
 	{

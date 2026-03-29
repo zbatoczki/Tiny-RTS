@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cetw1rdssdyyd"]
 
-[ext_resource type="PackedScene" uid="uid://c8oo8lg1yuu6f" path="res://scenes/units/Unit.tscn" id="1_5nh5i"]
+[ext_resource type="PackedScene" uid="uid://c8oo8lg1yuu6f" path="res://scenes/units/shared/Unit.tscn" id="1_5nh5i"]
 [ext_resource type="Texture2D" uid="uid://cmr0d4otg4lgp" path="res://assets/units/enemy/skeleton/skull_attack.png" id="2_6mirp"]
 [ext_resource type="Script" uid="uid://b7orlyrryypfu" path="res://scenes/units/enemy/Skeleton/Skeleton.cs" id="2_8ojr3"]
 [ext_resource type="Resource" uid="uid://mtxgfkstm5np" path="res://resources/unit/enemy/SkeletonWarrior.tres" id="3_5g3pi"]

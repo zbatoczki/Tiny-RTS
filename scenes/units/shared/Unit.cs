@@ -2,6 +2,8 @@ using Godot;
 using Game.Component;
 using Game.Resources.Unit;
 using Game.FSM;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.Marshalling;
 namespace Game.Units;
 
 [GlobalClass]
@@ -149,6 +151,17 @@ public abstract partial class Unit : CharacterBody2D
             animatedSprite2D.Play("idle");
             AttackTarget.TakeDamage(1);  
         }
+    }
+
+#endregion
+
+#region UNIT DETECTION
+
+    protected virtual void OnUnitDetected(Unit target)
+    {
+		GD.Print($"{Name} detected unit {target.Name}");
+		AttackTarget ??= target;
+		MoveTo(target.GlobalPosition);
     }
 
 #endregion

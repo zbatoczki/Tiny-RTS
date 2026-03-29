@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://coowfgss5y3sj"]
 
-[ext_resource type="Script" uid="uid://c46eynodjdj5h" path="res://scenes/units/enemy/harpoon fish/RangedUnit.cs" id="1_pqda4"]
+[ext_resource type="Script" uid="uid://c46eynodjdj5h" path="res://scenes/units/shared/RangedUnit.cs" id="1_pqda4"]
 [ext_resource type="PackedScene" uid="uid://bvlm0hhpo8n3b" path="res://scenes/component/projectiles/Arrow.tscn" id="2_0v0tm"]
 [ext_resource type="Texture2D" uid="uid://bjttc4wi3y28b" path="res://assets/units/player/archer/archer_shoot.png" id="2_ekx0g"]
 [ext_resource type="Texture2D" uid="uid://dmyjqu6vh5utw" path="res://assets/units/player/archer/archer_idle.png" id="3_0v0tm"]

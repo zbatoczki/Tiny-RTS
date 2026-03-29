@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://c8oo8lg1yuu6f"]
+
+[ext_resource type="PackedScene" uid="uid://br8m4v3ew4uej" path="res://scenes/component/finite_state_machine/StateMachine.tscn" id="1_ql2tn"]
+[ext_resource type="PackedScene" uid="uid://cp3r6nh3o4qgb" path="res://scenes/component/finite_state_machine/idle/Idle.tscn" id="2_71y13"]
+[ext_resource type="PackedScene" uid="uid://duuq7m2why15q" path="res://scenes/component/finite_state_machine/move/Move.tscn" id="3_2obbf"]
+[ext_resource type="PackedScene" uid="uid://cvt2y8xw4fqho" path="res://scenes/component/finite_state_machine/attack/Attack.tscn" id="4_tpxfp"]
+[ext_resource type="PackedScene" uid="uid://c2v03up3w3qe" path="res://scenes/component/finite_state_machine/dead/Dead.tscn" id="5_fupo1"]
+[ext_resource type="PackedScene" uid="uid://ldhygolivtsg" path="res://scenes/component/HealthComponent.tscn" id="6_3knaf"]
+[ext_resource type="PackedScene" uid="uid://0qknudhrbrjf" path="res://scenes/component/DamageComponent.tscn" id="7_oa6mx"]
+[ext_resource type="PackedScene" uid="uid://dggm7qkrau8nx" path="res://scenes/component/UnitDetectionComponent.tscn" id="8_mlno1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e0hnn"]
+radius = 6.596229
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e3b5r"]
+resource_local_to_scene = true
+animations = [{
+"frames": [],
+"loop": false,
+"name": &"attack",
+"speed": 10.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"move",
+"speed": 10.0
+}]
+
+[node name="Unit" type="CharacterBody2D" unique_id=1980137832]
+y_sort_enabled = true
+collision_layer = 0
+
+[node name="StateMachine" parent="." unique_id=1526190014 node_paths=PackedStringArray("StartingState") instance=ExtResource("1_ql2tn")]
+StartingState = NodePath("Idle")
+
+[node name="Idle" parent="StateMachine" unique_id=1748082814 node_paths=PackedStringArray("MoveState", "AttackState", "DeadState") instance=ExtResource("2_71y13")]
+MoveState = NodePath("../Move")
+AttackState = NodePath("../Attack")
+DeadState = NodePath("../Dead")
+
+[node name="Move" parent="StateMachine" unique_id=2013647738 node_paths=PackedStringArray("IdleState", "DeadState", "AttackState") instance=ExtResource("3_2obbf")]
+IdleState = NodePath("../Idle")
+DeadState = NodePath("../Dead")
+AttackState = NodePath("../Attack")
+
+[node name="Attack" parent="StateMachine" unique_id=1625647871 node_paths=PackedStringArray("IdleState", "MoveState", "DeadState") instance=ExtResource("4_tpxfp")]
+IdleState = NodePath("../Idle")
+MoveState = NodePath("../Move")
+DeadState = NodePath("../Dead")
+
+[node name="Dead" parent="StateMachine" unique_id=675850164 instance=ExtResource("5_fupo1")]
+
+[node name="HealthComponent" parent="." unique_id=1944934705 instance=ExtResource("6_3knaf")]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(-32, -70)
+scale = Vector2(0.5, 0.5)
+
+[node name="DamageComponent" parent="." unique_id=341774930 instance=ExtResource("7_oa6mx")]
+
+[node name="UnitDetectionComponent" parent="." unique_id=1331689136 instance=ExtResource("8_mlno1")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1633008240]
+scale = Vector2(3, 3)
+shape = SubResource("CircleShape2D_e0hnn")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=290410313]
+sprite_frames = SubResource("SpriteFrames_e3b5r")
+animation = &"attack"
+centered = false

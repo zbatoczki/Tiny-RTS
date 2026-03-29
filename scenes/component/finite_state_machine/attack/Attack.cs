@@ -56,6 +56,7 @@ public partial class Attack : State
 	private void DoAttack()
     {   
 		unit.PlayAnimation(AnimationName);
+		unit.Attack();
         attackTimer.Start();
     }
 	

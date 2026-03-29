@@ -1,11 +1,14 @@
 
+using Game.Component;
+
 namespace Game.Units;
 
-public partial class Worker : Unit
+public partial class Worker : MeleeUnit
 {
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		base._Ready();
+		detectionComponent.Monitoring = false;
 	}
 }
