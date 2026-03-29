@@ -16,20 +16,8 @@ position = Vector2(128, 192)
 [node name="Harpoon Fish" parent="." unique_id=742318684 instance=ExtResource("4_rarhs")]
 position = Vector2(832, 256)
 
-[node name="Harpoon Fish2" parent="." unique_id=1888417448 instance=ExtResource("4_rarhs")]
-position = Vector2(832, 384)
-
-[node name="Harpoon Fish3" parent="." unique_id=1789444511 instance=ExtResource("4_rarhs")]
-position = Vector2(832, 64)
-
 [node name="Archer" parent="." unique_id=1239305745 instance=ExtResource("5_vcsgt")]
 position = Vector2(256, 192)
-
-[node name="Archer2" parent="." unique_id=1063456236 instance=ExtResource("5_vcsgt")]
-position = Vector2(256, 320)
-
-[node name="Archer3" parent="." unique_id=1122536000 instance=ExtResource("5_vcsgt")]
-position = Vector2(256, 64)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1584375090]
 

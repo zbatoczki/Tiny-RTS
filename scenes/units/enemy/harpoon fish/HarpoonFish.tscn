@@ -186,7 +186,12 @@ animations = [{
 collision_layer = 4
 script = ExtResource("2_pi0t5")
 projectileScene = ExtResource("3_f8me8")
+ProjectileLaunchAnimationFrame = 5
 stats = ExtResource("3_ixigs")
+
+[node name="CollisionShape2D" parent="." index="1" unique_id=1633008240]
+position = Vector2(-2, 1)
+scale = Vector2(5, 5)
 
 [node name="AnimatedSprite2D" parent="." index="2" unique_id=290410313]
 sprite_frames = SubResource("SpriteFrames_f8me8")

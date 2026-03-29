@@ -1,10 +1,12 @@
 using Godot;
-using Game.Units;
 using Game.Component;
+
+namespace Game.Units;
 
 public partial class RangedUnit : Unit
 {
 	[Export] private PackedScene projectileScene;
+	[Export] private int ProjectileLaunchAnimationFrame;
 	private UnitDetectionComponent detectionComponent;
 	
 	public override void _Ready()
@@ -14,11 +16,13 @@ public partial class RangedUnit : Unit
 		detectionComponent = GetNode<UnitDetectionComponent>(nameof(UnitDetectionComponent));
 		detectionComponent.UnitDetected += OnUnitDetected;
 		detectionComponent.Scale *= stats.VisionRange;
+
+		animatedSprite2D.FrameChanged += OnFrameChanged;
 	}
 
 	public override void Attack()
 	{
-		if (!IsInstanceValid(AttackTarget)) return;
+		if (!IsInstanceValid(AttackTarget) || animatedSprite2D.Frame != ProjectileLaunchAnimationFrame) return;
 		
 		var projectile = projectileScene.Instantiate<ProjectileComponent>();
 		Owner.CallDeferred(Node.MethodName.AddChild, projectile);
@@ -28,8 +32,13 @@ public partial class RangedUnit : Unit
     private void OnUnitDetected(Unit target)
     {
 		GD.Print($"{Name} detected unit {target.Name}");
-		if(AttackTarget == null)
-        	AttackTarget = target;
+		AttackTarget ??= target;
 		MoveTo(target.GlobalPosition);
     }
+
+	private void OnFrameChanged()
+	{
+		if(animatedSprite2D.Animation == "attack" && animatedSprite2D.Frame == ProjectileLaunchAnimationFrame)
+			Attack();
+	}
 }

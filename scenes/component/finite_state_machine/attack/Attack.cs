@@ -1,4 +1,5 @@
 using Godot;
+using Game.Units;
 
 namespace Game.FSM;
 
@@ -55,7 +56,6 @@ public partial class Attack : State
 	private void DoAttack()
     {   
 		unit.PlayAnimation(AnimationName);
-		unit.Attack();
         attackTimer.Start();
     }
 	

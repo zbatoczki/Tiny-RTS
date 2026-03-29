@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using Game.Groups;
 using Game.InputMap;
 using Game.Units;
@@ -71,6 +72,10 @@ public partial class SelectionManager : Node2D
 				{
 					selectedUnits.ForEach(unit => unit.AttackTarget = n);
 				}
+			}
+			if (results.Count == 0)
+			{
+				selectedUnits.ForEach(unit => unit.AttackTarget = null);
 			}
 			MoveUnitsToPosition(mousePosition);
 		}

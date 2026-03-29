@@ -168,6 +168,7 @@ y_sort_enabled = true
 collision_layer = 2
 script = ExtResource("1_pqda4")
 projectileScene = ExtResource("2_0v0tm")
+ProjectileLaunchAnimationFrame = 5
 stats = ExtResource("3_wn2nt")
 
 [node name="StateMachine" parent="." unique_id=1526190014 node_paths=PackedStringArray("StartingState") instance=ExtResource("4_2q1cq")]
@@ -191,14 +192,15 @@ DeadState = NodePath("../Dead")
 [node name="Dead" parent="StateMachine" unique_id=675850164 instance=ExtResource("8_7lbsj")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1633008240]
-scale = Vector2(3, 3)
+position = Vector2(0, 2)
+scale = Vector2(5, 5)
 shape = SubResource("CircleShape2D_e0hnn")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=290410313]
 sprite_frames = SubResource("SpriteFrames_hi8vn")
-animation = &"idle"
+animation = &"attack"
 autoplay = "idle"
-frame_progress = 0.7534451
+frame = 1
 centered = false
 offset = Vector2(-96, -96)
 

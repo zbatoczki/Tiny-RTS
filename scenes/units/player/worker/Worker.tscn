@@ -153,6 +153,7 @@ animations = [{
 }]
 
 [node name="Worker" unique_id=1980137832 groups=["PlayerUnit"] instance=ExtResource("1_ir85n")]
+z_index = 1
 collision_layer = 2
 script = ExtResource("2_2rd3q")
 stats = ExtResource("3_phryt")
