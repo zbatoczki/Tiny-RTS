@@ -1,10 +1,10 @@
 [gd_resource type="TileSet" format=3 uid="uid://djlecc884ekiu"]
 
-[ext_resource type="Texture2D" uid="uid://dgp3wtajdaciq" path="res://assets/tiles/tilemap_color1.png" id="1_4eb6g"]
-[ext_resource type="Texture2D" uid="uid://chykl510dslax" path="res://assets/tiles/tree.png" id="2_ojpid"]
+[ext_resource type="Texture2D" uid="uid://dgp3wtajdaciq" path="res://assets/tiles/tilemap_color1.png" id="1_ln1vq"]
+[ext_resource type="Texture2D" uid="uid://chykl510dslax" path="res://assets/tiles/tree.png" id="2_rlc62"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ojpid"]
-texture = ExtResource("1_4eb6g")
+texture = ExtResource("1_ln1vq")
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
 0:0/0/terrain_set = 0
@@ -110,7 +110,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-32, -32, 32, -32, 32, 
 agent_radius = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gofkq"]
-texture = ExtResource("2_ojpid")
+texture = ExtResource("2_rlc62")
 texture_region_size = Vector2i(192, 192)
 0:0/animation_columns = 4
 0:0/animation_mode = 1
@@ -120,10 +120,13 @@ texture_region_size = Vector2i(192, 192)
 0:0/animation_frame_3/duration = 0.15
 0:0/0 = 0
 0:0/0/texture_origin = Vector2i(0, 64)
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(6, -156, -37.20279, -92.121185, -61, -41, -51.0849, 12.700653, 51.649353, 12.700653, 60, -32, 39, -93)
 0:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_ojpid")
 
 [resource]
 tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 32
+physics_layer_0/collision_mask = 0
 terrain_set_0/mode = 2
 terrain_set_0/terrain_0/name = "Ground"
 terrain_set_0/terrain_0/color = Color(0.16862746, 1, 0, 1)

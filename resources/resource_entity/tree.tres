@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="GatheringResource" format=3 uid="uid://fc7hnemrakna"]
+
+[ext_resource type="Script" uid="uid://bhmrkrl3fp4tw" path="res://resources/resource_entity/GatheringResource.cs" id="1_tr5l0"]
+
+[resource]
+script = ExtResource("1_tr5l0")
+Name = "Tree"
+metadata/_custom_type_script = "uid://bhmrkrl3fp4tw"

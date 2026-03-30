@@ -18,12 +18,4 @@ public partial class Skeleton : Unit
 		detectionComponent.UnitDetected += OnUnitDetected;
 		detectionComponent.Scale *= stats.VisionRange;
 	}
-
-    private void OnUnitDetected(Unit target)
-    {
-		GD.Print("unit detected");
-        AttackTarget = target;
-		MoveTo(target.GlobalPosition);
-    }
-
 }

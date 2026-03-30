@@ -1,21 +1,22 @@
 [gd_scene format=3 uid="uid://blnqgrr1rchxq"]
 
 [ext_resource type="PackedScene" uid="uid://6bbj1ble4hyb" path="res://scenes/manager/SelectionManager.tscn" id="1_0bbpv"]
-[ext_resource type="PackedScene" uid="uid://dr2a5dv1lisis" path="res://scenes/units/enemy/harpoon fish/HarpoonFish.tscn" id="4_rarhs"]
-[ext_resource type="PackedScene" uid="uid://coowfgss5y3sj" path="res://scenes/units/player/archer/Archer.tscn" id="5_vcsgt"]
+[ext_resource type="TileSet" uid="uid://djlecc884ekiu" path="res://resources/tilemap/tiles.tres" id="1_rarhs"]
+[ext_resource type="PackedScene" uid="uid://bwk4xpurv2t82" path="res://scenes/manager/TreeTilemapLayerManager.tscn" id="1_vcsgt"]
 [ext_resource type="PackedScene" uid="uid://bxo4obx7s5dql" path="res://scenes/units/player/worker/Worker.tscn" id="6_nxtc6"]
 [ext_resource type="Script" uid="uid://dhhqge6ld1u72" path="res://scenes/LabelTest.cs" id="7_nxtc6"]
 
 [node name="Main" type="Node" unique_id=330848765]
 
+[node name="TreeTilemapLayerManager" parent="." unique_id=1407894699 node_paths=PackedStringArray("TreeLayer") instance=ExtResource("1_vcsgt")]
+TreeLayer = NodePath("../TreeTileMapLayer")
+
+[node name="TreeTileMapLayer" type="TileMapLayer" parent="." unique_id=1184793851]
+tile_map_data = PackedByteArray(0, 0, 11, 0, 5, 0, 1, 0, 0, 0, 0, 0, 0, 0)
+tile_set = ExtResource("1_rarhs")
+
 [node name="Worker" parent="." unique_id=1980137832 instance=ExtResource("6_nxtc6")]
-position = Vector2(128, 192)
-
-[node name="Harpoon Fish" parent="." unique_id=742318684 instance=ExtResource("4_rarhs")]
-position = Vector2(832, 256)
-
-[node name="Archer" parent="." unique_id=1239305745 instance=ExtResource("5_vcsgt")]
-position = Vector2(256, 192)
+position = Vector2(448, 320)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1584375090]
 

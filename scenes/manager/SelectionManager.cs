@@ -68,6 +68,7 @@ public partial class SelectionManager : Node2D
 			//TODO handle action based on what is at position and what units are selected
 			foreach(var item in results)
 			{
+				GD.Print(item["collider"].AsGodotObject());
 				if (item["collider"].Obj is Unit n && n.IsInGroup(GlobalGroups.ENEMY_UNIT))
 				{
 					selectedUnits.ForEach(unit => unit.AttackTarget = n);

@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bwk4xpurv2t82"]
+
+[ext_resource type="Script" uid="uid://b7ti4x8efvo3i" path="res://scenes/manager/TreeTilemapLayerManager.cs" id="1_ird2n"]
+
+[node name="TreeTilemapLayerManager" type="Node" unique_id=1407894699]
+script = ExtResource("1_ird2n")
