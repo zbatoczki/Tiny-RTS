@@ -12,5 +12,5 @@ public partial class UnitStats : Resource
     [Export] public float MovementSpeed { get; set; } = 150f;
     [Export] public float AttackRange { get; set; } = 1f;
     [Export] public float VisionRange { get; set; } = 1f;
-
+    [Export] public float GatherRate {get; set; } = 1f;
 }

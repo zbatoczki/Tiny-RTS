@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://ca775ksc530rm" path="res://assets/units/player/pawn/pawn_idle.png" id="2_nowm4"]
 [ext_resource type="Texture2D" uid="uid://dsfgxp5fsj28e" path="res://assets/units/player/pawn/pawn_run.png" id="3_3j8ay"]
 [ext_resource type="Resource" uid="uid://1t4poprufd14" path="res://resources/unit/player/Worker.tres" id="3_phryt"]
+[ext_resource type="PackedScene" uid="uid://bofm86qfpkq7u" path="res://scenes/component/finite_state_machine/gather/Gather.tscn" id="4_kgdwa"]
+[ext_resource type="Texture2D" uid="uid://dxohd707fnn56" path="res://assets/units/player/pawn/pawn_swing_axe.png" id="6_fkppf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b3epq"]
 atlas = ExtResource("2_3j8ay")
@@ -22,6 +24,30 @@ region = Rect2(384, 0, 192, 192)
 [sub_resource type="AtlasTexture" id="AtlasTexture_o8sua"]
 atlas = ExtResource("2_3j8ay")
 region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2rd3q"]
+atlas = ExtResource("6_fkppf")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_phryt"]
+atlas = ExtResource("6_fkppf")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eadu0"]
+atlas = ExtResource("6_fkppf")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h1fsp"]
+atlas = ExtResource("6_fkppf")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n78tb"]
+atlas = ExtResource("6_fkppf")
+region = Rect2(768, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i3cyw"]
+atlas = ExtResource("6_fkppf")
+region = Rect2(960, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nowm4"]
 atlas = ExtResource("2_nowm4")
@@ -79,7 +105,7 @@ region = Rect2(768, 0, 192, 192)
 atlas = ExtResource("3_3j8ay")
 region = Rect2(960, 0, 192, 192)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_ueidr"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_t8116"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -97,6 +123,29 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2rd3q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_phryt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eadu0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h1fsp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n78tb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i3cyw")
+}],
+"loop": true,
+"name": &"gather_wood",
 "speed": 10.0
 }, {
 "frames": [{
@@ -152,11 +201,19 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_2d8m4"]
+
 [node name="Worker" unique_id=1980137832 groups=["PlayerUnit"] instance=ExtResource("1_ir85n")]
 z_index = 1
 collision_layer = 2
 script = ExtResource("2_2rd3q")
+GatheringRange = 5.0
 stats = ExtResource("3_phryt")
+
+[node name="Gather" parent="StateMachine" parent_id_path=PackedInt32Array(1526190014) index="4" unique_id=1583901294 node_paths=PackedStringArray("IdleState", "MoveState", "DeadState") instance=ExtResource("4_kgdwa")]
+IdleState = NodePath("../Idle")
+MoveState = NodePath("../Move")
+DeadState = NodePath("../Dead")
 
 [node name="DamageComponent" parent="." index="2" unique_id=341774930]
 position = Vector2(0, -6)
@@ -164,8 +221,6 @@ collision_mask = 4
 targetGroup = &"EnemyUnit"
 
 [node name="UnitDetectionComponent" parent="." index="3" unique_id=1331689136]
-visible = false
-monitoring = false
 targetGroup = &"EnemyUnit"
 
 [node name="CollisionShape2D" parent="." index="4" unique_id=1633008240]
@@ -174,6 +229,20 @@ scale = Vector2(4.415, 4.415)
 [node name="AnimatedSprite2D" parent="." index="5" unique_id=290410313]
 y_sort_enabled = true
 position = Vector2(2, 0)
-sprite_frames = SubResource("SpriteFrames_ueidr")
+sprite_frames = SubResource("SpriteFrames_t8116")
+animation = &"gather_wood"
 autoplay = "idle"
+frame = 5
+frame_progress = 0.9733357
 offset = Vector2(-96, -110)
+
+[node name="ResourceDetector" type="Area2D" parent="." index="6" unique_id=844198648]
+collision_layer = 0
+collision_mask = 32
+input_pickable = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ResourceDetector" index="0" unique_id=772626562]
+scale = Vector2(3, 3)
+shape = SubResource("CircleShape2D_2d8m4")
+debug_color = Color(0, 0.6, 0, 0.41960785)

@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Game.Groups;
 using Game.InputMap;
+using Game.Resources;
+using Game.Resources.Gathering;
 using Game.Units;
 using Godot;
 using Godot.Collections;
@@ -10,6 +12,9 @@ namespace Game.Test;
 
 public partial class SelectionManager : Node2D
 {
+	[Export] TileMapLayer treeTileMapLayer;
+	[Export] TreeTileMapLayerManager treeTileMapLayerManager;
+
 	private Vector2 startPosition;
 	private List<Unit> selectedUnits = [];
 	private ReferenceRect selectionBox;
@@ -68,10 +73,23 @@ public partial class SelectionManager : Node2D
 			//TODO handle action based on what is at position and what units are selected
 			foreach(var item in results)
 			{
-				GD.Print(item["collider"].AsGodotObject());
 				if (item["collider"].Obj is Unit n && n.IsInGroup(GlobalGroups.ENEMY_UNIT))
 				{
 					selectedUnits.ForEach(unit => unit.AttackTarget = n);
+				}
+				else if (item["collider"].Obj is TileMapLayer tml && tml == treeTileMapLayer)
+				{
+					Vector2 localPosition = treeTileMapLayer.ToLocal(mousePosition);
+					Vector2I cellPosition = treeTileMapLayer.LocalToMap(localPosition);
+					GatheringResource treeData = treeTileMapLayerManager.GetTreeAt(cellPosition);
+					if(treeData != null && !treeData.IsDepleted)
+					{
+						GD.Print($"Clicked tree at cell {cellPosition}, amount of wood: {treeData.CurrentCharges}");
+					}
+					selectedUnits.ForEach(unit =>
+					{
+						(unit as Worker).GatheringResourceTarget = treeData;
+					});
 				}
 			}
 			if (results.Count == 0)

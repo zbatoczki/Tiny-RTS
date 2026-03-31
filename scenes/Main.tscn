@@ -12,15 +12,19 @@
 TreeLayer = NodePath("../TreeTileMapLayer")
 
 [node name="TreeTileMapLayer" type="TileMapLayer" parent="." unique_id=1184793851]
-tile_map_data = PackedByteArray(0, 0, 11, 0, 5, 0, 1, 0, 0, 0, 0, 0, 0, 0)
+tile_map_data = PackedByteArray(0, 0, 11, 0, 5, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 3, 0, 7, 0, 1, 0, 0, 0, 0, 0, 0, 0, 17, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 16, 0, 7, 0, 1, 0, 0, 0, 0, 0, 0, 0)
 tile_set = ExtResource("1_rarhs")
 
-[node name="Worker" parent="." unique_id=1980137832 instance=ExtResource("6_nxtc6")]
+[node name="Worker" parent="." unique_id=1980137832 node_paths=PackedStringArray("treeManager") instance=ExtResource("6_nxtc6")]
 position = Vector2(448, 320)
+treeManager = NodePath("../TreeTilemapLayerManager")
+GatheringRange = 1.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1584375090]
 
-[node name="SelectionManager" parent="CanvasLayer" unique_id=588987418 instance=ExtResource("1_0bbpv")]
+[node name="SelectionManager" parent="CanvasLayer" unique_id=588987418 node_paths=PackedStringArray("treeTileMapLayer", "treeTileMapLayerManager") instance=ExtResource("1_0bbpv")]
+treeTileMapLayer = NodePath("../../TreeTileMapLayer")
+treeTileMapLayerManager = NodePath("../../TreeTilemapLayerManager")
 
 [node name="Label" type="Label" parent="CanvasLayer" unique_id=2012113887 node_paths=PackedStringArray("worker")]
 offset_left = 128.0

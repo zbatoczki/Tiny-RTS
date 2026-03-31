@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bofm86qfpkq7u"]
+
+[ext_resource type="Script" uid="uid://v5ywyf8esr2m" path="res://scenes/component/finite_state_machine/gather/Gather.cs" id="1_kjn0v"]
+
+[node name="Gather" type="Node" unique_id=1583901294]
+script = ExtResource("1_kjn0v")

@@ -100,7 +100,7 @@ public abstract partial class Unit : CharacterBody2D
 
 #region MOVEMENT
 
-    public void MoveTo(Vector2 worldTarget)
+    public virtual void MoveTo(Vector2 worldTarget)
     {
         targetPosition = worldTarget;
         stateMachine.ForceToState<Move>();

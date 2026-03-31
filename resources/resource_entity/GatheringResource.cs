@@ -24,9 +24,9 @@ public partial class GatheringResource : Resource
     /// </summary>
     /// <param name="amount">Amount to subtract from the current charges</param>
     /// <returns></returns>
-    public int Gather(int amount)
+    public (string, int) Gather(int amount)
     {
-        if(IsDepleted) return 0;
+        if(IsDepleted) return (Name, 0);
 
         int gathered = Mathf.Min(amount, CurrentCharges);
         CurrentCharges -= amount;
@@ -38,7 +38,7 @@ public partial class GatheringResource : Resource
             EmitSignal(SignalName.ResourceDepleted, CellCorrdinates);
         }
 
-        return gathered;
+        return (Name, gathered);
     }
 
 }
