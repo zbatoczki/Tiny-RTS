@@ -2,8 +2,7 @@ using Godot;
 using Game.Component;
 using Game.Resources.Unit;
 using Game.FSM;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.Marshalling;
+using Game.Resources.Gathering;
 namespace Game.Units;
 
 [GlobalClass]
@@ -19,6 +18,7 @@ public abstract partial class Unit : CharacterBody2D
     public AnimatedSprite2D animatedSprite2D;
     public DamageComponent damageComponent;
     public Unit AttackTarget {get; set;}
+    public GatheringResource GatheringResourceTarget {get; set;}
     
     public StateMachine stateMachine;
     private HealthComponent healthComponent;

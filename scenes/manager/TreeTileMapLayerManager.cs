@@ -23,6 +23,7 @@ public partial class TreeTileMapLayerManager : Node
 		{
 			var data = new GatheringResource
 			{
+				Name = "wood",
 				CellCorrdinates = cell	
 			};
 			data.ResourceDepleted += OnTreeDepleted;

@@ -12,9 +12,9 @@ public partial class GatheringResource : Resource
     public delegate void ResourceGatheredEventHandler(Vector2I cellCoordinates, int amount);
 
     [Export] public Vector2I CellCorrdinates {get; set;}
-    [Export] public string Name {get; private set;}
+    [Export] public string Name {get; set;}
     [Export] public int MaxCharges {get; set;} = 100;
-    [Export] public int CurrentCharges {get; set;} = 100;
+    [Export] public int CurrentCharges {get; set;} = 3;
     [Export] public bool IsBeingGathered {get; set;} = false;
 
     public bool IsDepleted => CurrentCharges <= 0;
@@ -26,10 +26,14 @@ public partial class GatheringResource : Resource
     /// <returns></returns>
     public (string, int) Gather(int amount)
     {
-        if(IsDepleted) return (Name, 0);
+        if(IsDepleted) 
+        {
+            EmitSignal(SignalName.ResourceDepleted, CellCorrdinates);
+            return (Name, 0);
+        }
 
         int gathered = Mathf.Min(amount, CurrentCharges);
-        CurrentCharges -= amount;
+        CurrentCharges -= gathered;
 
         EmitSignal(SignalName.ResourceGathered, CellCorrdinates, gathered);
 

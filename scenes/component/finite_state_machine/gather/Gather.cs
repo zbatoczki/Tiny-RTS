@@ -1,7 +1,7 @@
-using Game.FSM;
 using Game.Units;
 using Godot;
-using System;
+
+namespace Game.FSM;
 
 public partial class Gather : State
 {
@@ -27,6 +27,7 @@ public partial class Gather : State
 		unit.Velocity = Vector2.Zero;
 
 		worker = unit as Worker;
+		GD.Print(worker);
 		StringName gatheringAnimation = $"gather_{worker.GatheringResourceTarget.Name.ToLower()}";
 		worker.animatedSprite2D.Play(gatheringAnimation);
 
@@ -43,8 +44,21 @@ public partial class Gather : State
 
 	private void GatherResource()
     {
+		if (worker.GatheringResourceTarget.IsDepleted)
+		{
+			worker.stateMachine.ForceToState<Idle>();
+			return;
+		}
+
 		(string resource, int amount) = worker.GatheringResourceTarget.Gather(1);
 		worker.CurrentInventory[resource] += amount;
+		GD.Print($"Current worker wood Inventory: {worker.CurrentInventory["wood"]}|Tree charges left: {worker.GatheringResourceTarget.CurrentCharges}");
+		if (worker.GatheringResourceTarget.IsDepleted)
+		{
+			worker.stateMachine.ForceToState<Idle>();
+			return;
+		}
+		
 		gatherTimer.Start();
     }
 

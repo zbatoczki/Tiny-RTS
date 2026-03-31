@@ -1,9 +1,7 @@
-
-using System;
 using System.Collections.Generic;
 using Game.Resources;
-using Game.Resources.Gathering;
 using Godot;
+using Game.FSM;
 
 namespace Game.Units;
 
@@ -14,13 +12,13 @@ public partial class Worker : MeleeUnit
 
 	public Dictionary<string, int> CurrentInventory = new()
 	{
-		{"Wood", 0},
-		{"Gold", 0},
-		{"Food", 0}
+		{"wood", 0},
+		{"gold", 0},
+		{"food", 0}
 	};
 
 	private Area2D resourceDetector;
-	public GatheringResource GatheringResourceTarget {get; set;}
+	
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()

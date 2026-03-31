@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using Game.Groups;
 using Game.InputMap;
@@ -84,12 +85,18 @@ public partial class SelectionManager : Node2D
 					GatheringResource treeData = treeTileMapLayerManager.GetTreeAt(cellPosition);
 					if(treeData != null && !treeData.IsDepleted)
 					{
+						GD.Print(treeData);
 						GD.Print($"Clicked tree at cell {cellPosition}, amount of wood: {treeData.CurrentCharges}");
+						selectedUnits.ForEach(unit =>
+						{
+							unit.GatheringResourceTarget = treeData;
+							GD.Print($"unit tree target: {treeData.Name}");
+						});
 					}
-					selectedUnits.ForEach(unit =>
+					else
 					{
-						(unit as Worker).GatheringResourceTarget = treeData;
-					});
+						GD.Print("No tree found");
+					}
 				}
 			}
 			if (results.Count == 0)

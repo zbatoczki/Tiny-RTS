@@ -17,6 +17,7 @@ tile_set = ExtResource("1_rarhs")
 
 [node name="Worker" parent="." unique_id=1980137832 node_paths=PackedStringArray("treeManager") instance=ExtResource("6_nxtc6")]
 position = Vector2(448, 320)
+collision_mask = 0
 treeManager = NodePath("../TreeTilemapLayerManager")
 GatheringRange = 1.0
 
