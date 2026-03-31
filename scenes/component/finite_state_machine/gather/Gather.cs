@@ -21,6 +21,14 @@ public partial class Gather : State
 		AddChild(gatherTimer);
 	}
 
+    public override State UpdateFrame(double delta)
+    {
+        if(worker.GatheringResourceTarget == null) return IdleState;
+
+		return null;
+    }
+
+
     public override void Enter()
 	{
 		unit.targetPosition = Vector2.Zero;
@@ -46,7 +54,7 @@ public partial class Gather : State
     {
 		if (worker.GatheringResourceTarget.IsDepleted)
 		{
-			worker.stateMachine.ForceToState<Idle>();
+			worker.GatheringResourceTarget = null;
 			return;
 		}
 
@@ -55,7 +63,7 @@ public partial class Gather : State
 		GD.Print($"Current worker wood Inventory: {worker.CurrentInventory["wood"]}|Tree charges left: {worker.GatheringResourceTarget.CurrentCharges}");
 		if (worker.GatheringResourceTarget.IsDepleted)
 		{
-			worker.stateMachine.ForceToState<Idle>();
+			worker.GatheringResourceTarget = null;
 			return;
 		}
 		

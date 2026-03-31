@@ -6,7 +6,9 @@ using Godot;
 namespace Game.Resources;
 
 public partial class TreeTileMapLayerManager : Node
-{
+{	
+	private readonly Vector2I DEPLETED_TREE = new(0,2);
+
 	[Export] public TileMapLayer TreeLayer {get; set;}
 
 	private Dictionary<Vector2I, GatheringResource> treeResources = [];
@@ -41,7 +43,7 @@ public partial class TreeTileMapLayerManager : Node
     private void OnTreeDepleted(Vector2I cellCoordinates)
     {
         GD.Print($"Tree depleted at {cellCoordinates}");
-		TreeLayer.EraseCell(cellCoordinates);
+		TreeLayer.SetCell(cellCoordinates, 1, DEPLETED_TREE);
 		treeResources.Remove(cellCoordinates);
     }
 

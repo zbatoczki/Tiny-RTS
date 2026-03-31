@@ -116,6 +116,13 @@ texture_region_size = Vector2i(192, 192)
 0:0/0/texture_origin = Vector2i(0, 64)
 0:0/0/terrain_set = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(43.746704, -64.63226, 32, 19, -32, 19, -42.053314, -64.06778)
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 64)
+0:1/animation_columns = 2
+0:1/animation_frame_0/duration = 0.05
+0:1/animation_frame_1/duration = 0.05
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 64)
 
 [resource]
 tile_size = Vector2i(64, 64)
