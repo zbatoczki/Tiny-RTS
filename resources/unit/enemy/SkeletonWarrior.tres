@@ -5,5 +5,6 @@
 [resource]
 script = ExtResource("1_her1o")
 Name = "Skeleton Warrior"
-Health = 1.0
+AttackRange = 5.0
+VisionRange = 15.0
 metadata/_custom_type_script = "uid://dllaeorx6nqxd"

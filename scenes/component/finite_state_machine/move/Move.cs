@@ -1,3 +1,5 @@
+using System.Linq;
+using Game.Units;
 using Godot;
 
 namespace Game.FSM;
@@ -14,7 +16,7 @@ public partial class Move : State
 
 	public override void Enter()
     {
-        AnimationName = "move";
+        SetAnimation();
         unit.damageComponent.Monitoring = unit.AttackTarget != null;
         base.Enter();
     }
@@ -37,4 +39,16 @@ public partial class Move : State
 
         return null;
 	}
+
+    private void SetAnimation()
+	{
+		AnimationName = "move";
+		if(unit is Worker worker)
+		{
+			var mostCarried = worker.CurrentInventory.MaxBy(entry => entry.Value);
+			if(mostCarried.Value > 0)
+				AnimationName += $"_{mostCarried.Key}";
+		}
+	}
+
 }

@@ -6,7 +6,7 @@
 [node name="Arrow" unique_id=1112973394 instance=ExtResource("1_4nvwx")]
 collision_layer = 8
 collision_mask = 4
-monitorable = false
+UseArc = true
 
 [node name="Sprite2D" parent="." index="0" unique_id=1241161836]
 rotation = 0.0

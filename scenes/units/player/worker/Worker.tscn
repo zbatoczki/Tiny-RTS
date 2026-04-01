@@ -8,6 +8,8 @@
 [ext_resource type="Resource" uid="uid://1t4poprufd14" path="res://resources/unit/player/Worker.tres" id="3_phryt"]
 [ext_resource type="PackedScene" uid="uid://bofm86qfpkq7u" path="res://scenes/component/finite_state_machine/gather/Gather.tscn" id="4_kgdwa"]
 [ext_resource type="Texture2D" uid="uid://dxohd707fnn56" path="res://assets/units/player/pawn/pawn_swing_axe.png" id="6_fkppf"]
+[ext_resource type="Texture2D" uid="uid://bbnhi377lqtqj" path="res://assets/units/player/pawn/pawn_idle_wood.png" id="8_fkppf"]
+[ext_resource type="Texture2D" uid="uid://c4rw6ppti7f3d" path="res://assets/units/player/pawn/pawn_run_wood.png" id="10_2rd3q"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b3epq"]
 atlas = ExtResource("2_3j8ay")
@@ -81,6 +83,38 @@ region = Rect2(1152, 0, 192, 192)
 atlas = ExtResource("2_nowm4")
 region = Rect2(1344, 0, 192, 192)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_derj2"]
+atlas = ExtResource("8_fkppf")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oxa7x"]
+atlas = ExtResource("8_fkppf")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rorqd"]
+atlas = ExtResource("8_fkppf")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_655xy"]
+atlas = ExtResource("8_fkppf")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_55hq0"]
+atlas = ExtResource("8_fkppf")
+region = Rect2(768, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_urj45"]
+atlas = ExtResource("8_fkppf")
+region = Rect2(960, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b0t4p"]
+atlas = ExtResource("8_fkppf")
+region = Rect2(1152, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a4jke"]
+atlas = ExtResource("8_fkppf")
+region = Rect2(1344, 0, 192, 192)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_0hpvp"]
 atlas = ExtResource("3_3j8ay")
 region = Rect2(0, 0, 192, 192)
@@ -103,6 +137,30 @@ region = Rect2(768, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ftre6"]
 atlas = ExtResource("3_3j8ay")
+region = Rect2(960, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mo6cs"]
+atlas = ExtResource("10_2rd3q")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1cqfd"]
+atlas = ExtResource("10_2rd3q")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_btscv"]
+atlas = ExtResource("10_2rd3q")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l67sv"]
+atlas = ExtResource("10_2rd3q")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sf3r1"]
+atlas = ExtResource("10_2rd3q")
+region = Rect2(768, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2xcmt"]
+atlas = ExtResource("10_2rd3q")
 region = Rect2(960, 0, 192, 192)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_kgdwa"]
@@ -179,6 +237,35 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_derj2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oxa7x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rorqd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_655xy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_55hq0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_urj45")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0t4p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a4jke")
+}],
+"loop": true,
+"name": &"idle_wood",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_0hpvp")
 }, {
 "duration": 1.0,
@@ -198,6 +285,29 @@ animations = [{
 }],
 "loop": true,
 "name": &"move",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mo6cs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1cqfd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_btscv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l67sv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sf3r1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2xcmt")
+}],
+"loop": true,
+"name": &"move_wood",
 "speed": 10.0
 }]
 
@@ -230,10 +340,8 @@ scale = Vector2(4.415, 4.415)
 y_sort_enabled = true
 position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_kgdwa")
-animation = &"gather_wood"
+animation = &"move_wood"
 autoplay = "idle"
-frame = 5
-frame_progress = 0.9733357
 offset = Vector2(-96, -110)
 
 [node name="ResourceDetector" type="Area2D" parent="." index="6" unique_id=844198648]

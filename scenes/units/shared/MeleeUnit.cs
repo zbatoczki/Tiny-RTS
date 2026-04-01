@@ -1,4 +1,3 @@
-using Godot;
 using Game.Component;
 
 namespace Game.Units;

@@ -1,21 +1,9 @@
-using System;
-using Game.Component;
-using Game.Units;
-using Godot;
-
 namespace Game.Units;
 
-public partial class Skeleton : Unit
+public partial class Skeleton : MeleeUnit
 {
-	private UnitDetectionComponent detectionComponent;
-	
-
 	public override void _Ready()
 	{
 		base._Ready();
-
-		detectionComponent = GetNode<UnitDetectionComponent>(nameof(UnitDetectionComponent));
-		detectionComponent.UnitDetected += OnUnitDetected;
-		detectionComponent.Scale *= stats.VisionRange;
 	}
 }

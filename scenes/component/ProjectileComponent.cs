@@ -5,6 +5,7 @@ public partial class ProjectileComponent : Area2D
 {
 	[Export] public float TravelTime = 0.5f;
 	[Export] public float ArcHeight = 80f;
+	[Export] private bool UseArc = false;
 
 	private Unit attackTarget;
 	private Vector2 startPosition;
@@ -24,7 +25,7 @@ public partial class ProjectileComponent : Area2D
 		Vector2 previousPosition = GlobalPosition;
 		Vector2 linearPosition = startPosition.Lerp(endPosition, t);
 
-		float arcOffset = -ArcHeight * Mathf.Sin(t * Mathf.Pi);
+		float arcOffset = UseArc ? -ArcHeight * Mathf.Sin(t * Mathf.Pi) : 0f;
 		GlobalPosition = linearPosition + new Vector2(0f, arcOffset);
 
 		Vector2 travelDirection = GlobalPosition - previousPosition;

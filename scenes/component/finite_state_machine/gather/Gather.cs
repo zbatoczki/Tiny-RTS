@@ -33,14 +33,13 @@ public partial class Gather : State
 	{
 		unit.targetPosition = Vector2.Zero;
 		unit.Velocity = Vector2.Zero;
-
 		worker = unit as Worker;
-		GD.Print(worker);
-		StringName gatheringAnimation = $"gather_{worker.GatheringResourceTarget.Name.ToLower()}";
+		
+		if(worker.GatheringResourceTarget == null) return;
+
+		StringName gatheringAnimation = $"gather_{worker.GatheringResourceTarget.Name}";
 		worker.animatedSprite2D.Play(gatheringAnimation);
-
 		gatherTimer.WaitTime = unit.stats.GatherRate;
-
 		GatherResource();
 	}
 
