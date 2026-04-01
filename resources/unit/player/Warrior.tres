@@ -6,7 +6,6 @@
 script = ExtResource("1_5b3lj")
 Name = "Skeleton Warrior"
 MaxHealth = 20.0
-AttackSpeed = 2.0
 AttackDamage = 2.0
 AttackRange = 5.0
 VisionRange = 15.0

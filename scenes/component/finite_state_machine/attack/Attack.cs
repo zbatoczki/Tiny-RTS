@@ -24,6 +24,7 @@ public partial class Attack : State
 		unit.targetPosition = Vector2.Zero;
 		unit.Velocity = Vector2.Zero;
 		AnimationName = "attack";
+		attackTimer.WaitTime /= unit.stats.AttackSpeed;
 		unit.animatedSprite2D.AnimationFinished += OnAnimationFinished;
 		DoAttack();
 	}
