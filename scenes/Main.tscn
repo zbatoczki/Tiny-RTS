@@ -4,7 +4,7 @@
 [ext_resource type="TileSet" uid="uid://djlecc884ekiu" path="res://resources/tilemap/tiles.tres" id="1_rarhs"]
 [ext_resource type="PackedScene" uid="uid://bwk4xpurv2t82" path="res://scenes/manager/TreeTilemapLayerManager.tscn" id="1_vcsgt"]
 [ext_resource type="PackedScene" uid="uid://coowfgss5y3sj" path="res://scenes/units/player/archer/Archer.tscn" id="4_nxtc6"]
-[ext_resource type="PackedScene" uid="uid://cetw1rdssdyyd" path="res://scenes/units/enemy/Skeleton/Skeleton.tscn" id="5_jlsqs"]
+[ext_resource type="PackedScene" uid="uid://c7khacr0bxvup" path="res://scenes/units/player/Warrior/Warrior.tscn" id="6_jlsqs"]
 [ext_resource type="PackedScene" uid="uid://bxo4obx7s5dql" path="res://scenes/units/player/worker/Worker.tscn" id="6_nxtc6"]
 [ext_resource type="Script" uid="uid://dhhqge6ld1u72" path="res://scenes/LabelTest.cs" id="7_nxtc6"]
 [ext_resource type="PackedScene" uid="uid://dr2a5dv1lisis" path="res://scenes/units/enemy/harpoon fish/HarpoonFish.tscn" id="8_jlsqs"]
@@ -33,8 +33,8 @@ position = Vector2(256, 128)
 y_sort_enabled = false
 position = Vector2(1024, 256)
 
-[node name="Skeleton" parent="." unique_id=489706128 instance=ExtResource("5_jlsqs")]
-position = Vector2(960, 128)
+[node name="Warrior" parent="." unique_id=1842595345 instance=ExtResource("6_jlsqs")]
+position = Vector2(128, 256)
 
 [node name="TreeTileMapLayer" type="TileMapLayer" parent="." unique_id=1184793851]
 tile_map_data = PackedByteArray("AAALAAUAAQAAAAAAAAAJAAgAAQAAAAAAAAAEAAYAAQAAAAAAAAA=")

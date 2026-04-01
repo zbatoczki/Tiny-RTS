@@ -1,95 +1,97 @@
-[gd_scene format=3 uid="uid://cetw1rdssdyyd"]
+[gd_scene format=3 uid="uid://h3uqbq6gpnda"]
 
-[ext_resource type="PackedScene" uid="uid://h3uqbq6gpnda" path="res://scenes/units/shared/MeleeUnit.tscn" id="1_5nh5i"]
-[ext_resource type="Texture2D" uid="uid://cmr0d4otg4lgp" path="res://assets/units/enemy/skeleton/skull_attack.png" id="2_6mirp"]
-[ext_resource type="Texture2D" uid="uid://dw1qsvwteh6ij" path="res://assets/units/enemy/skeleton/skull_idle.png" id="3_itahj"]
-[ext_resource type="Texture2D" uid="uid://drr0ctr8d4kf0" path="res://assets/units/enemy/skeleton/skull_run.png" id="4_pwwfl"]
+[ext_resource type="PackedScene" uid="uid://c8oo8lg1yuu6f" path="res://scenes/units/shared/Unit.tscn" id="1_te3xq"]
+[ext_resource type="Script" uid="uid://b7orlyrryypfu" path="res://scenes/units/enemy/Skeleton/Skeleton.cs" id="2_3s3x3"]
+[ext_resource type="Resource" uid="uid://mtxgfkstm5np" path="res://resources/unit/enemy/SkeletonWarrior.tres" id="3_n7mw2"]
+[ext_resource type="Texture2D" uid="uid://cmr0d4otg4lgp" path="res://assets/units/enemy/skeleton/skull_attack.png" id="4_sauwk"]
+[ext_resource type="Texture2D" uid="uid://dw1qsvwteh6ij" path="res://assets/units/enemy/skeleton/skull_idle.png" id="5_ksf4x"]
+[ext_resource type="Texture2D" uid="uid://drr0ctr8d4kf0" path="res://assets/units/enemy/skeleton/skull_run.png" id="6_k050f"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6y8hu"]
-atlas = ExtResource("2_6mirp")
+atlas = ExtResource("4_sauwk")
 region = Rect2(0, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o3fwb"]
-atlas = ExtResource("2_6mirp")
+atlas = ExtResource("4_sauwk")
 region = Rect2(192, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jas41"]
-atlas = ExtResource("2_6mirp")
+atlas = ExtResource("4_sauwk")
 region = Rect2(384, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8ojr3"]
-atlas = ExtResource("2_6mirp")
+atlas = ExtResource("4_sauwk")
 region = Rect2(576, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5g3pi"]
-atlas = ExtResource("2_6mirp")
+atlas = ExtResource("4_sauwk")
 region = Rect2(768, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jghrl"]
-atlas = ExtResource("2_6mirp")
+atlas = ExtResource("4_sauwk")
 region = Rect2(960, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t7sa5"]
-atlas = ExtResource("2_6mirp")
+atlas = ExtResource("4_sauwk")
 region = Rect2(1152, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3arln"]
-atlas = ExtResource("3_itahj")
+atlas = ExtResource("5_ksf4x")
 region = Rect2(0, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_arfu7"]
-atlas = ExtResource("3_itahj")
+atlas = ExtResource("5_ksf4x")
 region = Rect2(192, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xgqqe"]
-atlas = ExtResource("3_itahj")
+atlas = ExtResource("5_ksf4x")
 region = Rect2(384, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4hnmf"]
-atlas = ExtResource("3_itahj")
+atlas = ExtResource("5_ksf4x")
 region = Rect2(576, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hbnax"]
-atlas = ExtResource("3_itahj")
+atlas = ExtResource("5_ksf4x")
 region = Rect2(768, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dmo70"]
-atlas = ExtResource("3_itahj")
+atlas = ExtResource("5_ksf4x")
 region = Rect2(960, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nryhg"]
-atlas = ExtResource("3_itahj")
+atlas = ExtResource("5_ksf4x")
 region = Rect2(1152, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_56nij"]
-atlas = ExtResource("3_itahj")
+atlas = ExtResource("5_ksf4x")
 region = Rect2(1344, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_te741"]
-atlas = ExtResource("4_pwwfl")
+atlas = ExtResource("6_k050f")
 region = Rect2(0, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_h5jil"]
-atlas = ExtResource("4_pwwfl")
+atlas = ExtResource("6_k050f")
 region = Rect2(192, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0r7s4"]
-atlas = ExtResource("4_pwwfl")
+atlas = ExtResource("6_k050f")
 region = Rect2(384, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sc8dp"]
-atlas = ExtResource("4_pwwfl")
+atlas = ExtResource("6_k050f")
 region = Rect2(576, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xl38h"]
-atlas = ExtResource("4_pwwfl")
+atlas = ExtResource("6_k050f")
 region = Rect2(768, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7fb31"]
-atlas = ExtResource("4_pwwfl")
+atlas = ExtResource("6_k050f")
 region = Rect2(960, 0, 192, 192)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_6mirp"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_itahj"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -171,9 +173,25 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="Skeleton" unique_id=1980137832 groups=["EnemyUnit"] instance=ExtResource("1_5nh5i")]
+[node name="MeleeUnit" unique_id=1980137832 instance=ExtResource("1_te3xq")]
+collision_layer = 4
+script = ExtResource("2_3s3x3")
+stats = ExtResource("3_n7mw2")
+
+[node name="DamageComponent" parent="." index="2" unique_id=341774930]
+collision_mask = 2
+targetGroup = &"PlayerUnit"
+
+[node name="UnitDetectionComponent" parent="." index="3" unique_id=1331689136]
+collision_mask = 2
+targetGroup = &"PlayerUnit"
+
+[node name="CollisionShape2D" parent="." index="4" unique_id=1633008240]
+scale = Vector2(4, 4)
 
 [node name="AnimatedSprite2D" parent="." index="5" unique_id=290410313]
-sprite_frames = SubResource("SpriteFrames_6mirp")
+sprite_frames = SubResource("SpriteFrames_itahj")
+autoplay = "idle"
+offset = Vector2(-96, -96)
 
 [editable path="DamageComponent"]
