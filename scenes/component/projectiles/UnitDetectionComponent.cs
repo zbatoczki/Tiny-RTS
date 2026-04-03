@@ -21,9 +21,9 @@ public partial class UnitDetectionComponent : Area2D
 	{
 		GD.Print($"target group: {targetGroup}");
 		GD.Print($"body entered | is body type Unit: {body is Unit}");
-		if(body is Unit && body.IsInGroup(targetGroup))
+		if(body is Unit unit && unit.IsInGroup(targetGroup))
 		{
-			EmitSignal(SignalName.UnitDetected, body as Unit);
+			EmitSignal(SignalName.UnitDetected, unit);
 		}
 	}
 }

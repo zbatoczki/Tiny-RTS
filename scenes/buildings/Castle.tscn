@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dggm7qkrau8nx" path="res://scenes/component/UnitDetectionComponent.tscn" id="3_l6pne"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lg0r4"]
-size = Vector2(274, 163)
+size = Vector2(258.115, 149.72)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8iw5o"]
 size = Vector2(274, 163)
@@ -15,7 +15,7 @@ script = ExtResource("1_xrw3n")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=2146834767]
 position = Vector2(0, -64)
-collision_mask = 2
+collision_mask = 6
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" unique_id=914712534]
 position = Vector2(160, 86)
@@ -29,7 +29,6 @@ offset = Vector2(-160, -224)
 
 [node name="UnitDetectionComponent" parent="." unique_id=1331689136 instance=ExtResource("3_l6pne")]
 collision_mask = 2
-monitoring = false
 monitorable = true
 targetGroup = &"PlayerUnit"
 

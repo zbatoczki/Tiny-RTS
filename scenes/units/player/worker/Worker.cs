@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Game.Resources;
 using Godot;
 using Game.FSM;
+using System.Linq;
 
 namespace Game.Units;
 
@@ -16,6 +17,8 @@ public partial class Worker : MeleeUnit
 		{"gold", 0},
 		{"food", 0}
 	};
+
+	public bool HasInventory => CurrentInventory.Any(resource => resource.Value > 0);
 
 	private Area2D resourceDetector;
 
@@ -39,7 +42,7 @@ public partial class Worker : MeleeUnit
 		//TODO: call ResourceEventBus and pass resource counts
 		GD.Print("Dropping off Resources");
 		ClearAllInventoryCounts();
-		GD.Print(CurrentInventory);
+		stateMachine.ForceToState<Idle>();
 	}
 
 	private void ClearAllInventoryCounts()
@@ -47,6 +50,14 @@ public partial class Worker : MeleeUnit
 		foreach(var key in CurrentInventory.Keys)
 		{
 			CurrentInventory[key] = 0;
+		}
+	}
+
+	private void PrintCurrentInventory()
+	{
+		foreach(var key in CurrentInventory.Keys)
+		{
+			GD.Print($"{key}: {CurrentInventory[key]}");
 		}
 	}
 

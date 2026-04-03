@@ -16,7 +16,7 @@ public partial class Castle : Node2D
 
 	private void OnUnitDetected(Unit unit)
 	{
-		if(unit is Worker worker)
+		if(unit is Worker worker && worker.HasInventory)
 		{
 			worker.DropOffResources();
 		}
