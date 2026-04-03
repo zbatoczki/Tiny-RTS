@@ -95,7 +95,7 @@ region = Rect2(768, 0, 192, 192)
 atlas = ExtResource("5_iwa0e")
 region = Rect2(960, 0, 192, 192)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_uend3"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_ecqhu"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -192,8 +192,11 @@ targetGroup = &"EnemyUnit"
 collision_mask = 4
 targetGroup = &"EnemyUnit"
 
+[node name="CollisionShape2D" parent="." index="4" unique_id=1633008240]
+scale = Vector2(2.5, 2.5)
+
 [node name="AnimatedSprite2D" parent="." index="5" unique_id=290410313]
-sprite_frames = SubResource("SpriteFrames_uend3")
+sprite_frames = SubResource("SpriteFrames_ecqhu")
 animation = &"move"
 
 [editable path="DamageComponent"]

@@ -335,6 +335,9 @@ targetGroup = &"EnemyUnit"
 visible = false
 targetGroup = &"EnemyUnit"
 
+[node name="CollisionShape2D" parent="." index="4" unique_id=1633008240]
+scale = Vector2(1.895, 1.895)
+
 [node name="AnimatedSprite2D" parent="." index="5" unique_id=290410313]
 y_sort_enabled = true
 position = Vector2(2, 0)
