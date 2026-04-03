@@ -18,7 +18,6 @@ public partial class Worker : MeleeUnit
 	};
 
 	private Area2D resourceDetector;
-	
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -34,5 +33,21 @@ public partial class Worker : MeleeUnit
 		GD.Print("Resource detected");
         stateMachine.ForceToState<Gather>();
     }
+
+	public void DropOffResources()
+	{
+		//TODO: call ResourceEventBus and pass resource counts
+		GD.Print("Dropping off Resources");
+		ClearAllInventoryCounts();
+		GD.Print(CurrentInventory);
+	}
+
+	private void ClearAllInventoryCounts()
+	{
+		foreach(var key in CurrentInventory.Keys)
+		{
+			CurrentInventory[key] = 0;
+		}
+	}
 
 }

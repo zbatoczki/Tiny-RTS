@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://drst3dcdxv4k0"]
+
+[ext_resource type="Texture2D" uid="uid://cr8kergaqm26e" path="res://assets/buildings/blue/castle.png" id="1_lg0r4"]
+[ext_resource type="Script" uid="uid://ci3uu3cjqjcg8" path="res://scenes/buildings/Castle.cs" id="1_xrw3n"]
+[ext_resource type="PackedScene" uid="uid://dggm7qkrau8nx" path="res://scenes/component/UnitDetectionComponent.tscn" id="3_l6pne"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lg0r4"]
+size = Vector2(274, 163)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8iw5o"]
+size = Vector2(274, 163)
+
+[node name="Castle" type="Node2D" unique_id=1580598003]
+script = ExtResource("1_xrw3n")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=2146834767]
+position = Vector2(0, -64)
+collision_mask = 2
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" unique_id=914712534]
+position = Vector2(160, 86)
+shape = SubResource("RectangleShape2D_lg0r4")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1372564955]
+position = Vector2(160, 96)
+texture = ExtResource("1_lg0r4")
+centered = false
+offset = Vector2(-160, -224)
+
+[node name="UnitDetectionComponent" parent="." unique_id=1331689136 instance=ExtResource("3_l6pne")]
+collision_mask = 2
+monitoring = false
+monitorable = true
+targetGroup = &"PlayerUnit"
+
+[node name="CollisionShape2D" parent="UnitDetectionComponent" index="0" unique_id=947036371]
+position = Vector2(160, 22)
+shape = SubResource("RectangleShape2D_8iw5o")
+
+[editable path="UnitDetectionComponent"]
