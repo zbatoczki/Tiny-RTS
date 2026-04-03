@@ -3,6 +3,7 @@ using Game.Resources;
 using Godot;
 using Game.FSM;
 using System.Linq;
+using Game.Resources.Gathering;
 
 namespace Game.Units;
 
@@ -19,8 +20,10 @@ public partial class Worker : MeleeUnit
 	};
 
 	public bool HasInventory => CurrentInventory.Any(resource => resource.Value > 0);
+	public GatheringResource GatheringResourceTarget {get; set;}
 
 	private Area2D resourceDetector;
+	private Vector2? castleLocation;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -29,6 +32,12 @@ public partial class Worker : MeleeUnit
 		
 		resourceDetector = GetNode<Area2D>("ResourceDetector");
 		resourceDetector.BodyEntered += OnResourceEntered;
+
+		var bases = GetTree().GetNodesInGroup("Base");
+		if (bases.Count != 0)
+		{
+			castleLocation = (bases.First() as Node2D).GlobalPosition;
+		}
 	}
 
     private void OnResourceEntered(Node2D body)
@@ -40,9 +49,30 @@ public partial class Worker : MeleeUnit
 	public void DropOffResources()
 	{
 		//TODO: call ResourceEventBus and pass resource counts
-		GD.Print("Dropping off Resources");
+		Vector2I lastTreeCellPosition = GatheringResourceTarget.CellCorrdinates;
 		ClearAllInventoryCounts();
-		stateMachine.ForceToState<Idle>();
+		GatheringResourceTarget = null;
+
+		Vector2 lastTreeWorldPosition = treeManager.TreeLayer.ToGlobal(treeManager.TreeLayer.MapToLocal(lastTreeCellPosition));
+
+		GatheringResource nearestTree = treeManager.GetNearestTree(lastTreeWorldPosition, lastTreeCellPosition);
+		if(nearestTree != null)
+		{
+			GatheringResourceTarget = nearestTree;
+			MoveTo(treeManager.GetGlobalPosition(GatheringResourceTarget.CellCorrdinates));
+		}
+		else
+		{
+			stateMachine.ForceToState<Idle>();
+		}
+
+	}
+
+	public void ReturnToCastle()
+	{
+		if(!castleLocation.HasValue) return;
+
+		MoveTo(castleLocation.Value);
 	}
 
 	private void ClearAllInventoryCounts()

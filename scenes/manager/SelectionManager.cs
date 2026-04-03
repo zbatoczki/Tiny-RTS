@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 using Game.Groups;
 using Game.InputMap;
 using Game.Resources;
@@ -80,6 +81,9 @@ public partial class SelectionManager : Node2D
 				}
 				else if (item["collider"].Obj is TileMapLayer tml && tml == treeTileMapLayer)
 				{
+					var workerUnits = selectedUnits.OfType<Worker>().ToList();
+					if(workerUnits.Count == 0) continue;
+
 					Vector2 localPosition = treeTileMapLayer.ToLocal(mousePosition);
 					Vector2I cellPosition = treeTileMapLayer.LocalToMap(localPosition);
 					GatheringResource treeData = treeTileMapLayerManager.GetTreeAt(cellPosition);
@@ -87,7 +91,7 @@ public partial class SelectionManager : Node2D
 					{
 						GD.Print(treeData);
 						GD.Print($"Clicked tree at cell {cellPosition}, amount of wood: {treeData.CurrentCharges}");
-						selectedUnits.ForEach(unit =>
+						workerUnits.ForEach(unit =>
 						{
 							unit.GatheringResourceTarget = treeData;
 							GD.Print($"unit tree target: {treeData.Name}");

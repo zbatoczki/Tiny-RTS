@@ -37,6 +37,7 @@ naming/scene_name_casing=1
 
 PlayerUnit=""
 EnemyUnit=""
+Base=""
 
 [input]
 

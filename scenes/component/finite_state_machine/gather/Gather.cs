@@ -62,7 +62,7 @@ public partial class Gather : State
 		GD.Print($"Current worker wood Inventory: {worker.CurrentInventory["wood"]}|Tree charges left: {worker.GatheringResourceTarget.CurrentCharges}");
 		if (worker.GatheringResourceTarget.IsDepleted)
 		{
-			worker.GatheringResourceTarget = null;
+			worker.ReturnToCastle();
 			return;
 		}
 		

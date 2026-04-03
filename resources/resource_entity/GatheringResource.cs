@@ -44,5 +44,4 @@ public partial class GatheringResource : Resource
 
         return (Name, gathered);
     }
-
 }
