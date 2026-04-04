@@ -14,7 +14,7 @@ public partial class GatheringResource : Resource
     [Export] public Vector2I CellCorrdinates {get; set;}
     [Export] public string Name {get; set;}
     [Export] public int MaxCharges {get; set;} = 100;
-    [Export] public int CurrentCharges {get; set;} = 3;
+    [Export] public int CurrentCharges {get; set;} = 100;
     [Export] public bool IsBeingGathered {get; set;} = false;
 
     public bool IsDepleted => CurrentCharges <= 0;

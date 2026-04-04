@@ -6,4 +6,5 @@
 script = ExtResource("1_ca8hu")
 Name = "Worker"
 MaxHealth = 5.0
+GatherRate = 10.0
 metadata/_custom_type_script = "uid://dllaeorx6nqxd"

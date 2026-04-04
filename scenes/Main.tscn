@@ -32,7 +32,7 @@ treeManager = NodePath("../TreeTilemapLayerManager")
 GatheringRange = 1.0
 
 [node name="TreeTileMapLayer" type="TileMapLayer" parent="." unique_id=1184793851]
-tile_map_data = PackedByteArray("AAADAAQAAQAAAAAAAAAKAAgAAQAAAAAAAAADAAgAAQAAAAAAAAALAAQAAQAAAAAAAAAHAAYAAQAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAADAAQAAQAAAAAAAAAKAAgAAQAAAAAAAAADAAgAAQAAAAAAAAALAAQAAQAAAAAAAAAHAAYAAQAAAAAAAAAGAAYAAQAAAAAAAAAGAAcAAQAAAAAAAAAHAAcAAQAAAAAAAAAIAAcAAQAAAAAAAAAIAAYAAQAAAAAAAAA=")
 tile_set = ExtResource("1_rarhs")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1584375090]

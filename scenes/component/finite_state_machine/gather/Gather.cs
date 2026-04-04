@@ -40,7 +40,7 @@ public partial class Gather : State
 		StringName gatheringAnimation = $"gather_{worker.GatheringResourceTarget.Name}";
 		worker.animatedSprite2D.Play(gatheringAnimation);
 		gatherTimer.WaitTime = unit.stats.GatherRate;
-		GatherResource();
+		gatherTimer.Start();
 	}
 
 	public override void Exit()
@@ -57,16 +57,10 @@ public partial class Gather : State
 			return;
 		}
 
-		(string resource, int amount) = worker.GatheringResourceTarget.Gather(1);
+		(string resource, int amount) = worker.GatheringResourceTarget.Gather(10);
 		worker.CurrentInventory[resource] += amount;
 		GD.Print($"Current worker wood Inventory: {worker.CurrentInventory["wood"]}|Tree charges left: {worker.GatheringResourceTarget.CurrentCharges}");
-		if (worker.GatheringResourceTarget.IsDepleted)
-		{
-			worker.ReturnToCastle();
-			return;
-		}
-		
-		gatherTimer.Start();
+		worker.ReturnToCastle();
     }
 
 

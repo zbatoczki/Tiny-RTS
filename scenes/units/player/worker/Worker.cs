@@ -43,7 +43,7 @@ public partial class Worker : MeleeUnit
 
     private void OnResourceEntered(Node2D body)
     {
-		GD.Print("Resource detected");
+		GD.Print($"Resource detected: {body}");
         stateMachine.ForceToState<Gather>();
     }
 
@@ -54,21 +54,24 @@ public partial class Worker : MeleeUnit
 
 		Vector2I lastTreeCellPosition = GatheringResourceTarget.CellCorrdinates;
 		ClearAllInventoryCounts();
-		GatheringResourceTarget = null;
+
+		if (!GatheringResourceTarget.IsDepleted)
+		{
+			MoveTo(treeManager.GetGlobalPosition(GatheringResourceTarget.CellCorrdinates));
+			return;
+		}
 
 		Vector2 lastTreeWorldPosition = treeManager.TreeLayer.ToGlobal(treeManager.TreeLayer.MapToLocal(lastTreeCellPosition));
-
 		GatheringResource nearestTree = treeManager.GetNearestTree(lastTreeWorldPosition, lastTreeCellPosition);
+		GatheringResourceTarget = nearestTree;
 		if(nearestTree != null)
 		{
-			GatheringResourceTarget = nearestTree;
 			MoveTo(treeManager.GetGlobalPosition(GatheringResourceTarget.CellCorrdinates));
 		}
 		else
 		{
 			stateMachine.ForceToState<Idle>();
 		}
-
 	}
 
 	public void ReturnToCastle()
