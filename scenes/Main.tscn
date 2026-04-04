@@ -6,11 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://bwk4xpurv2t82" path="res://scenes/manager/TreeTilemapLayerManager.tscn" id="1_vcsgt"]
 [ext_resource type="PackedScene" uid="uid://bxo4obx7s5dql" path="res://scenes/units/player/worker/Worker.tscn" id="6_nxtc6"]
 [ext_resource type="Script" uid="uid://dhhqge6ld1u72" path="res://scenes/LabelTest.cs" id="7_nxtc6"]
+[ext_resource type="PackedScene" uid="uid://c5fgnm0wp186w" path="res://scenes/ui/ResourcesUi.tscn" id="8_jlsqs"]
 [ext_resource type="PackedScene" uid="uid://drst3dcdxv4k0" path="res://scenes/buildings/Castle.tscn" id="9_q8u5g"]
 
 [node name="Main" type="Node" unique_id=330848765]
 
-[node name="ResourceManager" parent="." unique_id=814893254 instance=ExtResource("1_nxtc6")]
+[node name="ResourceManager" parent="." unique_id=814893254 node_paths=PackedStringArray("resoucesUI") instance=ExtResource("1_nxtc6")]
+resoucesUI = NodePath("../CanvasLayer/ResourcesUI")
 
 [node name="TreeTilemapLayerManager" parent="." unique_id=1407894699 node_paths=PackedStringArray("TreeLayer") instance=ExtResource("1_vcsgt")]
 TreeLayer = NodePath("../TreeTileMapLayer")
@@ -39,10 +41,14 @@ tile_set = ExtResource("1_rarhs")
 treeTileMapLayer = NodePath("../../TreeTileMapLayer")
 treeTileMapLayerManager = NodePath("../../TreeTilemapLayerManager")
 
+[node name="ResourcesUI" parent="CanvasLayer" unique_id=1113608158 instance=ExtResource("8_jlsqs")]
+
 [node name="Label" type="Label" parent="CanvasLayer" unique_id=2012113887 node_paths=PackedStringArray("worker")]
-offset_left = 128.0
-offset_right = 269.0
-offset_bottom = 23.0
+visible = false
+offset_left = 14.0
+offset_top = 25.0
+offset_right = 155.0
+offset_bottom = 48.0
 text = "DEBUG TEXT HERE"
 script = ExtResource("7_nxtc6")
 worker = NodePath("../../Worker")

@@ -1,10 +1,13 @@
 using Game.Autoload;
+using Game.UI;
 using Godot;
 
 namespace Game.Manager;
 
 public partial class ResourceManager : Node
 {
+	[Export] private ResourcesUi resoucesUI;
+
 	private int CurrentWoodAmount = 0;
 	private int CurrentGoldAmount = 0;
 	private int CurrentFoodAmount = 0;
@@ -22,6 +25,6 @@ public partial class ResourceManager : Node
 		CurrentGoldAmount += goldAmt;
 		CurrentWoodAmount += woodAmt;
 
-		GD.Print($"Wood: {CurrentWoodAmount} | Gold: {CurrentGoldAmount} | Food: {CurrentFoodAmount}");
+		resoucesUI.UpdateResouceCounts(CurrentWoodAmount, CurrentGoldAmount, CurrentFoodAmount);
 	}
 }
