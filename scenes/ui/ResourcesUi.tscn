@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bv75fqf10thj2" path="res://assets/resources/wood_no_shadow.png" id="1_4odlf"]
 [ext_resource type="Script" uid="uid://b8md3te0mr4an" path="res://scenes/ui/ResourcesUi.cs" id="1_wf4uh"]
 [ext_resource type="Texture2D" uid="uid://3eyh5kioaj7u" path="res://assets/resources/food_no_shadow.png" id="2_wf4uh"]
+[ext_resource type="Script" uid="uid://dolyr8ootl6w8" path="res://scenes/component/ui/NumberLabel.cs" id="3_0yh56"]
 [ext_resource type="Texture2D" uid="uid://bdcmmhl1bn6rj" path="res://assets/resources/gold_no_shadow.png" id="3_e6bjk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8n3kj"]
@@ -40,6 +41,7 @@ texture = SubResource("AtlasTexture_8n3kj")
 unique_name_in_owner = true
 layout_mode = 2
 text = "100"
+script = ExtResource("3_0yh56")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer" unique_id=1492477480]
 layout_mode = 2
@@ -52,6 +54,7 @@ texture = SubResource("AtlasTexture_fvqop")
 unique_name_in_owner = true
 layout_mode = 2
 text = "100"
+script = ExtResource("3_0yh56")
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="HBoxContainer" unique_id=876514974]
 layout_mode = 2
@@ -64,3 +67,4 @@ texture = SubResource("AtlasTexture_ujui6")
 unique_name_in_owner = true
 layout_mode = 2
 text = "100"
+script = ExtResource("3_0yh56")

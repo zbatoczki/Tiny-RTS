@@ -1,3 +1,4 @@
+using Game.Component.Ui;
 using Godot;
 
 namespace Game.UI;
@@ -6,15 +7,15 @@ namespace Game.UI;
 public partial class ResourcesUi : PanelContainer
 {
 	
-	private Label woodCountLabel;
-	private Label goldCountLabel;
-	private Label foodCountLabel;
+	private NumberLabel woodCountLabel;
+	private NumberLabel goldCountLabel;
+	private NumberLabel foodCountLabel;
 
 	public override void _Ready()
 	{
-		woodCountLabel = GetNode<Label>("%WoodCountLabel");
-		goldCountLabel = GetNode<Label>("%GoldCountLabel");
-		foodCountLabel = GetNode<Label>("%FoodCountLabel");
+		woodCountLabel = GetNode<NumberLabel>("%WoodCountLabel");
+		goldCountLabel = GetNode<NumberLabel>("%GoldCountLabel");
+		foodCountLabel = GetNode<NumberLabel>("%FoodCountLabel");
 
 		woodCountLabel.Text = "0";
 		goldCountLabel.Text = "0";
@@ -23,9 +24,9 @@ public partial class ResourcesUi : PanelContainer
 
 	public void UpdateResouceCounts(int woodCount, int goldCount, int foodCount)
 	{
-		woodCountLabel.Text = woodCount.ToString();
-		goldCountLabel.Text = goldCount.ToString();
-		foodCountLabel.Text = foodCount.ToString();
+		woodCountLabel.AnimateTo(woodCount);
+		goldCountLabel.AnimateTo(goldCount);
+		foodCountLabel.AnimateTo(foodCount);
 	}
 }
 
