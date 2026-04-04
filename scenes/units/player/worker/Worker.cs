@@ -4,6 +4,7 @@ using Godot;
 using Game.FSM;
 using System.Linq;
 using Game.Resources.Gathering;
+using Game.Autoload;
 
 namespace Game.Units;
 
@@ -49,6 +50,8 @@ public partial class Worker : MeleeUnit
 	public void DropOffResources()
 	{
 		//TODO: call ResourceEventBus and pass resource counts
+		ResourceEvents.EmitResourcesModified(CurrentInventory["wood"], CurrentInventory["gold"], CurrentInventory["food"]);
+
 		Vector2I lastTreeCellPosition = GatheringResourceTarget.CellCorrdinates;
 		ClearAllInventoryCounts();
 		GatheringResourceTarget = null;
