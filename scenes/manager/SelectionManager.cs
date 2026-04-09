@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using Game.Buildings;
 using Game.Groups;
 using Game.InputMap;
 using Game.Resources;
@@ -73,8 +74,10 @@ public partial class SelectionManager : Node2D
 			//check what is at mouse position
 			Array<Dictionary> results = CheckAtMousePosition(mousePosition);
 			//TODO handle action based on what is at position and what units are selected
+			
 			foreach(var item in results)
 			{
+				GD.Print(item["collider"].Obj);
 				if (item["collider"].Obj is Unit n && n.IsInGroup(GlobalGroups.ENEMY_UNIT))
 				{
 					selectedUnits.ForEach(unit => unit.AttackTarget = n);
@@ -100,6 +103,22 @@ public partial class SelectionManager : Node2D
 					else
 					{
 						GD.Print("No tree found");
+					}
+				}
+				else if (item["collider"].Obj is StaticBody2D node && node.GetParent() is GoldMine goldmine)
+				{
+					GD.Print("GoldMine detected found");
+					var workerUnits = selectedUnits.OfType<Worker>().ToList();
+					if(workerUnits.Count == 0) continue;
+
+					GatheringResource goldMineData = goldmine._GatheringResource;
+					if(goldMineData != null && !goldMineData.IsDepleted)
+					{
+						workerUnits.ForEach(unit =>
+						{
+							unit.GatheringResourceTarget = goldMineData;
+							GD.Print($"unit target: {goldMineData.Name}");
+						});
 					}
 				}
 			}

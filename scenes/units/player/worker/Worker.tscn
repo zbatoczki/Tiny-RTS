@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://dxohd707fnn56" path="res://assets/units/player/pawn/pawn_swing_axe.png" id="6_fkppf"]
 [ext_resource type="Texture2D" uid="uid://bbnhi377lqtqj" path="res://assets/units/player/pawn/pawn_idle_wood.png" id="8_fkppf"]
 [ext_resource type="Texture2D" uid="uid://c4rw6ppti7f3d" path="res://assets/units/player/pawn/pawn_run_wood.png" id="10_2rd3q"]
+[ext_resource type="Texture2D" uid="uid://d2c6txamrye2y" path="res://assets/units/player/pawn/pawn_run_gold.png" id="10_phryt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b3epq"]
 atlas = ExtResource("2_3j8ay")
@@ -137,6 +138,30 @@ region = Rect2(768, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ftre6"]
 atlas = ExtResource("3_3j8ay")
+region = Rect2(960, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0vtrx"]
+atlas = ExtResource("10_phryt")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e24bp"]
+atlas = ExtResource("10_phryt")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_exhha"]
+atlas = ExtResource("10_phryt")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d3xvp"]
+atlas = ExtResource("10_phryt")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dwr0l"]
+atlas = ExtResource("10_phryt")
+region = Rect2(768, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u4o23"]
+atlas = ExtResource("10_phryt")
 region = Rect2(960, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mo6cs"]
@@ -289,6 +314,29 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_0vtrx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e24bp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_exhha")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d3xvp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dwr0l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u4o23")
+}],
+"loop": true,
+"name": &"move_gold",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_mo6cs")
 }, {
 "duration": 1.0,
@@ -342,7 +390,7 @@ scale = Vector2(1.895, 1.895)
 y_sort_enabled = true
 position = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_2rd3q")
-animation = &"move_wood"
+animation = &"move_gold"
 autoplay = "idle"
 offset = Vector2(-96, -110)
 

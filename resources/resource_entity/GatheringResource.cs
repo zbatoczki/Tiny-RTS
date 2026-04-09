@@ -11,6 +11,9 @@ public partial class GatheringResource : Resource
     [Signal]
     public delegate void ResourceGatheredEventHandler(Vector2I cellCoordinates, int amount);
 
+    [Signal]
+    public delegate void ResourceGatheringEventHandler();
+
     [Export] public Vector2I CellCorrdinates {get; set;}
     [Export] public string Name {get; set;}
     [Export] public int MaxCharges {get; set;} = 100;
@@ -26,13 +29,14 @@ public partial class GatheringResource : Resource
     /// <returns></returns>
     public (string, int) Gather(int amount)
     {
+        EmitSignal(SignalName.ResourceGathering);
         if(IsDepleted) 
         {
             EmitSignal(SignalName.ResourceDepleted, CellCorrdinates);
             return (Name, 0);
         }
 
-        int gathered = Mathf.Min(amount, CurrentCharges);
+        int gathered = Mathf.Clamp(Mathf.Min(amount, CurrentCharges), 0, CurrentCharges);
         CurrentCharges -= gathered;
 
         EmitSignal(SignalName.ResourceGathered, CellCorrdinates, gathered);

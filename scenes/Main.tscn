@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bxo4obx7s5dql" path="res://scenes/units/player/worker/Worker.tscn" id="6_nxtc6"]
 [ext_resource type="Script" uid="uid://dhhqge6ld1u72" path="res://scenes/LabelTest.cs" id="7_nxtc6"]
 [ext_resource type="PackedScene" uid="uid://c5fgnm0wp186w" path="res://scenes/ui/ResourcesUi.tscn" id="8_jlsqs"]
+[ext_resource type="PackedScene" uid="uid://dy0ld8xk5d245" path="res://scenes/buildings/GoldMine.tscn" id="9_lhr70"]
 [ext_resource type="PackedScene" uid="uid://drst3dcdxv4k0" path="res://scenes/buildings/Castle.tscn" id="9_q8u5g"]
 
 [node name="Main" type="Node" unique_id=330848765]
@@ -24,6 +25,9 @@ tile_set = ExtResource("1_rarhs")
 [node name="Castle2" parent="." unique_id=1580598003 groups=["Base"] instance=ExtResource("9_q8u5g")]
 position = Vector2(384, 64)
 
+[node name="GoldMine" parent="." unique_id=829714884 instance=ExtResource("9_lhr70")]
+position = Vector2(1024, 320)
+
 [node name="Worker" parent="." unique_id=1980137832 node_paths=PackedStringArray("treeManager") instance=ExtResource("6_nxtc6")]
 z_index = 0
 y_sort_enabled = false
@@ -31,8 +35,22 @@ position = Vector2(384, 320)
 treeManager = NodePath("../TreeTilemapLayerManager")
 GatheringRange = 1.0
 
+[node name="Worker2" parent="." unique_id=72196077 node_paths=PackedStringArray("treeManager") instance=ExtResource("6_nxtc6")]
+z_index = 0
+y_sort_enabled = false
+position = Vector2(128, 384)
+treeManager = NodePath("../TreeTilemapLayerManager")
+GatheringRange = 1.0
+
+[node name="Worker3" parent="." unique_id=1068468214 node_paths=PackedStringArray("treeManager") instance=ExtResource("6_nxtc6")]
+z_index = 0
+y_sort_enabled = false
+position = Vector2(128, 192)
+treeManager = NodePath("../TreeTilemapLayerManager")
+GatheringRange = 1.0
+
 [node name="TreeTileMapLayer" type="TileMapLayer" parent="." unique_id=1184793851]
-tile_map_data = PackedByteArray("AAADAAQAAQAAAAAAAAAKAAgAAQAAAAAAAAADAAgAAQAAAAAAAAALAAQAAQAAAAAAAAAHAAYAAQAAAAAAAAAGAAYAAQAAAAAAAAAGAAcAAQAAAAAAAAAHAAcAAQAAAAAAAAAIAAcAAQAAAAAAAAAIAAYAAQAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAKAAgAAQAAAAAAAAADAAgAAQAAAAAAAAAGAAcAAQAAAAAAAAAHAAcAAQAAAAAAAAAIAAcAAQAAAAAAAAA=")
 tile_set = ExtResource("1_rarhs")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1584375090]

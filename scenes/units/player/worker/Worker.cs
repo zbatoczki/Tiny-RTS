@@ -5,6 +5,7 @@ using Game.FSM;
 using System.Linq;
 using Game.Resources.Gathering;
 using Game.Autoload;
+using Game.Buildings;
 
 namespace Game.Units;
 
@@ -43,7 +44,10 @@ public partial class Worker : MeleeUnit
 
     private void OnResourceEntered(Node2D body)
     {
-		GD.Print($"Resource detected: {body}");
+		if (body is GoldMine goldmine)
+		{
+			goldmine.EnterMine(this);
+		}
         stateMachine.ForceToState<Gather>();
     }
 
@@ -51,27 +55,34 @@ public partial class Worker : MeleeUnit
 	{
 		//TODO: call ResourceEventBus and pass resource counts
 		ResourceEvents.EmitResourcesModified(CurrentInventory["wood"], CurrentInventory["gold"], CurrentInventory["food"]);
-
-		Vector2I lastTreeCellPosition = GatheringResourceTarget.CellCorrdinates;
 		ClearAllInventoryCounts();
+		if(GatheringResourceTarget.Name == "gold")
+		{
+			MoveTo(GatheringResourceTarget.CellCorrdinates);
+		}
+		else if(GatheringResourceTarget.Name == "tree")
+		{
+			Vector2I lastTreeCellPosition = GatheringResourceTarget.CellCorrdinates;
+	
+			if (!GatheringResourceTarget.IsDepleted)
+			{
+				MoveTo(treeManager.GetGlobalPosition(GatheringResourceTarget.CellCorrdinates));
+				return;
+			}
 
-		if (!GatheringResourceTarget.IsDepleted)
-		{
-			MoveTo(treeManager.GetGlobalPosition(GatheringResourceTarget.CellCorrdinates));
-			return;
+			Vector2 lastTreeWorldPosition = treeManager.TreeLayer.ToGlobal(treeManager.TreeLayer.MapToLocal(lastTreeCellPosition));
+			GatheringResource nearestTree = treeManager.GetNearestTree(lastTreeWorldPosition, lastTreeCellPosition);
+			GatheringResourceTarget = nearestTree;
+			if(nearestTree != null)
+			{
+				MoveTo(treeManager.GetGlobalPosition(GatheringResourceTarget.CellCorrdinates));
+			}
+			else
+			{
+				stateMachine.ForceToState<Idle>();
+			}
 		}
-
-		Vector2 lastTreeWorldPosition = treeManager.TreeLayer.ToGlobal(treeManager.TreeLayer.MapToLocal(lastTreeCellPosition));
-		GatheringResource nearestTree = treeManager.GetNearestTree(lastTreeWorldPosition, lastTreeCellPosition);
-		GatheringResourceTarget = nearestTree;
-		if(nearestTree != null)
-		{
-			MoveTo(treeManager.GetGlobalPosition(GatheringResourceTarget.CellCorrdinates));
-		}
-		else
-		{
-			stateMachine.ForceToState<Idle>();
-		}
+		
 	}
 
 	public void ReturnToCastle()
@@ -89,7 +100,7 @@ public partial class Worker : MeleeUnit
 		}
 	}
 
-	private void PrintCurrentInventory()
+	public void PrintCurrentInventory()
 	{
 		foreach(var key in CurrentInventory.Keys)
 		{

@@ -7,7 +7,7 @@ namespace Game.Resources;
 
 public partial class TreeTileMapLayerManager : Node
 {	
-	private readonly Vector2I DEPLETED_TREE = new(0,2);
+	private readonly Vector2I DEPLETED_TREE_ATLAS_COORD = new(0,2);
 
 	[Export] public TileMapLayer TreeLayer {get; set;}
 
@@ -71,7 +71,7 @@ public partial class TreeTileMapLayerManager : Node
     private void OnTreeDepleted(Vector2I cellCoordinates)
     {
         GD.Print($"Tree depleted at {cellCoordinates}");
-		TreeLayer.SetCell(cellCoordinates, 1, DEPLETED_TREE);
+		TreeLayer.SetCell(cellCoordinates, 1, DEPLETED_TREE_ATLAS_COORD);
 		treeResources.Remove(cellCoordinates);
     }
 

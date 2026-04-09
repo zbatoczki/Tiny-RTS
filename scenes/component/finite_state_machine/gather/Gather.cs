@@ -37,14 +37,26 @@ public partial class Gather : State
 		
 		if(worker.GatheringResourceTarget == null) return;
 
-		StringName gatheringAnimation = $"gather_{worker.GatheringResourceTarget.Name}";
-		worker.animatedSprite2D.Play(gatheringAnimation);
+		if(worker.GatheringResourceTarget.Name == "gold")
+		{
+			worker.Visible = false;
+			worker.GatheringResourceTarget.EmitSignal("ResourceGathering");
+		}
+		else
+		{
+			StringName gatheringAnimation = $"gather_{worker.GatheringResourceTarget.Name}";
+			worker.animatedSprite2D.Play(gatheringAnimation);
+		}
+
+		worker.GatheringResourceTarget.IsBeingGathered = true;
 		gatherTimer.WaitTime = unit.stats.GatherRate;
 		gatherTimer.Start();
 	}
 
 	public override void Exit()
     {
+		worker?.GatheringResourceTarget?.IsBeingGathered = false;
+		worker.Visible = true;
         gatherTimer.Stop();
     }
 
@@ -59,7 +71,8 @@ public partial class Gather : State
 
 		(string resource, int amount) = worker.GatheringResourceTarget.Gather(10);
 		worker.CurrentInventory[resource] += amount;
-		GD.Print($"Current worker wood Inventory: {worker.CurrentInventory["wood"]}|Tree charges left: {worker.GatheringResourceTarget.CurrentCharges}");
+		GD.Print("Current worker Inventory");
+		worker.PrintCurrentInventory();
 		worker.ReturnToCastle();
     }
 
