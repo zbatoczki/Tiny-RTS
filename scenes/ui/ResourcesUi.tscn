@@ -6,21 +6,29 @@
 [ext_resource type="Script" uid="uid://dolyr8ootl6w8" path="res://scenes/component/ui/NumberLabel.cs" id="3_0yh56"]
 [ext_resource type="Texture2D" uid="uid://bdcmmhl1bn6rj" path="res://assets/resources/gold_no_shadow.png" id="3_e6bjk"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e6bjk"]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_8n3kj"]
 atlas = ExtResource("1_4odlf")
-region = Rect2(39, 54, 49, 60)
+region = Rect2(32, 54, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fvqop"]
 atlas = ExtResource("2_wf4uh")
-region = Rect2(43, 40, 49, 73)
+region = Rect2(37, 46, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ujui6"]
 atlas = ExtResource("3_e6bjk")
-region = Rect2(48, 35, 43, 79)
+region = Rect2(36, 45, 64, 64)
 
-[node name="ResourcesUI" type="PanelContainer" unique_id=1113608158]
-offset_right = 337.0
-offset_bottom = 79.0
+[node name="ResourcesUI" type="PanelContainer" unique_id=493419162]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -190.0
+offset_right = 190.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_e6bjk")
 script = ExtResource("1_wf4uh")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1774951614]
@@ -31,6 +39,7 @@ theme_override_constants/separation = 25
 alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer" unique_id=668902985]
+custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="HBoxContainer/HBoxContainer" unique_id=45564064]
@@ -40,11 +49,12 @@ texture = SubResource("AtlasTexture_8n3kj")
 [node name="WoodCountLabel" type="Label" parent="HBoxContainer/HBoxContainer" unique_id=1545907217]
 unique_name_in_owner = true
 layout_mode = 2
-text = "100"
+text = "1000"
 script = ExtResource("3_0yh56")
 Duration = 1.0
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer" unique_id=1492477480]
+custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="HBoxContainer/HBoxContainer2" unique_id=1026778827]
@@ -58,6 +68,7 @@ text = "100"
 script = ExtResource("3_0yh56")
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="HBoxContainer" unique_id=876514974]
+custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="HBoxContainer/HBoxContainer3" unique_id=2101764201]
@@ -67,5 +78,5 @@ texture = SubResource("AtlasTexture_ujui6")
 [node name="GoldCountLabel" type="Label" parent="HBoxContainer/HBoxContainer3" unique_id=1031520400]
 unique_name_in_owner = true
 layout_mode = 2
-text = "100"
+text = "0000"
 script = ExtResource("3_0yh56")

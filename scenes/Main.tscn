@@ -13,7 +13,7 @@
 [node name="Main" type="Node" unique_id=330848765]
 
 [node name="ResourceManager" parent="." unique_id=814893254 node_paths=PackedStringArray("resoucesUI") instance=ExtResource("1_nxtc6")]
-resoucesUI = NodePath("../CanvasLayer/ResourcesUI")
+resoucesUI = NodePath("../UI/ResourcesUI")
 
 [node name="TreeTilemapLayerManager" parent="." unique_id=1407894699 node_paths=PackedStringArray("TreeLayer") instance=ExtResource("1_vcsgt")]
 TreeLayer = NodePath("../TreeTileMapLayer")
@@ -53,15 +53,15 @@ GatheringRange = 1.0
 tile_map_data = PackedByteArray("AAAKAAgAAQAAAAAAAAADAAgAAQAAAAAAAAAGAAcAAQAAAAAAAAAHAAcAAQAAAAAAAAAIAAcAAQAAAAAAAAA=")
 tile_set = ExtResource("1_rarhs")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1584375090]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1584375090]
 
-[node name="SelectionManager" parent="CanvasLayer" unique_id=588987418 node_paths=PackedStringArray("treeTileMapLayer", "treeTileMapLayerManager") instance=ExtResource("1_0bbpv")]
+[node name="SelectionManager" parent="UI" unique_id=588987418 node_paths=PackedStringArray("treeTileMapLayer", "treeTileMapLayerManager") instance=ExtResource("1_0bbpv")]
 treeTileMapLayer = NodePath("../../TreeTileMapLayer")
 treeTileMapLayerManager = NodePath("../../TreeTilemapLayerManager")
 
-[node name="ResourcesUI" parent="CanvasLayer" unique_id=1113608158 instance=ExtResource("8_jlsqs")]
+[node name="ResourcesUI" parent="UI" unique_id=1113608158 instance=ExtResource("8_jlsqs")]
 
-[node name="Label" type="Label" parent="CanvasLayer" unique_id=2012113887 node_paths=PackedStringArray("worker")]
+[node name="Label" type="Label" parent="UI" unique_id=2012113887 node_paths=PackedStringArray("worker")]
 visible = false
 offset_left = 14.0
 offset_top = 25.0
