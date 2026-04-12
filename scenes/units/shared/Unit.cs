@@ -89,7 +89,6 @@ public abstract partial class Unit : CharacterBody2D
     public void TakeDamage(float incomingDamage)
     {
         currentHealth -= incomingDamage;
-        if(Name == "Worker") GD.Print(currentHealth);
         healthComponent.SetCurrentHealth(currentHealth);
         if(currentHealth < 1)
             stateMachine.ForceToState<Dead>();
@@ -144,7 +143,6 @@ public abstract partial class Unit : CharacterBody2D
 
     private void OnAnimationFinsihed()
     {
-        GD.Print("On animation finished");
         if(animatedSprite2D.Animation != "attack") return;
         if(stateMachine.currentState is Attack)
         {
@@ -159,7 +157,6 @@ public abstract partial class Unit : CharacterBody2D
 
     protected virtual void OnUnitDetected(Unit target)
     {
-		GD.Print($"{Name} detected unit {target.Name}");
 		AttackTarget ??= target;
 		MoveTo(target.GlobalPosition);
     }

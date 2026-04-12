@@ -90,7 +90,6 @@ public partial class UnitSelector : Control
 
 	private Vector2I GetTilePosition(Vector2 position)
 	{
-		GD.Print(position);
 		Vector2 localposition = tileMapLayer.ToLocal(position);
 		Vector2I tilePosition = tileMapLayer.LocalToMap(localposition);
 		return tilePosition;

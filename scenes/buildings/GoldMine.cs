@@ -38,8 +38,8 @@ public partial class GoldMine : Node2D
 
     private void OnResourceDepleted(Vector2I _)
     {
+		GD.Print($"Gold mine at {_GatheringResource.CellCorrdinates} is depleted.");
         SetActiveSprite(SpriteStates.DESTRYOED);
-		unitDetectionComponent.Monitorable = false;
 		unitDetectionComponent.Monitoring = false;
     }
 

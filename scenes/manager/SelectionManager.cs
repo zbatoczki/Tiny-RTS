@@ -77,7 +77,6 @@ public partial class SelectionManager : Node2D
 			
 			foreach(var item in results)
 			{
-				GD.Print(item["collider"].Obj);
 				if (item["collider"].Obj is Unit n && n.IsInGroup(GlobalGroups.ENEMY_UNIT))
 				{
 					selectedUnits.ForEach(unit => unit.AttackTarget = n);
@@ -92,12 +91,10 @@ public partial class SelectionManager : Node2D
 					GatheringResource treeData = treeTileMapLayerManager.GetTreeAt(cellPosition);
 					if(treeData != null && !treeData.IsDepleted)
 					{
-						GD.Print(treeData);
-						GD.Print($"Clicked tree at cell {cellPosition}, amount of wood: {treeData.CurrentCharges}");
 						workerUnits.ForEach(unit =>
 						{
 							unit.GatheringResourceTarget = treeData;
-							GD.Print($"unit tree target: {treeData.Name}");
+							GD.Print($"unit tree target: {treeData.ResourceType} at {treeData.CellCorrdinates}");
 						});
 					}
 					else
@@ -107,7 +104,6 @@ public partial class SelectionManager : Node2D
 				}
 				else if (item["collider"].Obj is StaticBody2D node && node.GetParent() is GoldMine goldmine)
 				{
-					GD.Print("GoldMine detected found");
 					var workerUnits = selectedUnits.OfType<Worker>().ToList();
 					if(workerUnits.Count == 0) continue;
 
@@ -117,7 +113,7 @@ public partial class SelectionManager : Node2D
 						workerUnits.ForEach(unit =>
 						{
 							unit.GatheringResourceTarget = goldMineData;
-							GD.Print($"unit target: {goldMineData.Name}");
+							GD.Print($"unit target: {goldMineData.ResourceType} at {goldMineData.CellCorrdinates}");
 						});
 					}
 				}

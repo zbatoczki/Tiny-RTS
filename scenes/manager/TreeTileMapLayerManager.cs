@@ -25,13 +25,12 @@ public partial class TreeTileMapLayerManager : Node
 		{
 			var data = new GatheringResource
 			{
-				Name = "wood",
+				ResourceType = GatheringResource.ResourceTypes.WOOD,
 				CellCorrdinates = cell	
 			};
 			data.ResourceDepleted += OnTreeDepleted;
 			treeResources[cell] = data;
 		}
-		GD.Print($"Initialized {treeResources.Count} trees.");
 	}
 
 	public GatheringResource GetTreeAt(Vector2I cell)
@@ -70,7 +69,6 @@ public partial class TreeTileMapLayerManager : Node
 
     private void OnTreeDepleted(Vector2I cellCoordinates)
     {
-        GD.Print($"Tree depleted at {cellCoordinates}");
 		TreeLayer.SetCell(cellCoordinates, 1, DEPLETED_TREE_ATLAS_COORD);
 		treeResources.Remove(cellCoordinates);
     }

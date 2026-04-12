@@ -14,11 +14,11 @@ public partial class Worker : MeleeUnit
 	[Export] private TreeTileMapLayerManager treeManager;
 	[Export] private float GatheringRange;
 
-	public Dictionary<string, int> CurrentInventory = new()
+	public Dictionary<GatheringResource.ResourceTypes, int> CurrentInventory = new()
 	{
-		{"wood", 0},
-		{"gold", 0},
-		{"food", 0}
+		{GatheringResource.ResourceTypes.WOOD, 0},
+		{GatheringResource.ResourceTypes.GOLD, 0},
+		{GatheringResource.ResourceTypes.FOOD, 0}
 	};
 
 	public bool HasInventory => CurrentInventory.Any(resource => resource.Value > 0);
@@ -44,7 +44,7 @@ public partial class Worker : MeleeUnit
 
     private void OnResourceEntered(Node2D body)
     {
-		if (body is GoldMine goldmine)
+		if (body is GoldMine goldmine && !goldmine._GatheringResource.IsDepleted)
 		{
 			goldmine.EnterMine(this);
 		}
@@ -54,13 +54,49 @@ public partial class Worker : MeleeUnit
 	public void DropOffResources()
 	{
 		//TODO: call ResourceEventBus and pass resource counts
-		ResourceEvents.EmitResourcesModified(CurrentInventory["wood"], CurrentInventory["gold"], CurrentInventory["food"]);
+		ResourceEvents.EmitResourcesModified(CurrentInventory[GatheringResource.ResourceTypes.WOOD], CurrentInventory[GatheringResource.ResourceTypes.GOLD], CurrentInventory[GatheringResource.ResourceTypes.FOOD]);
 		ClearAllInventoryCounts();
-		if(GatheringResourceTarget.Name == "gold")
+		ReturnToResource();
+		
+		
+	}
+
+	public void ReturnToCastle()
+	{
+		if(!castleLocation.HasValue) return;
+
+		MoveTo(castleLocation.Value);
+	}
+
+	public void PrintCurrentInventory()
+	{
+		foreach(var key in CurrentInventory.Keys)
+		{
+			GD.Print($"{key}: {CurrentInventory[key]}");
+		}
+	}
+
+	private void ClearAllInventoryCounts()
+	{
+		foreach(var key in CurrentInventory.Keys)
+		{
+			CurrentInventory[key] = 0;
+		}
+	}
+
+	private void ReturnToResource()
+	{
+		if(GatheringResourceTarget == null || GatheringResourceTarget.IsDepleted)
+		{
+			stateMachine.ForceToState<Idle>();
+			return;
+		}
+
+		if(GatheringResourceTarget.ResourceType == GatheringResource.ResourceTypes.GOLD)
 		{
 			MoveTo(GatheringResourceTarget.CellCorrdinates);
 		}
-		else if(GatheringResourceTarget.Name == "tree")
+		else if(GatheringResourceTarget.ResourceType == GatheringResource.ResourceTypes.WOOD)
 		{
 			Vector2I lastTreeCellPosition = GatheringResourceTarget.CellCorrdinates;
 	
@@ -81,30 +117,6 @@ public partial class Worker : MeleeUnit
 			{
 				stateMachine.ForceToState<Idle>();
 			}
-		}
-		
-	}
-
-	public void ReturnToCastle()
-	{
-		if(!castleLocation.HasValue) return;
-
-		MoveTo(castleLocation.Value);
-	}
-
-	private void ClearAllInventoryCounts()
-	{
-		foreach(var key in CurrentInventory.Keys)
-		{
-			CurrentInventory[key] = 0;
-		}
-	}
-
-	public void PrintCurrentInventory()
-	{
-		foreach(var key in CurrentInventory.Keys)
-		{
-			GD.Print($"{key}: {CurrentInventory[key]}");
 		}
 	}
 
