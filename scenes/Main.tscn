@@ -9,6 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://c5fgnm0wp186w" path="res://scenes/ui/ResourcesUi.tscn" id="8_jlsqs"]
 [ext_resource type="PackedScene" uid="uid://dy0ld8xk5d245" path="res://scenes/buildings/GoldMine.tscn" id="9_lhr70"]
 [ext_resource type="PackedScene" uid="uid://drst3dcdxv4k0" path="res://scenes/buildings/Castle.tscn" id="9_q8u5g"]
+[ext_resource type="PackedScene" uid="uid://c7khacr0bxvup" path="res://scenes/units/player/Warrior/Warrior.tscn" id="10_bjd11"]
+[ext_resource type="PackedScene" uid="uid://coowfgss5y3sj" path="res://scenes/units/player/archer/Archer.tscn" id="11_qmy6f"]
+[ext_resource type="PackedScene" uid="uid://dr2a5dv1lisis" path="res://scenes/units/enemy/harpoon fish/HarpoonFish.tscn" id="12_mwfav"]
 
 [node name="Main" type="Node" unique_id=330848765]
 
@@ -50,7 +53,8 @@ treeManager = NodePath("../TreeTilemapLayerManager")
 GatheringRange = 1.0
 
 [node name="TreeTileMapLayer" type="TileMapLayer" parent="." unique_id=1184793851]
-tile_map_data = PackedByteArray("AAAKAAgAAQAAAAAAAAADAAgAAQAAAAAAAAAGAAcAAQAAAAAAAAAHAAcAAQAAAAAAAAAIAAcAAQAAAAAAAAA=")
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAAKAAgAAQAAAAAAAAADAAgAAQAAAAAAAAAGAAcAAQAAAAAAAAAHAAcAAQAAAAAAAAAIAAcAAQAAAAAAAAAOAAkAAgAAAAAAAQAQAAkAAgAAAAAAAQAPAAgAAgAAAAAAAQAPAAkAAgAAAAAAAQARAAkAAgAAAAAAAQARAAgAAgAAAAAAAQARAAcAAgAAAAAAAQAQAAcAAgAAAAAAAQAQAAgAAgAAAAAAAQA=")
 tile_set = ExtResource("1_rarhs")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1584375090]
@@ -70,3 +74,12 @@ offset_bottom = 48.0
 text = "DEBUG TEXT HERE"
 script = ExtResource("7_nxtc6")
 worker = NodePath("../../Worker")
+
+[node name="Warrior" parent="." unique_id=1725664390 instance=ExtResource("10_bjd11")]
+position = Vector2(576, 256)
+
+[node name="Archer" parent="." unique_id=1312663005 instance=ExtResource("11_qmy6f")]
+position = Vector2(768, 402)
+
+[node name="Harpoon Fish" parent="." unique_id=1286992087 instance=ExtResource("12_mwfav")]
+position = Vector2(960, 128)

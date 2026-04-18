@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dgp3wtajdaciq" path="res://assets/tiles/tilemap_color1.png" id="1_ln1vq"]
 [ext_resource type="Texture2D" uid="uid://chykl510dslax" path="res://assets/tiles/tree.png" id="2_rlc62"]
+[ext_resource type="PackedScene" uid="uid://c07hggokpirp3" path="res://scenes/resources/Tree.tscn" id="3_rlc62"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ojpid"]
 texture = ExtResource("1_ln1vq")
@@ -124,6 +125,11 @@ texture_region_size = Vector2i(192, 192)
 0:1/0 = 0
 0:1/0/texture_origin = Vector2i(0, 64)
 
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_xkfyw"]
+resource_name = "tree"
+scenes/1/scene = ExtResource("3_rlc62")
+scenes/1/display_placeholder = true
+
 [resource]
 tile_size = Vector2i(64, 64)
 physics_layer_0/collision_layer = 32
@@ -135,3 +141,4 @@ custom_data_layer_0/name = "buildable"
 custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_ojpid")
 sources/1 = SubResource("TileSetAtlasSource_gofkq")
+sources/2 = SubResource("TileSetScenesCollectionSource_xkfyw")

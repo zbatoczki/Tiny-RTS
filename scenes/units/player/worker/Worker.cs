@@ -86,13 +86,8 @@ public partial class Worker : MeleeUnit
 
 	private void ReturnToResource()
 	{
-		if(GatheringResourceTarget == null || GatheringResourceTarget.IsDepleted)
-		{
-			stateMachine.ForceToState<Idle>();
-			return;
-		}
-
-		if(GatheringResourceTarget.ResourceType == GatheringResource.ResourceTypes.GOLD)
+		
+		if(GatheringResourceTarget.ResourceType == GatheringResource.ResourceTypes.GOLD && !GatheringResourceTarget.IsDepleted)
 		{
 			MoveTo(GatheringResourceTarget.CellCorrdinates);
 		}

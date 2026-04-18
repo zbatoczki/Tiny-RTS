@@ -28,7 +28,7 @@ public partial class Idle : State
 		{
 			var mostCarried = worker.CurrentInventory.MaxBy(entry => entry.Value);
 			if(mostCarried.Value > 0)
-				AnimationName += $"_{mostCarried.Key}";
+				AnimationName += $"_{mostCarried.Key.ToString().ToLower()}";
 		}
 	}
 }
