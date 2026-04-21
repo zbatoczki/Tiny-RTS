@@ -15,8 +15,7 @@ namespace Game.Test;
 
 public partial class SelectionManager : Node2D
 {
-	[Export] TileMapLayer treeTileMapLayer;
-	[Export] TreeTileMapLayerManager treeTileMapLayerManager;
+	[Export] TreeTileMapLayerManager treeTileMapLayer;
 
 	private Vector2 startPosition;
 	private List<Unit> selectedUnits = [];
@@ -77,18 +76,19 @@ public partial class SelectionManager : Node2D
 			
 			foreach(var item in results)
 			{
+				GD.Print(item["collider"].Obj);
 				if (item["collider"].Obj is Unit n && n.IsInGroup(GlobalGroups.ENEMY_UNIT))
 				{
 					selectedUnits.ForEach(unit => unit.AttackTarget = n);
 				}
-				else if (item["collider"].Obj is TileMapLayer tml && tml == treeTileMapLayer)
+				else if (item["collider"].Obj is Resources.Tree)
 				{
 					var workerUnits = selectedUnits.OfType<Worker>().ToList();
 					if(workerUnits.Count == 0) continue;
 
 					Vector2 localPosition = treeTileMapLayer.ToLocal(mousePosition);
 					Vector2I cellPosition = treeTileMapLayer.LocalToMap(localPosition);
-					GatheringResource treeData = treeTileMapLayerManager.GetTreeAt(cellPosition);
+					GatheringResource treeData = treeTileMapLayer.GetTreeAt(cellPosition);
 					if(treeData != null && !treeData.IsDepleted)
 					{
 						workerUnits.ForEach(unit =>

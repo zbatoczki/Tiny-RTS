@@ -11,7 +11,7 @@ namespace Game.Units;
 
 public partial class Worker : MeleeUnit
 {
-	[Export] private TreeTileMapLayerManager treeManager;
+	[Export] private TreeTileMapLayerManager treeLayer;
 	[Export] private float GatheringRange;
 
 	public Dictionary<GatheringResource.ResourceTypes, int> CurrentInventory = new()
@@ -53,12 +53,13 @@ public partial class Worker : MeleeUnit
 
 	public void DropOffResources()
 	{
-		//TODO: call ResourceEventBus and pass resource counts
-		ResourceEvents.EmitResourcesModified(CurrentInventory[GatheringResource.ResourceTypes.WOOD], CurrentInventory[GatheringResource.ResourceTypes.GOLD], CurrentInventory[GatheringResource.ResourceTypes.FOOD]);
+		ResourceEvents.EmitResourcesModified(
+			CurrentInventory[GatheringResource.ResourceTypes.WOOD], 
+			CurrentInventory[GatheringResource.ResourceTypes.GOLD], 
+			CurrentInventory[GatheringResource.ResourceTypes.FOOD]
+		);
 		ClearAllInventoryCounts();
 		ReturnToResource();
-		
-		
 	}
 
 	public void ReturnToCastle()
@@ -97,21 +98,25 @@ public partial class Worker : MeleeUnit
 	
 			if (!GatheringResourceTarget.IsDepleted)
 			{
-				MoveTo(treeManager.GetGlobalPosition(GatheringResourceTarget.CellCorrdinates));
+				MoveTo(treeLayer.GetGlobalPosition(GatheringResourceTarget.CellCorrdinates));
 				return;
 			}
 
-			Vector2 lastTreeWorldPosition = treeManager.TreeLayer.ToGlobal(treeManager.TreeLayer.MapToLocal(lastTreeCellPosition));
-			GatheringResource nearestTree = treeManager.GetNearestTree(lastTreeWorldPosition, lastTreeCellPosition);
+			Vector2 lastTreeWorldPosition = treeLayer.ToGlobal(treeLayer.MapToLocal(lastTreeCellPosition));
+			GatheringResource nearestTree = treeLayer.GetNearestTree(lastTreeWorldPosition, lastTreeCellPosition);
 			GatheringResourceTarget = nearestTree;
 			if(nearestTree != null)
 			{
-				MoveTo(treeManager.GetGlobalPosition(GatheringResourceTarget.CellCorrdinates));
+				MoveTo(treeLayer.GetGlobalPosition(GatheringResourceTarget.CellCorrdinates));
 			}
 			else
 			{
 				stateMachine.ForceToState<Idle>();
 			}
+		}
+		else
+		{
+			stateMachine.ForceToState<Idle>();
 		}
 	}
 

@@ -1,42 +1,48 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Game.Resources.Gathering;
 using Godot;
 
 namespace Game.Resources;
 
-public partial class TreeTileMapLayerManager : Node
+public partial class TreeTileMapLayerManager : TileMapLayer
 {	
 	private readonly Vector2I DEPLETED_TREE_ATLAS_COORD = new(0,2);
 
-	[Export] public TileMapLayer TreeLayer {get; set;}
+	//[Export] public TileMapLayer TreeLayer {get; set;}
 
-	private Dictionary<Vector2I, GatheringResource> treeResources = [];
+	private Dictionary<Vector2I, Tree> treeResources = [];
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		InitializeTrees();
+		CallDeferred(MethodName.InitializeTrees);
 	}
 
 	private void InitializeTrees()
 	{
-		foreach(Vector2I cell in TreeLayer.GetUsedCells())
+		var trees = GetChildren().Cast<Tree>();
+		foreach(Vector2I cell in GetUsedCells())
 		{
-			var data = new GatheringResource
+			var localPos = MapToLocal(cell);
+
+			var treeInstance = trees.FirstOrDefault(tree => tree.Position == localPos);
+			if (treeInstance == null)
 			{
-				ResourceType = GatheringResource.ResourceTypes.WOOD,
-				CellCorrdinates = cell	
-			};
-			data.ResourceDepleted += OnTreeDepleted;
-			treeResources[cell] = data;
+				GD.PrintErr($"No scene instance found at cell {cell}");
+				continue;
+			}
+			treeInstance.GatheringResource.CellCorrdinates = cell;
+			treeResources[cell] = treeInstance;
+			treeInstance.GatheringResource.ResourceDepleted += OnTreeDepleted;
 		}
 	}
 
 	public GatheringResource GetTreeAt(Vector2I cell)
 	{
-		treeResources.TryGetValue(cell, out GatheringResource data);
-		return data;
+		treeResources.TryGetValue(cell, out Tree data);
+		return data.GatheringResource;
 	}
 
 	public GatheringResource GetNearestTree(Vector2 worldPosition, Vector2I? excludeCell = null)
@@ -46,7 +52,7 @@ public partial class TreeTileMapLayerManager : Node
 
 		foreach (var kvp in treeResources)
 		{
-			if (kvp.Value.IsDepleted) continue;
+			if (kvp.Value.GatheringResource.IsDepleted) continue;
 			if (excludeCell.HasValue && kvp.Key == excludeCell.Value) continue;
 
 			Vector2 tileWorld = GetGlobalPosition(kvp.Key);
@@ -55,7 +61,7 @@ public partial class TreeTileMapLayerManager : Node
 			if (dist < nearestDist)
 			{
 				nearestDist = dist;
-				nearest = kvp.Value;
+				nearest = kvp.Value.GatheringResource;
 			}
 		}
 
@@ -64,12 +70,12 @@ public partial class TreeTileMapLayerManager : Node
 
 	public Vector2 GetGlobalPosition(Vector2I treeCellPosition)
     {
-        return TreeLayer.ToGlobal(TreeLayer.MapToLocal(treeCellPosition));
+        return ToGlobal(MapToLocal(treeCellPosition));
     }
 
     private void OnTreeDepleted(Vector2I cellCoordinates)
     {
-		TreeLayer.SetCell(cellCoordinates, 1, DEPLETED_TREE_ATLAS_COORD);
+		SetCell(cellCoordinates, 1, DEPLETED_TREE_ATLAS_COORD);
 		treeResources.Remove(cellCoordinates);
     }
 
