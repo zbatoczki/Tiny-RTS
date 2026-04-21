@@ -23,6 +23,7 @@ public abstract partial class Unit : CharacterBody2D
     public StateMachine stateMachine;
     private HealthComponent healthComponent;
     private float currentHealth;
+    private Sprite2D selectionRing;
 
     public override void _Ready()
     {
@@ -30,6 +31,8 @@ public abstract partial class Unit : CharacterBody2D
         collisionShape = GetNodeOrNull<CollisionShape2D>(nameof(CollisionShape2D));
         animatedSprite2D = GetNode<AnimatedSprite2D>(nameof(AnimatedSprite2D));
         damageComponent = GetNode<DamageComponent>(nameof(DamageComponent));
+        selectionRing = GetNode<Sprite2D>("SelectionRing");
+        selectionRing.Visible = false;
 
         stateMachine = GetNode<StateMachine>(nameof(StateMachine));
         stateMachine.Init(this);
@@ -73,7 +76,7 @@ public abstract partial class Unit : CharacterBody2D
 
     public virtual void SetSelected(bool selected)
     {
-        healthComponent.Visible = selected;
+        selectionRing.Visible = selected;
         OnSelectionChanged(selected);
     }
 

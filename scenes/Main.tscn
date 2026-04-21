@@ -25,13 +25,6 @@ position = Vector2(512, 128)
 [node name="GoldMine" parent="." unique_id=829714884 instance=ExtResource("9_lhr70")]
 position = Vector2(1024, 320)
 
-[node name="Worker" parent="." unique_id=1980137832 node_paths=PackedStringArray("treeLayer") instance=ExtResource("6_nxtc6")]
-z_index = 0
-y_sort_enabled = false
-position = Vector2(384, 320)
-treeLayer = NodePath("../TreeTileMapLayer")
-GatheringRange = 1.0
-
 [node name="TreeTileMapLayer" type="TileMapLayer" parent="." unique_id=1184793851]
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAEAAgAAgAAAAAAAQA=")
@@ -53,4 +46,12 @@ offset_right = 155.0
 offset_bottom = 48.0
 text = "DEBUG TEXT HERE"
 script = ExtResource("7_nxtc6")
-worker = NodePath("../../Worker")
+worker = NodePath("")
+
+[node name="Worker" parent="." unique_id=1980137832 node_paths=PackedStringArray("treeLayer") instance=ExtResource("6_nxtc6")]
+position = Vector2(256, 256)
+treeLayer = NodePath("../TreeTileMapLayer")
+
+[node name="Worker2" parent="." unique_id=1101288395 node_paths=PackedStringArray("treeLayer") instance=ExtResource("6_nxtc6")]
+position = Vector2(384, 256)
+treeLayer = NodePath("../TreeTileMapLayer")
