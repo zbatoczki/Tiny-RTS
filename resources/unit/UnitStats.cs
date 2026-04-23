@@ -1,3 +1,4 @@
+using Game.Globals;
 using Godot;
 
 namespace Game.Resources.Unit;
@@ -13,4 +14,5 @@ public partial class UnitStats : Resource
     [Export] public float AttackRange { get; set; } = 1f;
     [Export] public float VisionRange { get; set; } = 1f;
     [Export] public float GatherRate {get; set; } = 1f;
+    [Export] public Faction Faction {get; set;}
 }

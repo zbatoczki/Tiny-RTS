@@ -1,10 +1,11 @@
 using Game.Component;
+using Game.Resources.Building;
 using Game.Units;
 using Godot;
 
 namespace Game.Buildings;
 
-public partial class Castle : Node2D
+public partial class Castle : Building
 {
 	private UnitDetectionComponent unitDetectionComponent;
 
