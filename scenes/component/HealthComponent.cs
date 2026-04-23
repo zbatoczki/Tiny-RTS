@@ -4,9 +4,6 @@ public partial class HealthComponent : Node2D
 {
 	private ProgressBar healthProgressBar;
 
-	private Button healthUpButton;
-	private Button healthDownButton;
-
 	public override void _Ready()
 	{
 		healthProgressBar = GetNode<ProgressBar>("%HealthProgressBar");
