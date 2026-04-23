@@ -6,6 +6,7 @@ using System.Linq;
 using Game.Resources.Gathering;
 using Game.Autoload;
 using Game.Buildings;
+using Game.Globals;
 
 namespace Game.Units;
 
@@ -14,15 +15,15 @@ public partial class Worker : MeleeUnit
 	[Export] private TreeTileMapLayerManager treeLayer;
 	[Export] private float GatheringRange;
 
-	public Dictionary<GatheringResource.ResourceTypes, int> CurrentInventory = new()
+	public Dictionary<ResourceType, int> CurrentInventory = new()
 	{
-		{GatheringResource.ResourceTypes.WOOD, 0},
-		{GatheringResource.ResourceTypes.GOLD, 0},
-		{GatheringResource.ResourceTypes.FOOD, 0}
+		{ResourceType.Wood, 0},
+		{ResourceType.Gold, 0},
+		{ResourceType.Food, 0}
 	};
 
 	public bool HasInventory => CurrentInventory.Any(resource => resource.Value > 0);
-	public GatheringResource GatheringResourceTarget {get; set;}
+	public ResourceNode GatheringResourceTarget {get; set;}
 
 	private Area2D resourceDetector;
 	private Vector2? castleLocation;
@@ -44,19 +45,24 @@ public partial class Worker : MeleeUnit
 
     private void OnResourceEntered(Node2D body)
     {
-		if (body is GoldMine goldmine && !goldmine._GatheringResource.IsDepleted)
-		{
-			goldmine.EnterMine(this);
-		}
-        stateMachine.ForceToState<Gather>();
+		var node = body as ResourceNode;
+		GD.Print(node + ":" + GatheringResourceTarget);
+        if (node != null && !node.IsDepleted && node == GatheringResourceTarget)
+        {
+            if (node is GoldMine goldmine)
+			{
+                goldmine.EnterMine(this);
+			}
+            stateMachine.ForceToState<Gather>();
+        }
     }
 
 	public void DropOffResources()
 	{
 		ResourceEvents.EmitResourcesModified(
-			CurrentInventory[GatheringResource.ResourceTypes.WOOD], 
-			CurrentInventory[GatheringResource.ResourceTypes.GOLD], 
-			CurrentInventory[GatheringResource.ResourceTypes.FOOD]
+			CurrentInventory[ResourceType.Wood], 
+			CurrentInventory[ResourceType.Gold], 
+			CurrentInventory[ResourceType.Food]
 		);
 		ClearAllInventoryCounts();
 		ReturnToResource();
@@ -88,26 +94,26 @@ public partial class Worker : MeleeUnit
 	private void ReturnToResource()
 	{
 		
-		if(GatheringResourceTarget.ResourceType == GatheringResource.ResourceTypes.GOLD && !GatheringResourceTarget.IsDepleted)
+		if(GatheringResourceTarget.Type == ResourceType.Gold && !GatheringResourceTarget.IsDepleted)
 		{
-			MoveTo(GatheringResourceTarget.CellCorrdinates);
+			MoveTo(GatheringResourceTarget.CellCoordinates);
 		}
-		else if(GatheringResourceTarget.ResourceType == GatheringResource.ResourceTypes.WOOD)
+		else if(GatheringResourceTarget.Type == ResourceType.Wood)
 		{
-			Vector2I lastTreeCellPosition = GatheringResourceTarget.CellCorrdinates;
+			Vector2I lastTreeCellPosition = GatheringResourceTarget.CellCoordinates;
 	
 			if (!GatheringResourceTarget.IsDepleted)
 			{
-				MoveTo(treeLayer.GetGlobalPosition(GatheringResourceTarget.CellCorrdinates));
+				MoveTo(treeLayer.GetGlobalPosition(GatheringResourceTarget.CellCoordinates));
 				return;
 			}
 
 			Vector2 lastTreeWorldPosition = treeLayer.ToGlobal(treeLayer.MapToLocal(lastTreeCellPosition));
-			GatheringResource nearestTree = treeLayer.GetNearestTree(lastTreeWorldPosition, lastTreeCellPosition);
+			Resources.Tree nearestTree = treeLayer.GetNearestTree(lastTreeWorldPosition, lastTreeCellPosition);
 			GatheringResourceTarget = nearestTree;
 			if(nearestTree != null)
 			{
-				MoveTo(treeLayer.GetGlobalPosition(GatheringResourceTarget.CellCorrdinates));
+				MoveTo(treeLayer.GetGlobalPosition(GatheringResourceTarget.CellCoordinates));
 			}
 			else
 			{

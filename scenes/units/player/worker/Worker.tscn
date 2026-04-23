@@ -188,7 +188,7 @@ region = Rect2(768, 0, 192, 192)
 atlas = ExtResource("10_2rd3q")
 region = Rect2(960, 0, 192, 192)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_2rd3q"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_phryt"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -364,6 +364,7 @@ animations = [{
 [node name="Worker" unique_id=1980137832 groups=["PlayerUnit"] instance=ExtResource("1_ir85n")]
 z_index = 1
 collision_layer = 2
+collision_mask = 33
 script = ExtResource("2_2rd3q")
 GatheringRange = 5.0
 stats = ExtResource("3_phryt")
@@ -389,13 +390,12 @@ scale = Vector2(1.895, 1.895)
 [node name="AnimatedSprite2D" parent="." index="5" unique_id=290410313]
 y_sort_enabled = true
 position = Vector2(2, 0)
-sprite_frames = SubResource("SpriteFrames_2rd3q")
+sprite_frames = SubResource("SpriteFrames_phryt")
 animation = &"move_gold"
 autoplay = "idle"
 offset = Vector2(-96, -110)
 
 [node name="ResourceDetector" type="Area2D" parent="." index="6" unique_id=844198648]
-visible = false
 collision_layer = 0
 collision_mask = 32
 input_pickable = false

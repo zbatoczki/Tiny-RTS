@@ -10,6 +10,7 @@ using Game.Resources.Gathering;
 using Game.Units;
 using Godot;
 using Godot.Collections;
+using Game.Globals;
 
 namespace Game.Test;
 
@@ -88,13 +89,15 @@ public partial class SelectionManager : Node2D
 
 					Vector2 localPosition = treeTileMapLayer.ToLocal(mousePosition);
 					Vector2I cellPosition = treeTileMapLayer.LocalToMap(localPosition);
-					GatheringResource treeData = treeTileMapLayer.GetTreeAt(cellPosition);
+					GD.Print(cellPosition);
+					Resources.Tree treeData = treeTileMapLayer.GetTreeAt(cellPosition);
+					GD.Print(treeData.RemainingResources);
 					if(treeData != null && !treeData.IsDepleted)
 					{
 						workerUnits.ForEach(unit =>
 						{
 							unit.GatheringResourceTarget = treeData;
-							GD.Print($"unit tree target: {treeData.ResourceType} at {treeData.CellCorrdinates}");
+							GD.Print($"unit tree target: {treeData.CellCoordinates}");
 						});
 					}
 					else
@@ -102,18 +105,16 @@ public partial class SelectionManager : Node2D
 						GD.Print("No tree found");
 					}
 				}
-				else if (item["collider"].Obj is StaticBody2D node && node.GetParent() is GoldMine goldmine)
+				else if (item["collider"].Obj is GoldMine goldmine)
 				{
 					var workerUnits = selectedUnits.OfType<Worker>().ToList();
 					if(workerUnits.Count == 0) continue;
 
-					GatheringResource goldMineData = goldmine._GatheringResource;
-					if(goldMineData != null && !goldMineData.IsDepleted)
+					if(goldmine != null && !goldmine.IsDepleted)
 					{
 						workerUnits.ForEach(unit =>
 						{
-							unit.GatheringResourceTarget = goldMineData;
-							GD.Print($"unit target: {goldMineData.ResourceType} at {goldMineData.CellCorrdinates}");
+							unit.GatheringResourceTarget = goldmine;
 						});
 					}
 				}

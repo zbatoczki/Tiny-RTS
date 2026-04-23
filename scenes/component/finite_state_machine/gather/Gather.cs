@@ -1,3 +1,4 @@
+using Game.Globals;
 using Game.Resources.Gathering;
 using Game.Units;
 using Godot;
@@ -38,25 +39,23 @@ public partial class Gather : State
 		
 		if(worker.GatheringResourceTarget == null || worker.GatheringResourceTarget.IsDepleted) return;
 
-		if(worker.GatheringResourceTarget.ResourceType == GatheringResource.ResourceTypes.GOLD)
+		if(worker.GatheringResourceTarget.Type == ResourceType.Gold)
 		{
 			worker.Visible = false;
 			worker.GatheringResourceTarget.EmitSignal("ResourceGathering");
 		}
 		else
 		{
-			StringName gatheringAnimation = $"gather_{worker.GatheringResourceTarget.ResourceType.ToString().ToLower()}";
+			StringName gatheringAnimation = $"gather_{worker.GatheringResourceTarget.Type.ToString().ToLower()}";
 			worker.animatedSprite2D.Play(gatheringAnimation);
 		}
 
-		worker.GatheringResourceTarget.IsBeingGathered = true;
 		gatherTimer.WaitTime = unit.stats.GatherRate;
 		gatherTimer.Start();
 	}
 
 	public override void Exit()
     {
-		worker?.GatheringResourceTarget?.IsBeingGathered = false;
 		worker.Visible = true;
         gatherTimer.Stop();
     }
@@ -70,7 +69,7 @@ public partial class Gather : State
 			return;
 		}
 
-		(GatheringResource.ResourceTypes resource, int amount) = worker.GatheringResourceTarget.Gather(10);
+		(ResourceType resource, int amount) = worker.GatheringResourceTarget.Gather(10);
 		worker.CurrentInventory[resource] += amount;
 		worker.PrintCurrentInventory();
 		worker.ReturnToCastle();

@@ -23,6 +23,8 @@ public partial class TreeTileMapLayerManager : TileMapLayer
 	private void InitializeTrees()
 	{
 		var trees = GetChildren().Cast<Tree>();
+		var usedCells = GetUsedCells();
+		GD.Print("Used cells in tree layer: " + usedCells.Count);
 		foreach(Vector2I cell in GetUsedCells())
 		{
 			var localPos = MapToLocal(cell);
@@ -33,26 +35,27 @@ public partial class TreeTileMapLayerManager : TileMapLayer
 				GD.PrintErr($"No scene instance found at cell {cell}");
 				continue;
 			}
-			treeInstance.GatheringResource.CellCorrdinates = cell;
+			treeInstance.ResourceDepleted += OnTreeDepleted;
+			treeInstance.CellCoordinates = cell;
 			treeResources[cell] = treeInstance;
-			treeInstance.GatheringResource.ResourceDepleted += OnTreeDepleted;
 		}
+		
 	}
 
-	public GatheringResource GetTreeAt(Vector2I cell)
+	public Tree GetTreeAt(Vector2I cell)
 	{
 		treeResources.TryGetValue(cell, out Tree data);
-		return data.GatheringResource;
+		return data;
 	}
 
-	public GatheringResource GetNearestTree(Vector2 worldPosition, Vector2I? excludeCell = null)
+	public Tree GetNearestTree(Vector2 worldPosition, Vector2I? excludeCell = null)
 	{
-		GatheringResource nearest = null;
+		Tree nearest = null;
 		float nearestDist = float.MaxValue;
 
 		foreach (var kvp in treeResources)
 		{
-			if (kvp.Value.GatheringResource.IsDepleted) continue;
+			if (kvp.Value.IsDepleted) continue;
 			if (excludeCell.HasValue && kvp.Key == excludeCell.Value) continue;
 
 			Vector2 tileWorld = GetGlobalPosition(kvp.Key);
@@ -61,7 +64,7 @@ public partial class TreeTileMapLayerManager : TileMapLayer
 			if (dist < nearestDist)
 			{
 				nearestDist = dist;
-				nearest = kvp.Value.GatheringResource;
+				nearest = kvp.Value;
 			}
 		}
 
@@ -76,7 +79,9 @@ public partial class TreeTileMapLayerManager : TileMapLayer
     private void OnTreeDepleted(Vector2I cellCoordinates)
     {
 		SetCell(cellCoordinates, 1, DEPLETED_TREE_ATLAS_COORD);
+		var treeInstance = treeResources[cellCoordinates];
 		treeResources.Remove(cellCoordinates);
+		treeInstance.QueueFree();
     }
 
 }

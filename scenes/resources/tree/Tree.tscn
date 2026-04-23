@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://c07hggokpirp3"]
 
 [ext_resource type="Script" uid="uid://c7xg7g7syujmr" path="res://scenes/resources/tree/Tree.cs" id="1_pknr5"]
-[ext_resource type="Resource" uid="uid://fc7hnemrakna" path="res://resources/resource_entity/tree.tres" id="2_7x6od"]
 [ext_resource type="Texture2D" uid="uid://chykl510dslax" path="res://assets/tiles/tree.png" id="3_741qs"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_60mlq"]
@@ -52,10 +51,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_eglkm"]
-atlas = ExtResource("3_741qs")
-region = Rect2(81, 530, 32, 27)
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_eglkm"]
 radius = 34.0
 height = 142.0
@@ -64,17 +59,14 @@ height = 142.0
 collision_layer = 32
 collision_mask = 2
 script = ExtResource("1_pknr5")
-GatheringResource = ExtResource("2_7x6od")
+Type = 1
+TotalResources = 10
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=619849326]
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_3n80q")
 autoplay = "default"
 offset = Vector2(0, -64)
-
-[node name="DepletedSprite" type="Sprite2D" parent="." unique_id=449591747]
-visible = false
-texture = SubResource("AtlasTexture_eglkm")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=716583844]
 position = Vector2(0, -59)

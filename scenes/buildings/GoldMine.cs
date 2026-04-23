@@ -1,19 +1,17 @@
 using Game.Component;
+using Game.Resources;
 using Game.Resources.Gathering;
 using Game.Units;
 using Godot;
-using System;
 using System.Collections.Generic;
 namespace Game.Buildings;
-public partial class GoldMine : Node2D
+
+public partial class GoldMine : ResourceNode
 {
-
-	[Export] public GatheringResource _GatheringResource{get; private set;}
-
 	private Sprite2D inactiveSprite;
 	private Sprite2D activeSprite;
 	private Sprite2D destroyedSprite;
-	private UnitDetectionComponent unitDetectionComponent;
+
 
 	private enum SpriteStates
 	{
@@ -25,22 +23,21 @@ public partial class GoldMine : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		InitializeResource();
 		inactiveSprite = GetNode<Sprite2D>("Inactive");
 		activeSprite = GetNode<Sprite2D>("Active");
 		destroyedSprite = GetNode<Sprite2D>("Destroyed");
-		unitDetectionComponent = GetNode<UnitDetectionComponent>(nameof(UnitDetectionComponent));
 
-		_GatheringResource.ResourceGathered += OnResourceGathered;
-		_GatheringResource.ResourceDepleted += OnResourceDepleted;
+		ResourceGathered += OnResourceGathered;
+		ResourceDepleted += OnResourceDepleted;
 
-		_GatheringResource.CellCorrdinates = (Vector2I)GlobalPosition;
+		CellCoordinates = (Vector2I)GlobalPosition;
 	}
 
     private void OnResourceDepleted(Vector2I _)
     {
-		GD.Print($"Gold mine at {_GatheringResource.CellCorrdinates} is depleted.");
+		GD.Print($"Gold mine at {CellCoordinates} is depleted.");
         SetActiveSprite(SpriteStates.DESTRYOED);
-		unitDetectionComponent.Monitoring = false;
     }
 
 

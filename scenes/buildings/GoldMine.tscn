@@ -1,31 +1,24 @@
 [gd_scene format=3 uid="uid://dy0ld8xk5d245"]
 
 [ext_resource type="Script" uid="uid://bbafkc2yj8oca" path="res://scenes/buildings/GoldMine.cs" id="1_ltrxr"]
-[ext_resource type="Resource" uid="uid://c3457bx8mq6xv" path="res://resources/resource_entity/goldmine.tres" id="2_6s07i"]
 [ext_resource type="Texture2D" uid="uid://c78qc0xfnab0g" path="res://assets/resources/goldmine/goldmine_inactive.png" id="2_ltrxr"]
 [ext_resource type="Texture2D" uid="uid://co86whfl80inc" path="res://assets/resources/goldmine/goldmine_active.png" id="3_6s07i"]
-[ext_resource type="PackedScene" uid="uid://dggm7qkrau8nx" path="res://scenes/component/UnitDetectionComponent.tscn" id="3_ltrxr"]
 [ext_resource type="Texture2D" uid="uid://cr1tydn8k2f2g" path="res://assets/resources/goldmine/goldmine_destroyed.png" id="4_nf7bt"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hl115"]
 radius = 44.33
 height = 159.27
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6s07i"]
-radius = 48.0
-height = 164.0
-
-[node name="GoldMine" type="Node2D" unique_id=1580598003]
-script = ExtResource("1_ltrxr")
-_GatheringResource = ExtResource("2_6s07i")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=2146834767]
-position = Vector2(0, -22)
+[node name="GoldMine" type="StaticBody2D" unique_id=93055991]
 collision_layer = 32
 collision_mask = 6
+script = ExtResource("1_ltrxr")
+TotalResources = 10
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" unique_id=914712534]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=914712534]
+position = Vector2(0, -22)
 rotation = 1.5652542
+scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("CapsuleShape2D_hl115")
 
 [node name="Inactive" type="Sprite2D" parent="." unique_id=1372564955]
@@ -44,15 +37,3 @@ visible = false
 texture = ExtResource("4_nf7bt")
 centered = false
 offset = Vector2(-96, -86)
-
-[node name="UnitDetectionComponent" parent="." unique_id=1331689136 instance=ExtResource("3_ltrxr")]
-position = Vector2(0, -22)
-collision_mask = 2
-monitorable = true
-targetGroup = &"PlayerUnit"
-
-[node name="CollisionShape2D" parent="UnitDetectionComponent" index="0" unique_id=947036371]
-rotation = 1.5707964
-shape = SubResource("CapsuleShape2D_6s07i")
-
-[editable path="UnitDetectionComponent"]
