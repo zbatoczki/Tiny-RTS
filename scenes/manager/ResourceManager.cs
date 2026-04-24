@@ -19,6 +19,14 @@ public partial class ResourceManager : Node
 		ResourceEvents.Instance.ResourcesModified += OnResourcesModified;
 	}
 
+	public bool CanAfford(int woodCost = 0, int goldCost = 0, int foodCost = 0)
+	{
+		return 
+		CurrentWoodAmount >= woodCost && 
+		CurrentGoldAmount >= goldCost && 
+		CurrentFoodAmount >= foodCost;
+	}
+
 	private void OnResourcesModified(int woodAmt = 0, int goldAmt = 0, int foodAmt = 0)
 	{
 		CurrentFoodAmount += foodAmt;

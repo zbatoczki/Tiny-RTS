@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Resources;
 using Game.Buildings;
 using Game.Globals;
-using Game.Resources.Building;
 using Game.Units;
+using Game.Manager;
 using Godot;
 
 
@@ -15,6 +16,8 @@ public partial class GameManager: Node
 
     [Signal] public delegate void GameOverEventHandler(bool playerWon);
     [Signal] public delegate void PopulationChangedEventHandler(int faction, int current, int max);
+
+    private Manager.ResourceManager resourceManager;
 
     public GameState State {get; private set;} = GameState.Playing;
 
@@ -38,6 +41,7 @@ public partial class GameManager: Node
             currentPopulation[faction] = 0;
             maxPopulation[faction] = 5;
         }
+        resourceManager = GetNode<Manager.ResourceManager>(nameof(Manager.ResourceManager));
     }
 
     #region UNITS
@@ -70,6 +74,11 @@ public partial class GameManager: Node
     public void UnregisterBuilding(Building building)
     {
         AllBuildings.Remove(building);
+    }
+
+    public bool CanAffordBuilding(int woodCost = 0, int goldCost = 0, int foodCost = 0)
+    {
+        return resourceManager.CanAfford(woodCost, goldCost, foodCost);
     }
 
     #endregion

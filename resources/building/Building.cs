@@ -1,18 +1,24 @@
+using System.Collections.Generic;
 using Game.Autoload;
 using Game.Component;
 using Game.Globals;
+using Game.Units;
 using Godot;
 
-namespace Game.Resources.Building;
+namespace Game.Buildings;
 
-public partial class Building : StaticBody2D
+public abstract partial class Building : StaticBody2D
 {
 	[Export] public Faction Faction;
     [Export] public float MaxHealth = 500f;
+    [Export] public float TrainTime = 10f;
 
     public float CurrentHealth {get; protected set;}
 
     private HealthComponent healthBar;
+    private Timer timer;
+
+    protected readonly Queue<(PackedScene unitScene, float waitTime)> queue = new();
 
     public override void _Ready()
     {
@@ -26,6 +32,9 @@ public partial class Building : StaticBody2D
             GameManager.Instance.RegisterBuilding(this);
             OnReady();
         }
+        timer = GetNode<Timer>(nameof(Timer));
+        timer.WaitTime = TrainTime;
+        timer.Timeout += OnTimeout;
     }
 
     public virtual void OnReady() { }
@@ -44,5 +53,34 @@ public partial class Building : StaticBody2D
     {
         GameManager.Instance.UnregisterBuilding(this);
         QueueFree();
+    }
+
+    private void OnTimeout()
+    {
+        //spawn unit
+        SpawnUnit(queue.Dequeue().unitScene);
+        //get next item in queue if any and restart the timer with the queued time
+        if(queue.Count > 0)
+        {
+            timer.WaitTime = queue.Peek().waitTime;
+            timer.Start();
+        }
+    }
+
+    protected void Enqueue(PackedScene scene, float time)
+    {
+        queue.Enqueue((scene, time));
+        if(queue.Count == 1)
+        {
+            timer.WaitTime = time;
+            timer.Start();
+        }
+    }
+
+    protected abstract bool TrainUnit();
+
+    private void SpawnUnit(PackedScene scene)
+    {
+        if(scene == null) return;
     }
 }
