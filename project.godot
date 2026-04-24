@@ -22,7 +22,6 @@ config/icon="uid://c1d0cq36adn3"
 [autoload]
 
 ResourceEvents="*uid://bqjps2u0qs4ao"
-GameManager="*uid://xgwr25exdrsw"
 
 [display]
 

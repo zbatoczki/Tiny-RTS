@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://blnqgrr1rchxq"]
 
 [ext_resource type="PackedScene" uid="uid://6bbj1ble4hyb" path="res://scenes/manager/SelectionManager.tscn" id="1_0bbpv"]
+[ext_resource type="Script" uid="uid://xgwr25exdrsw" path="res://scripts/GameManager.cs" id="1_lhr70"]
 [ext_resource type="PackedScene" uid="uid://n0i5ir0pwbek" path="res://scenes/manager/ResourceManager.tscn" id="1_nxtc6"]
 [ext_resource type="TileSet" uid="uid://djlecc884ekiu" path="res://resources/tilemap/tiles.tres" id="1_rarhs"]
 [ext_resource type="PackedScene" uid="uid://bxo4obx7s5dql" path="res://scenes/units/player/worker/Worker.tscn" id="6_nxtc6"]
@@ -11,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://drst3dcdxv4k0" path="res://scenes/buildings/Castle.tscn" id="9_q8u5g"]
 
 [node name="Main" type="Node" unique_id=330848765]
+script = ExtResource("1_lhr70")
 
 [node name="ResourceManager" parent="." unique_id=814893254 node_paths=PackedStringArray("resoucesUI") instance=ExtResource("1_nxtc6")]
 resoucesUI = NodePath("../UI/ResourcesUI")
@@ -20,7 +22,7 @@ tile_map_data = PackedByteArray("AAAUAAsAAAACAAIAAAAUAAoAAAACAAEAAAAUAAkAAAACAAE
 tile_set = ExtResource("1_rarhs")
 
 [node name="Castle2" parent="." unique_id=1580598003 groups=["Base"] instance=ExtResource("9_q8u5g")]
-position = Vector2(512, 128)
+position = Vector2(704, 256)
 
 [node name="GoldMine" parent="." unique_id=829714884 instance=ExtResource("9_lhr70")]
 position = Vector2(256, 640)
@@ -48,9 +50,5 @@ text = "DEBUG TEXT HERE"
 script = ExtResource("7_nxtc6")
 
 [node name="Worker" parent="." unique_id=1980137832 node_paths=PackedStringArray("treeLayer") instance=ExtResource("6_nxtc6")]
-position = Vector2(256, 256)
-treeLayer = NodePath("../TreeTileMapLayer")
-
-[node name="Worker2" parent="." unique_id=1101288395 node_paths=PackedStringArray("treeLayer") instance=ExtResource("6_nxtc6")]
-position = Vector2(384, 256)
+position = Vector2(128, 256)
 treeLayer = NodePath("../TreeTileMapLayer")

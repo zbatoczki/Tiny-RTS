@@ -82,5 +82,9 @@ public abstract partial class Building : StaticBody2D
     private void SpawnUnit(PackedScene scene)
     {
         if(scene == null) return;
+        var unit = scene.Instantiate<Unit>();
+        unit.stats.Faction = Faction;
+        unit.GlobalPosition = GlobalPosition + new Vector2(GD.RandRange(-128, 128), 96);
+        GetParent().AddChild(unit);
     }
 }
