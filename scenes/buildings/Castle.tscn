@@ -16,6 +16,7 @@ size = Vector2(258.115, 149.72)
 collision_mask = 6
 script = ExtResource("1_xrw3n")
 WorkerScene = ExtResource("2_c3u2i")
+TrainTime = 2.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1372564955]
 texture = ExtResource("1_lg0r4")

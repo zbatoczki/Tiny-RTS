@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://degbw6igj5uch"]
+
+[sub_resource type="Gradient" id="Gradient_ql2tn"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.55331415, 0.7550432)
+colors = PackedColorArray(0.6431373, 1, 0.6431373, 0, 0, 1, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_71y13"]
+gradient = SubResource("Gradient_ql2tn")
+width = 65
+height = 13
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="SelectionRing" type="Sprite2D" unique_id=1405774456]
+texture = SubResource("GradientTexture2D_71y13")
+offset = Vector2(0, 20)

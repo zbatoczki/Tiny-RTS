@@ -14,15 +14,16 @@ public partial class Castle : Building
 
 	public override void _Ready()
 	{
+		base._Ready();
 		unitDetectionComponent = GetNode<UnitDetectionComponent>(nameof(UnitDetectionComponent));
 		unitDetectionComponent.UnitDetected += OnUnitDetected;
 	}
 
-	protected override bool TrainUnit()
+	public override bool TrainUnit()
 	{
 		var (goldCost, woodCost) = Costs.Worker;
 		if(!GameManager.Instance.CanTrain(Faction.Player)) return false;
-		if(!GameManager.Instance.CanAffordBuilding(woodCost, goldCost)) return false;
+		if(!ResourceManager.Instance.Spend(Faction, woodCost, goldCost)) return false;
 		Enqueue(WorkerScene, TrainTime);
 		return true;
 	}

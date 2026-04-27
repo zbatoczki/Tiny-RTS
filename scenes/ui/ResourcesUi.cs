@@ -1,8 +1,9 @@
 using Game.Component.Ui;
+using Game.Globals;
+using Game.Autoload;
 using Godot;
 
 namespace Game.UI;
-
 
 public partial class ResourcesUi : PanelContainer
 {
@@ -17,16 +18,20 @@ public partial class ResourcesUi : PanelContainer
 		goldCountLabel = GetNode<NumberLabel>("%GoldCountLabel");
 		foodCountLabel = GetNode<NumberLabel>("%FoodCountLabel");
 
-		woodCountLabel.Text = "0";
-		goldCountLabel.Text = "0";
-		foodCountLabel.Text = "0";
+		woodCountLabel.SetImmediate(ResourceManager.Instance.GetWood(Faction.Player));
+		goldCountLabel.SetImmediate(ResourceManager.Instance.GetGold(Faction.Player));
+		foodCountLabel.SetImmediate(ResourceManager.Instance.GetFood(Faction.Player));
+
+		ResourceManager.Instance.ResourceChanged += UpdateResouceCounts;
 	}
 
-	public void UpdateResouceCounts(int woodCount, int goldCount, int foodCount)
+	public void UpdateResouceCounts(int faction, int gold, int wood, int food)
 	{
-		woodCountLabel.AnimateTo(woodCount);
-		goldCountLabel.AnimateTo(goldCount);
-		foodCountLabel.AnimateTo(foodCount);
+		if(faction != (int) Faction.Player) return;
+
+		woodCountLabel.AnimateTo(wood);
+		goldCountLabel.AnimateTo(gold);
+		foodCountLabel.AnimateTo(food);
 	}
 }
 

@@ -77,7 +77,7 @@ public abstract partial class Building : StaticBody2D
         }
     }
 
-    protected abstract bool TrainUnit();
+    public abstract bool TrainUnit();
 
     private void SpawnUnit(PackedScene scene)
     {
