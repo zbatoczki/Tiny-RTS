@@ -11,8 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dy0ld8xk5d245" path="res://scenes/buildings/GoldMine.tscn" id="9_lhr70"]
 [ext_resource type="PackedScene" uid="uid://drst3dcdxv4k0" path="res://scenes/buildings/Castle.tscn" id="9_q8u5g"]
 [ext_resource type="PackedScene" uid="uid://dr2a5dv1lisis" path="res://scenes/units/enemy/harpoon fish/HarpoonFish.tscn" id="10_bjd11"]
-[ext_resource type="PackedScene" uid="uid://c7khacr0bxvup" path="res://scenes/units/player/Warrior/Warrior.tscn" id="11_qmy6f"]
-[ext_resource type="PackedScene" uid="uid://coowfgss5y3sj" path="res://scenes/units/player/archer/Archer.tscn" id="12_mwfav"]
+[ext_resource type="PackedScene" uid="uid://inc61pd743x5" path="res://scenes/units/player/spearman/Spearman.tscn" id="14_mwfav"]
 
 [node name="Main" type="Node" unique_id=330848765]
 
@@ -68,15 +67,19 @@ offset_right = 566.0
 offset_bottom = 671.0
 text = "Train Warrior (10 gold)"
 
+[node name="TrainSpearmanButton" type="Button" parent="UI" unique_id=961533029]
+offset_left = 768.0
+offset_top = 640.0
+offset_right = 950.0
+offset_bottom = 671.0
+text = "Train Spearman"
+
 [node name="Worker" parent="." unique_id=1980137832 node_paths=PackedStringArray("treeLayer") instance=ExtResource("6_nxtc6")]
 position = Vector2(576, 448)
 treeLayer = NodePath("../TreeTileMapLayer")
 
 [node name="Harpoon Fish" parent="." unique_id=1465977348 instance=ExtResource("10_bjd11")]
-position = Vector2(1216, 192)
+position = Vector2(128, 576)
 
-[node name="Warrior" parent="." unique_id=118165868 instance=ExtResource("11_qmy6f")]
-position = Vector2(832, 256)
-
-[node name="Archer" parent="." unique_id=2067037902 instance=ExtResource("12_mwfav")]
-position = Vector2(832, 128)
+[node name="Spearman" parent="." unique_id=933469420 instance=ExtResource("14_mwfav")]
+position = Vector2(896, 320)

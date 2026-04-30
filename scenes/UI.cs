@@ -9,6 +9,7 @@ public partial class UI : CanvasLayer
 	
 	private Button trainWorkerButton;
 	private Button trainWarriorButton;
+	private Button trainSpearmanButton;
 
 	public override void _Ready()
 	{
@@ -18,7 +19,16 @@ public partial class UI : CanvasLayer
 
 		trainWarriorButton = GetNode<Button>("TrainWarriorButton");
 		trainWarriorButton.Pressed += OnTrainWarriorButtonPressed;
+
+		trainSpearmanButton = GetNode<Button>("TrainSpearmanButton");
+		trainSpearmanButton.Pressed += OnTrainSpearmanButtonPressed;
 	}
+
+    private void OnTrainSpearmanButtonPressed()
+    {
+        barracks.TrainUnit(Game.Globals.UnitTypes.Spearman);
+    }
+
 
     private void OnTrainWarriorButtonPressed()
     {
