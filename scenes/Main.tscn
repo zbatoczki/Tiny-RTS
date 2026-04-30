@@ -2,6 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://6bbj1ble4hyb" path="res://scenes/manager/SelectionManager.tscn" id="1_0bbpv"]
 [ext_resource type="TileSet" uid="uid://djlecc884ekiu" path="res://resources/tilemap/tiles.tres" id="1_rarhs"]
+[ext_resource type="PackedScene" uid="uid://bfcnmskvbcevy" path="res://scenes/buildings/Barracks.tscn" id="3_qmy6f"]
+[ext_resource type="Script" uid="uid://bod58brbc03l2" path="res://scenes/UI.cs" id="5_qmy6f"]
 [ext_resource type="PackedScene" uid="uid://bxo4obx7s5dql" path="res://scenes/units/player/worker/Worker.tscn" id="6_nxtc6"]
 [ext_resource type="Script" uid="uid://b7ti4x8efvo3i" path="res://scenes/manager/TreeTileMapLayerManager.cs" id="6_q8u5g"]
 [ext_resource type="Script" uid="uid://dhhqge6ld1u72" path="res://scenes/LabelTest.cs" id="7_nxtc6"]
@@ -9,7 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://dy0ld8xk5d245" path="res://scenes/buildings/GoldMine.tscn" id="9_lhr70"]
 [ext_resource type="PackedScene" uid="uid://drst3dcdxv4k0" path="res://scenes/buildings/Castle.tscn" id="9_q8u5g"]
 [ext_resource type="PackedScene" uid="uid://dr2a5dv1lisis" path="res://scenes/units/enemy/harpoon fish/HarpoonFish.tscn" id="10_bjd11"]
-[ext_resource type="Script" uid="uid://daa6d62tqjlf4" path="res://scripts/test/TrainWorkerButton.cs" id="10_wp0k4"]
 [ext_resource type="PackedScene" uid="uid://c7khacr0bxvup" path="res://scenes/units/player/Warrior/Warrior.tscn" id="11_qmy6f"]
 [ext_resource type="PackedScene" uid="uid://coowfgss5y3sj" path="res://scenes/units/player/archer/Archer.tscn" id="12_mwfav"]
 
@@ -22,6 +23,9 @@ tile_set = ExtResource("1_rarhs")
 [node name="Castle2" parent="." unique_id=1580598003 groups=["Base"] instance=ExtResource("9_q8u5g")]
 position = Vector2(640, 256)
 
+[node name="Barracks" parent="." unique_id=105743704 instance=ExtResource("3_qmy6f")]
+position = Vector2(256, 192)
+
 [node name="GoldMine" parent="." unique_id=829714884 instance=ExtResource("9_lhr70")]
 position = Vector2(896, 512)
 
@@ -31,7 +35,10 @@ tile_map_data = PackedByteArray("AAAFAAcAAgAAAAAAAQA=")
 tile_set = ExtResource("1_rarhs")
 script = ExtResource("6_q8u5g")
 
-[node name="UI" type="CanvasLayer" parent="." unique_id=1584375090]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1584375090 node_paths=PackedStringArray("castle", "barracks")]
+script = ExtResource("5_qmy6f")
+castle = NodePath("../Castle2")
+barracks = NodePath("../Barracks")
 
 [node name="SelectionManager" parent="UI" unique_id=588987418 node_paths=PackedStringArray("treeTileMapLayer") instance=ExtResource("1_0bbpv")]
 treeTileMapLayer = NodePath("../../TreeTileMapLayer")
@@ -47,14 +54,19 @@ offset_bottom = 48.0
 text = "DEBUG TEXT HERE"
 script = ExtResource("7_nxtc6")
 
-[node name="TrainWorkerButton" type="Button" parent="UI" unique_id=525383106 node_paths=PackedStringArray("castle")]
+[node name="TrainWorkerButton" type="Button" parent="UI" unique_id=525383106]
 offset_left = 576.0
 offset_top = 640.0
 offset_right = 755.0
 offset_bottom = 671.0
 text = "Train Worker (10 gold)"
-script = ExtResource("10_wp0k4")
-castle = NodePath("../../Castle2")
+
+[node name="TrainWarriorButton" type="Button" parent="UI" unique_id=1576265488]
+offset_left = 384.0
+offset_top = 640.0
+offset_right = 566.0
+offset_bottom = 671.0
+text = "Train Warrior (10 gold)"
 
 [node name="Worker" parent="." unique_id=1980137832 node_paths=PackedStringArray("treeLayer") instance=ExtResource("6_nxtc6")]
 position = Vector2(576, 448)

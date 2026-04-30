@@ -20,7 +20,7 @@ public abstract partial class Building : StaticBody2D
 
     protected readonly Queue<(PackedScene unitScene, float waitTime)> queue = new();
 
-    public override void _Ready()
+    public void OnReady()
     {
         CurrentHealth = MaxHealth;
         healthBar = GetNodeOrNull<HealthComponent>(nameof(HealthComponent));
@@ -30,14 +30,11 @@ public abstract partial class Building : StaticBody2D
             healthBar.SetCurrentHealth(MaxHealth);
             AddToGroup("Buildings");
             GameManager.Instance.RegisterBuilding(this);
-            OnReady();
         }
         timer = GetNode<Timer>(nameof(Timer));
         timer.WaitTime = TrainTime;
         timer.Timeout += OnTimeout;
     }
-
-    public virtual void OnReady() { }
 
     public virtual void TakeDamage(float amount)
     {
@@ -57,9 +54,7 @@ public abstract partial class Building : StaticBody2D
 
     private void OnTimeout()
     {
-        //spawn unit
         SpawnUnit(queue.Dequeue().unitScene);
-        //get next item in queue if any and restart the timer with the queued time
         if(queue.Count > 0)
         {
             timer.WaitTime = queue.Peek().waitTime;
@@ -77,7 +72,7 @@ public abstract partial class Building : StaticBody2D
         }
     }
 
-    public abstract bool TrainUnit();
+    public abstract bool TrainUnit(UnitTypes unitType);
 
     private void SpawnUnit(PackedScene scene)
     {
