@@ -12,6 +12,8 @@ public abstract partial class Unit : CharacterBody2D
     public delegate void UnitDiedEventHandler(Unit unit);
 
     [Export] public UnitStats stats;
+    [Export] public bool HasAttackDirections {get; private set;} = false;
+    [Export] public bool CanAttack {get; private set;} = true;
 
     public Vector2 targetPosition    = Vector2.Zero;
     public CollisionShape2D  collisionShape;
@@ -115,10 +117,8 @@ public abstract partial class Unit : CharacterBody2D
 
     private void OnEnemyEntered(Node2D body)
     {
-        if(AttackTarget == null)
-        {
-            AttackTarget = body as Unit;
-        }
+        if(!CanAttack) return;
+        AttackTarget ??= body as Unit;
         stateMachine.ForceToState<Attack>();
     }
 

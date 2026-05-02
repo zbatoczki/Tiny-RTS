@@ -79,7 +79,7 @@ position = Vector2(576, 448)
 treeLayer = NodePath("../TreeTileMapLayer")
 
 [node name="Harpoon Fish" parent="." unique_id=1465977348 instance=ExtResource("10_bjd11")]
-position = Vector2(128, 576)
+position = Vector2(1088, 320)
 
 [node name="Spearman" parent="." unique_id=933469420 instance=ExtResource("14_mwfav")]
-position = Vector2(896, 320)
+position = Vector2(768, 384)

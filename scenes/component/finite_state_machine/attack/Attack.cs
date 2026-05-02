@@ -1,5 +1,6 @@
 using Godot;
 using Game.Units;
+using Game.Globals;
 
 namespace Game.FSM;
 
@@ -24,6 +25,10 @@ public partial class Attack : State
 		unit.targetPosition = Vector2.Zero;
 		unit.Velocity = Vector2.Zero;
 		AnimationName = "attack";
+		if(unit.HasAttackDirections)
+		{
+			SetAttackDirection();
+		}
 		attackTimer.WaitTime /= unit.stats.AttackSpeed;
 		unit.animatedSprite2D.AnimationFinished += OnAnimationFinished;
 		DoAttack();
@@ -60,6 +65,30 @@ public partial class Attack : State
 		unit.Attack();
         attackTimer.Start();
     }
+
+	private void SetAttackDirection()
+	{
+		(float x, float y) = (unit.GlobalPosition - unit.AttackTarget.GlobalPosition).Normalized().Round();
+		GD.Print($"{x} : {y}");
+		if(y >= 1)
+		{
+			AnimationName = AttackAnimationDirections.AtackUp;
+			if(x >= 1 || x <= -1)
+			{
+				AnimationName = AttackAnimationDirections.UpRight;
+				if(x < 0) unit.FaceRight(false);
+			}
+		}
+		else if(y <= -1)
+		{
+			AnimationName = AttackAnimationDirections.AtackDown;
+			if(x >= 1 || x <= -1)
+			{
+				AnimationName = AttackAnimationDirections.DownRight;
+				if(x < 0) unit.FaceRight(false);
+			}
+		}
+	}
 	
 
 }
