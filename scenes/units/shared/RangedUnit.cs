@@ -25,7 +25,7 @@ public partial class RangedUnit : Unit
 		if (!IsInstanceValid(AttackTarget) || animatedSprite2D.Frame != ProjectileLaunchAnimationFrame) return;
 		
 		var projectile = projectileScene.Instantiate<ProjectileComponent>();
-		Owner.CallDeferred(Node.MethodName.AddChild, projectile);
+		GetParent().CallDeferred(Node.MethodName.AddChild, projectile);
 		projectile.Launch(GlobalPosition, stats.AttackDamage, AttackTarget);
 	}
 

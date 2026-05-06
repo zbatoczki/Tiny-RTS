@@ -11,7 +11,7 @@ public abstract partial class Building : StaticBody2D
 {
 	[Export] public Faction Faction;
     [Export] public float MaxHealth = 500f;
-    [Export] public float TrainTime = 10f;
+    [Export] public float TrainTime = 3f;
 
     public float CurrentHealth {get; protected set;}
 

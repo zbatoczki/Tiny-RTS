@@ -8,6 +8,7 @@ public partial class Barracks : Building
 {
 	[Export] public PackedScene WarriorScene;
 	[Export] public PackedScene SpearmanScene;
+	[Export] public PackedScene ArcherScene;
 
 
 	// Called when the node enters the scene tree for the first time.
@@ -24,6 +25,11 @@ public partial class Barracks : Building
 		{
 			(goldCost, woodCost) = Costs.Spearman;
 			unitScene = SpearmanScene;
+		}
+		if(unitType == UnitTypes.Archer)
+		{
+			(goldCost, woodCost) = Costs.Archer;
+			unitScene = ArcherScene;
 		}
 		if(!GameManager.Instance.CanTrain(Faction.Player)) return false;
 		if(!ResourceManager.Instance.Spend(Faction, woodCost, goldCost)) return false;

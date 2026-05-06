@@ -1,6 +1,6 @@
 using Game.Buildings;
+using Game.Autoload;
 using Godot;
-using System;
 
 public partial class UI : CanvasLayer
 {
@@ -10,19 +10,40 @@ public partial class UI : CanvasLayer
 	private Button trainWorkerButton;
 	private Button trainWarriorButton;
 	private Button trainSpearmanButton;
+	private Button trainArcherButton;
+	private Button resetButton;
 
 	public override void _Ready()
 	{
-		trainWorkerButton = GetNode<Button>("TrainWorkerButton");
+		trainWorkerButton = GetNode<Button>("%TrainWorkerButton");
 		trainWorkerButton.Pressed += OnTrainWorkerButtonPressed;
 		
 
-		trainWarriorButton = GetNode<Button>("TrainWarriorButton");
+		trainWarriorButton = GetNode<Button>("%TrainWarriorButton");
 		trainWarriorButton.Pressed += OnTrainWarriorButtonPressed;
 
-		trainSpearmanButton = GetNode<Button>("TrainSpearmanButton");
+		trainSpearmanButton = GetNode<Button>("%TrainSpearmanButton");
 		trainSpearmanButton.Pressed += OnTrainSpearmanButtonPressed;
+
+		trainArcherButton = GetNode<Button>("%TrainArcherButton");
+		trainArcherButton.Pressed += OnTrainArcherButtonPressed;
+
+		resetButton = GetNode<Button>("ResetButton");
+		resetButton.Pressed += OnResetButtonPressed;
 	}
+
+    private void OnResetButtonPressed()
+    {
+        ResourceManager.Instance.InitializeResources();
+        GetTree().ReloadCurrentScene();
+    }
+
+
+    private void OnTrainArcherButtonPressed()
+    {
+        barracks.TrainUnit(Game.Globals.UnitTypes.Archer);
+    }
+
 
     private void OnTrainSpearmanButtonPressed()
     {

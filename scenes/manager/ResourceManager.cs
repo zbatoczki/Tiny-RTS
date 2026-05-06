@@ -10,9 +10,9 @@ public partial class ResourceManager : Node
 
 	[Signal] public delegate void ResourceChangedEventHandler(int faction, int gold, int wood, int food);
 
-	private readonly Dictionary<Faction, int> gold = [];
-    private readonly Dictionary<Faction, int> wood = [];
-    private readonly Dictionary<Faction, int> food = [];
+	private Dictionary<Faction, int> gold = [];
+    private Dictionary<Faction, int> wood = [];
+    private Dictionary<Faction, int> food = [];
 
 	private int CurrentWoodAmount = 0;
 	private int CurrentGoldAmount = 0;
@@ -30,12 +30,7 @@ public partial class ResourceManager : Node
 			return;
 		}
         Instance = this;
-        foreach (Faction f in System.Enum.GetValues<Faction>())
-        { 
-			gold[f] = 200;
-			wood[f] = 200; 
-			food[f] = 200; 
-		}
+        InitializeResources();
 	}
 
 	public int  GetGold(Faction f) => gold[f];
@@ -81,5 +76,15 @@ public partial class ResourceManager : Node
 			wood[faction] += amount;
 		}
 		EmitSignal(SignalName.ResourceChanged, (int)faction, gold[faction], wood[faction], food[faction]);
+	}
+
+	public void InitializeResources()
+	{
+		foreach (Faction f in System.Enum.GetValues<Faction>())
+        { 
+			gold[f] = 200;
+			wood[f] = 200; 
+			food[f] = 200; 
+		}
 	}
 }

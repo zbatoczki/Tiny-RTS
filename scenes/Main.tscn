@@ -11,7 +11,10 @@
 [ext_resource type="PackedScene" uid="uid://dy0ld8xk5d245" path="res://scenes/buildings/GoldMine.tscn" id="9_lhr70"]
 [ext_resource type="PackedScene" uid="uid://drst3dcdxv4k0" path="res://scenes/buildings/Castle.tscn" id="9_q8u5g"]
 [ext_resource type="PackedScene" uid="uid://dr2a5dv1lisis" path="res://scenes/units/enemy/harpoon fish/HarpoonFish.tscn" id="10_bjd11"]
-[ext_resource type="PackedScene" uid="uid://inc61pd743x5" path="res://scenes/units/player/spearman/Spearman.tscn" id="14_mwfav"]
+[ext_resource type="PackedScene" uid="uid://coowfgss5y3sj" path="res://scenes/units/player/archer/Archer.tscn" id="12_bjd11"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wp0k4"]
+content_margin_bottom = 20.0
 
 [node name="Main" type="Node" unique_id=330848765]
 
@@ -53,33 +56,53 @@ offset_bottom = 48.0
 text = "DEBUG TEXT HERE"
 script = ExtResource("7_nxtc6")
 
-[node name="TrainWorkerButton" type="Button" parent="UI" unique_id=525383106]
-offset_left = 576.0
-offset_top = 640.0
-offset_right = 755.0
-offset_bottom = 671.0
+[node name="PanelContainer" type="PanelContainer" parent="UI" unique_id=916671450]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_wp0k4")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/PanelContainer" unique_id=652172023]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="TrainWorkerButton" type="Button" parent="UI/PanelContainer/HBoxContainer" unique_id=525383106]
+unique_name_in_owner = true
+layout_mode = 2
 text = "Train Worker (10 gold)"
 
-[node name="TrainWarriorButton" type="Button" parent="UI" unique_id=1576265488]
-offset_left = 384.0
-offset_top = 640.0
-offset_right = 566.0
-offset_bottom = 671.0
-text = "Train Warrior (10 gold)"
+[node name="TrainWarriorButton" type="Button" parent="UI/PanelContainer/HBoxContainer" unique_id=1576265488]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Train Warrior (100 gold)"
 
-[node name="TrainSpearmanButton" type="Button" parent="UI" unique_id=961533029]
-offset_left = 768.0
-offset_top = 640.0
-offset_right = 950.0
-offset_bottom = 671.0
-text = "Train Spearman"
+[node name="TrainSpearmanButton" type="Button" parent="UI/PanelContainer/HBoxContainer" unique_id=961533029]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Train Spearman (50 gold, 75 wood"
+
+[node name="TrainArcherButton" type="Button" parent="UI/PanelContainer/HBoxContainer" unique_id=1718658902]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Train Archer (75 gold, 50 wood)"
+
+[node name="ResetButton" type="Button" parent="UI" unique_id=1901668927]
+offset_left = 40.0
+offset_top = 36.0
+offset_right = 148.0
+offset_bottom = 67.0
+text = "RESET SCENE"
 
 [node name="Worker" parent="." unique_id=1980137832 node_paths=PackedStringArray("treeLayer") instance=ExtResource("6_nxtc6")]
 position = Vector2(576, 448)
 treeLayer = NodePath("../TreeTileMapLayer")
 
 [node name="Harpoon Fish" parent="." unique_id=1465977348 instance=ExtResource("10_bjd11")]
-position = Vector2(1088, 320)
+position = Vector2(1152, 128)
 
-[node name="Spearman" parent="." unique_id=933469420 instance=ExtResource("14_mwfav")]
-position = Vector2(768, 384)
+[node name="Archer" parent="." unique_id=172825737 instance=ExtResource("12_bjd11")]
+position = Vector2(832, 320)

@@ -21,13 +21,20 @@ public partial class ResourcesUi : PanelContainer
 		woodCountLabel.SetImmediate(ResourceManager.Instance.GetWood(Faction.Player));
 		goldCountLabel.SetImmediate(ResourceManager.Instance.GetGold(Faction.Player));
 		foodCountLabel.SetImmediate(ResourceManager.Instance.GetFood(Faction.Player));
-
+		
 		ResourceManager.Instance.ResourceChanged += UpdateResouceCounts;
 	}
+
+	public override void _ExitTree()
+    {
+        ResourceManager.Instance.ResourceChanged -= UpdateResouceCounts;
+    }
 
 	public void UpdateResouceCounts(int faction, int gold, int wood, int food)
 	{
 		if(faction != (int) Faction.Player) return;
+
+		GD.Print($"{woodCountLabel} |{goldCountLabel} |{foodCountLabel}");
 
 		woodCountLabel.AnimateTo(wood);
 		goldCountLabel.AnimateTo(gold);

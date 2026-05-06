@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://mlfcbwdgkbcy" path="res://assets/buildings/blue/barracks.png" id="2_4so6g"]
 [ext_resource type="PackedScene" uid="uid://c7khacr0bxvup" path="res://scenes/units/player/Warrior/Warrior.tscn" id="2_rhwkk"]
 [ext_resource type="PackedScene" uid="uid://inc61pd743x5" path="res://scenes/units/player/spearman/Spearman.tscn" id="3_rhwkk"]
+[ext_resource type="PackedScene" uid="uid://coowfgss5y3sj" path="res://scenes/units/player/archer/Archer.tscn" id="4_c08p7"]
 [ext_resource type="PackedScene" uid="uid://ldhygolivtsg" path="res://scenes/component/HealthComponent.tscn" id="5_2j4ot"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lg0r4"]
@@ -14,6 +15,7 @@ collision_mask = 6
 script = ExtResource("1_63nyx")
 WarriorScene = ExtResource("2_rhwkk")
 SpearmanScene = ExtResource("3_rhwkk")
+ArcherScene = ExtResource("4_c08p7")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1372564955]
 texture = ExtResource("2_4so6g")
