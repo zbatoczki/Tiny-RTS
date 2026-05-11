@@ -6,6 +6,7 @@ public partial class UI : CanvasLayer
 {
 	[Export] private Castle castle;
 	[Export] private Barracks barracks;
+    [Export] private ArcheryRange archery;
 	
 	private Button trainWorkerButton;
 	private Button trainWarriorButton;
@@ -41,7 +42,7 @@ public partial class UI : CanvasLayer
 
     private void OnTrainArcherButtonPressed()
     {
-        barracks.TrainUnit(Game.Globals.UnitTypes.Archer);
+        archery.TrainUnit(Game.Globals.UnitTypes.Archer);
     }
 
 

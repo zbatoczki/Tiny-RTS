@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://drst3dcdxv4k0" path="res://scenes/buildings/Castle.tscn" id="9_q8u5g"]
 [ext_resource type="PackedScene" uid="uid://dr2a5dv1lisis" path="res://scenes/units/enemy/harpoon fish/HarpoonFish.tscn" id="10_bjd11"]
 [ext_resource type="PackedScene" uid="uid://coowfgss5y3sj" path="res://scenes/units/player/archer/Archer.tscn" id="12_bjd11"]
+[ext_resource type="PackedScene" uid="uid://dbaeqccn85l1u" path="res://scenes/buildings/ArcheryRange.tscn" id="13_qmy6f"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wp0k4"]
 content_margin_bottom = 20.0
@@ -28,19 +29,23 @@ position = Vector2(640, 256)
 [node name="Barracks" parent="." unique_id=105743704 instance=ExtResource("3_qmy6f")]
 position = Vector2(256, 192)
 
+[node name="ArcheryRange" parent="." unique_id=972537190 instance=ExtResource("13_qmy6f")]
+position = Vector2(256, 512)
+
 [node name="GoldMine" parent="." unique_id=829714884 instance=ExtResource("9_lhr70")]
 position = Vector2(896, 512)
 
 [node name="TreeTileMapLayer" type="TileMapLayer" parent="." unique_id=1184793851]
 y_sort_enabled = true
-tile_map_data = PackedByteArray("AAAFAAcAAgAAAAAAAQA=")
+tile_map_data = PackedByteArray("AAAIAAkAAgAAAAAAAQA=")
 tile_set = ExtResource("1_rarhs")
 script = ExtResource("6_q8u5g")
 
-[node name="UI" type="CanvasLayer" parent="." unique_id=1584375090 node_paths=PackedStringArray("castle", "barracks")]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1584375090 node_paths=PackedStringArray("castle", "barracks", "archery")]
 script = ExtResource("5_qmy6f")
 castle = NodePath("../Castle2")
 barracks = NodePath("../Barracks")
+archery = NodePath("../ArcheryRange")
 
 [node name="SelectionManager" parent="UI" unique_id=588987418 node_paths=PackedStringArray("treeTileMapLayer") instance=ExtResource("1_0bbpv")]
 treeTileMapLayer = NodePath("../../TreeTileMapLayer")

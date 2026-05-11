@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://dbaeqccn85l1u"]
+
+[ext_resource type="Script" uid="uid://6c1ksei10s1k" path="res://scenes/buildings/ArcheryRange.cs" id="1_m1s3s"]
+[ext_resource type="Texture2D" uid="uid://b24rgui8hsalo" path="res://assets/buildings/blue/archery.png" id="3_kqvht"]
+[ext_resource type="PackedScene" uid="uid://coowfgss5y3sj" path="res://scenes/units/player/archer/Archer.tscn" id="4_4byy1"]
+[ext_resource type="PackedScene" uid="uid://ldhygolivtsg" path="res://scenes/component/HealthComponent.tscn" id="6_jfyf1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lg0r4"]
+size = Vector2(174, 174)
+
+[node name="ArcheryRange" type="StaticBody2D" unique_id=105743704]
+collision_mask = 6
+script = ExtResource("1_m1s3s")
+ArcherScene = ExtResource("4_4byy1")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1372564955]
+texture = ExtResource("3_kqvht")
+centered = false
+offset = Vector2(-96, -177)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=914712534]
+position = Vector2(0, -28)
+shape = SubResource("RectangleShape2D_lg0r4")
+
+[node name="HealthComponent" parent="." unique_id=1944934705 instance=ExtResource("6_jfyf1")]
+position = Vector2(-64, -170)
+
+[node name="Timer" type="Timer" parent="." unique_id=40608170]
+one_shot = true
