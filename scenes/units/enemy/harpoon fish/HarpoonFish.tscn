@@ -207,3 +207,6 @@ autoplay = "idle"
 frame = 7
 frame_progress = 1.0
 offset = Vector2(-96, -96)
+
+[node name="SelectionRing" parent="." index="6" unique_id=1405774456]
+offset = Vector2(0, 33)

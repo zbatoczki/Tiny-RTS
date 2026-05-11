@@ -16,7 +16,7 @@ namespace Game.Context;
 ///   2. Call HandleRightClick() from SelectionManager on right-click.
 ///   3. Register additional custom actions with RegisterAction().
 /// </summary>
-public sealed class ContextActionHandler(Node2D sceneRoot, TreeTileMapLayerManager treeTileMapLayer)
+public sealed class ContextActionHandler(Node2D _sceneRoot, TreeTileMapLayerManager treeTileMapLayer)
 {
     private readonly List<IContextAction> actions =
         [
@@ -26,7 +26,7 @@ public sealed class ContextActionHandler(Node2D sceneRoot, TreeTileMapLayerManag
             new MoveAction(), // catch-all — must remain last
         ];
 
-    private readonly Node2D sceneRoot = sceneRoot; // used for physics queries
+    private readonly Node2D sceneRoot = _sceneRoot; // used for physics queries
 
     /// <summary>Adds a custom action. The list is re-sorted by priority automatically.</summary>
     public void RegisterAction(IContextAction action)
@@ -57,7 +57,6 @@ public sealed class ContextActionHandler(Node2D sceneRoot, TreeTileMapLayerManag
 
         if (hits.Count == 0) return null;
 
-        // Return the first valid collider object.
         foreach (Dictionary hit in hits)
         {
             if (hit.TryGetValue("collider", out Variant colliderVariant))

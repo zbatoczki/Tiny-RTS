@@ -8,6 +8,7 @@ using Game.Globals;
 using System.Resources;
 using Game.Autoload;
 using ResourceManager = Game.Autoload.ResourceManager;
+using Game.Groups;
 namespace Game.Units;
 
 public partial class Worker : MeleeUnit
@@ -36,10 +37,16 @@ public partial class Worker : MeleeUnit
 		resourceDetector = GetNode<Area2D>("ResourceDetector");
 		resourceDetector.BodyEntered += OnResourceEntered;
 
-		var bases = GetTree().GetNodesInGroup("Base");
+		var bases = GetTree().GetNodesInGroup(GlobalGroups.BASE);
 		if (bases.Count != 0)
 		{
 			castleLocation = (bases.First() as Node2D).GlobalPosition;
+		}
+
+		var treeMaplayer = GetTree().GetNodesInGroup(GlobalGroups.TREE_MAP_LAYER);
+		if (treeMaplayer.Count != 0)
+		{
+			treeLayer = treeMaplayer.First() as TreeTileMapLayerManager;
 		}
 	}
 

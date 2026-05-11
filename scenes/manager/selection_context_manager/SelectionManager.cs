@@ -43,12 +43,12 @@ public partial class SelectionManager : Node2D
     private readonly List<Unit> _selectedUnits = [];
     private Building _selectedBuilding;
 
-    private ReferenceRect _selectionBox = null!;
-    private ContextActionHandler _contextHandler = null!;
+    private ReferenceRect _selectionBox = null;
+    private ContextActionHandler _contextHandler = null;
     private SelectionContext _currentContext = SelectionContext.Empty;
 
     // Small threshold: drags shorter than this are treated as clicks.
-    private const float ClickThreshold = 6f;
+    private const float CLICK_THRESHOLD = 6f;
 
     // -------------------------------------------------------------------------
     // Lifecycle
@@ -95,7 +95,7 @@ public partial class SelectionManager : Node2D
 
         _selectionBox.GlobalPosition = upperLeft;
         _selectionBox.Size = (mouse - _dragStart).Abs();
-        _selectionBox.Visible = _selectionBox.Size.Length() > ClickThreshold;
+        _selectionBox.Visible = _selectionBox.Size.Length() > CLICK_THRESHOLD;
     }
 
     private void HandleLeftClickRelease(InputEvent evt)
@@ -106,7 +106,7 @@ public partial class SelectionManager : Node2D
         Vector2 endPosition = GetGlobalMousePosition();
         float dragDistance = _dragStart.DistanceTo(endPosition);
 
-        if (dragDistance <= ClickThreshold)
+        if (dragDistance <= CLICK_THRESHOLD)
             HandleSingleClick(_dragStart);
         else
             HandleBoxSelection(_dragStart, endPosition);
@@ -252,9 +252,7 @@ public partial class SelectionManager : Node2D
         _selectedUnits.Remove(unit);
 
         // Rebuild context after a unit is removed from selection mid-fight.
-        _currentContext = _selectedUnits.Count > 0
-            ? new SelectionContext(_selectedUnits)
-            : SelectionContext.Empty;
+        _currentContext = _selectedUnits.Count > 0 ? new SelectionContext(_selectedUnits) : SelectionContext.Empty;
     }
 
 	#endregion

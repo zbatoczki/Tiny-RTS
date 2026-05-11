@@ -10,9 +10,9 @@ namespace Game.Context.Actions;
 /// Requires a reference to <see cref="TreeTileMapLayerManager"/> so it can
 /// resolve the tile-map cell from world position.
 /// </summary>
-public sealed class GatherTreeAction(TreeTileMapLayerManager treeTileMapLayer) : IContextAction
+public sealed class GatherTreeAction(TreeTileMapLayerManager _treeTileMapLayer) : IContextAction
 {
-    private readonly TreeTileMapLayerManager _treeTileMapLayer = treeTileMapLayer;
+    private readonly TreeTileMapLayerManager treeTileMapLayer = _treeTileMapLayer;
 
     public int Priority => 90;
 
@@ -21,9 +21,9 @@ public sealed class GatherTreeAction(TreeTileMapLayerManager treeTileMapLayer) :
 
     public void Execute(SelectionContext context, GodotObject target, Vector2 mousePosition)
     {
-        Vector2 localPosition = _treeTileMapLayer.ToLocal(mousePosition);
-        Vector2I cellPosition = _treeTileMapLayer.LocalToMap(localPosition);
-        Resources.Tree treeData = _treeTileMapLayer.GetTreeAt(cellPosition);
+        Vector2 localPosition = treeTileMapLayer.ToLocal(mousePosition);
+        Vector2I cellPosition = treeTileMapLayer.LocalToMap(localPosition);
+        Resources.Tree treeData = treeTileMapLayer.GetTreeAt(cellPosition);
 
         if (treeData == null || treeData.IsDepleted)
         {
@@ -36,5 +36,7 @@ public sealed class GatherTreeAction(TreeTileMapLayerManager treeTileMapLayer) :
             worker.GatheringResourceTarget = treeData;
             GD.Print($"GatherTreeAction: worker targeting tree at {treeData.CellCoordinates}");
         }
+
+        FormationHelper.MoveToFormation(context.Workers, mousePosition);
     }
 }

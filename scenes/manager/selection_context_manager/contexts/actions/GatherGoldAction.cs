@@ -23,5 +23,7 @@ public sealed class GatherGoldAction : IContextAction
         {
             worker.GatheringResourceTarget = goldMine;
         }
+
+        FormationHelper.MoveToFormation(context.Workers, mousePosition);
     }
 }
