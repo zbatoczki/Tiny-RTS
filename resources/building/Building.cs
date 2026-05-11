@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Game.Autoload;
 using Game.Component;
@@ -17,6 +18,7 @@ public abstract partial class Building : StaticBody2D
 
     private HealthComponent healthBar;
     private Timer timer;
+    private Sprite2D selectionRing;
 
     protected readonly Queue<(PackedScene unitScene, float waitTime)> queue = new();
 
@@ -34,6 +36,9 @@ public abstract partial class Building : StaticBody2D
         timer = GetNode<Timer>(nameof(Timer));
         timer.WaitTime = TrainTime;
         timer.Timeout += OnTimeout;
+
+        selectionRing = GetNode<Sprite2D>("SelectionRing");
+        selectionRing.Visible = false;
     }
 
     public virtual void TakeDamage(float amount)
@@ -81,5 +86,16 @@ public abstract partial class Building : StaticBody2D
         unit.stats.Faction = Faction;
         unit.GlobalPosition = GlobalPosition + new Vector2(GD.RandRange(-128, 128), 96);
         GetParent().AddChild(unit);
+    }
+
+    internal virtual void SetSelected(bool selected)
+    {
+        selectionRing.Visible = selected;
+        OnSelectionChanged(selected);
+    }
+
+     protected virtual void OnSelectionChanged(bool selected)
+    {
+        GD.Print($"{Name} selected={selected}");
     }
 }

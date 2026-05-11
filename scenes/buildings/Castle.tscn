@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cr8kergaqm26e" path="res://assets/buildings/blue/castle.png" id="1_lg0r4"]
 [ext_resource type="Script" uid="uid://ci3uu3cjqjcg8" path="res://scenes/buildings/Castle.cs" id="1_xrw3n"]
 [ext_resource type="PackedScene" uid="uid://bxo4obx7s5dql" path="res://scenes/units/player/worker/Worker.tscn" id="2_c3u2i"]
+[ext_resource type="PackedScene" uid="uid://degbw6igj5uch" path="res://scenes/units/shared/SelectionRing.tscn" id="3_3hter"]
 [ext_resource type="PackedScene" uid="uid://dggm7qkrau8nx" path="res://scenes/component/UnitDetectionComponent.tscn" id="3_l6pne"]
 [ext_resource type="PackedScene" uid="uid://ldhygolivtsg" path="res://scenes/component/HealthComponent.tscn" id="4_8iw5o"]
 
@@ -17,6 +18,10 @@ collision_mask = 6
 script = ExtResource("1_xrw3n")
 WorkerScene = ExtResource("2_c3u2i")
 TrainTime = 2.0
+
+[node name="SelectionRing" parent="." unique_id=1405774456 instance=ExtResource("3_3hter")]
+scale = Vector2(4, 4)
+offset = Vector2(0, 9)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1372564955]
 texture = ExtResource("1_lg0r4")
