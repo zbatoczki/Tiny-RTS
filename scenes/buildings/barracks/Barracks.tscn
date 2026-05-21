@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://ldhygolivtsg" path="res://scenes/component/HealthComponent.tscn" id="5_2j4ot"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lg0r4"]
-size = Vector2(174, 174)
+size = Vector2(192, 192)
 
 [node name="Barracks" type="StaticBody2D" unique_id=105743704]
 collision_mask = 6
@@ -18,19 +18,22 @@ SpearmanScene = ExtResource("3_rhwkk")
 
 [node name="SelectionRing" parent="." unique_id=1405774456 instance=ExtResource("4_c08p7")]
 scale = Vector2(3, 3)
-offset = Vector2(0, 13)
+offset = Vector2(32, 56)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1372564955]
+position = Vector2(96, 128)
 texture = ExtResource("2_4so6g")
 centered = false
-offset = Vector2(-96, -183)
+offset = Vector2(-96, -182)
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=914712534]
-position = Vector2(0, -34)
+visible = false
+position = Vector2(96, 96)
 shape = SubResource("RectangleShape2D_lg0r4")
 
 [node name="HealthComponent" parent="." unique_id=1944934705 instance=ExtResource("5_2j4ot")]
-position = Vector2(-64, -170)
+position = Vector2(31, -32)
+scale = Vector2(1, 0.666)
 
 [node name="Timer" type="Timer" parent="." unique_id=40608170]
 one_shot = true

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BuildingResource" format=3 uid="uid://bb3k1i83qw4qn"]
+
+[ext_resource type="Script" uid="uid://bnmrquguhq1rt" path="res://resources/building/BuildingResource.cs" id="1_4dipk"]
+
+[resource]
+script = ExtResource("1_4dipk")
+Name = "Barracks"
+Description = "Used to train warrirors"
+Dimensions = Vector2i(3, 3)
+metadata/_custom_type_script = "uid://bnmrquguhq1rt"
