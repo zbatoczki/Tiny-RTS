@@ -6,8 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://cr1tydn8k2f2g" path="res://assets/resources/goldmine/goldmine_destroyed.png" id="4_nf7bt"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hl115"]
-radius = 44.33
-height = 159.27
+radius = 44.0
+height = 159.0
 
 [node name="GoldMine" type="StaticBody2D" unique_id=93055991]
 collision_layer = 32
@@ -16,24 +16,27 @@ script = ExtResource("1_ltrxr")
 TotalResources = 10
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=914712534]
-position = Vector2(0, -22)
+position = Vector2(96, 68)
 rotation = 1.5652542
 scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("CapsuleShape2D_hl115")
 
 [node name="Inactive" type="Sprite2D" parent="." unique_id=1372564955]
+position = Vector2(96, 96)
 texture = ExtResource("2_ltrxr")
 centered = false
-offset = Vector2(-96, -86)
+offset = Vector2(-96, -92)
 
 [node name="Active" type="Sprite2D" parent="." unique_id=2105244025]
 visible = false
+position = Vector2(96, 96)
 texture = ExtResource("3_6s07i")
 centered = false
-offset = Vector2(-96, -86)
+offset = Vector2(-96, -92)
 
 [node name="Destroyed" type="Sprite2D" parent="." unique_id=1673016080]
 visible = false
+position = Vector2(96, 96)
 texture = ExtResource("4_nf7bt")
 centered = false
-offset = Vector2(-96, -86)
+offset = Vector2(-96, -92)

@@ -2,33 +2,37 @@
 
 [ext_resource type="Script" uid="uid://6c1ksei10s1k" path="res://scenes/buildings/archery_range/ArcheryRange.cs" id="1_m1s3s"]
 [ext_resource type="PackedScene" uid="uid://degbw6igj5uch" path="res://scenes/units/shared/SelectionRing.tscn" id="3_0mdi1"]
+[ext_resource type="Resource" uid="uid://dt2ftiiros40i" path="res://scenes/buildings/archery_range/archery_range.tres" id="3_boy2a"]
 [ext_resource type="Texture2D" uid="uid://b24rgui8hsalo" path="res://assets/buildings/blue/archery.png" id="3_kqvht"]
 [ext_resource type="PackedScene" uid="uid://coowfgss5y3sj" path="res://scenes/units/player/archer/Archer.tscn" id="4_4byy1"]
 [ext_resource type="PackedScene" uid="uid://ldhygolivtsg" path="res://scenes/component/HealthComponent.tscn" id="6_jfyf1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lg0r4"]
-size = Vector2(174, 174)
+size = Vector2(192, 192)
 
 [node name="ArcheryRange" type="StaticBody2D" unique_id=105743704]
 collision_mask = 6
 script = ExtResource("1_m1s3s")
 ArcherScene = ExtResource("4_4byy1")
+BuildingResourcePath = ExtResource("3_boy2a")
 
 [node name="SelectionRing" parent="." unique_id=1405774456 instance=ExtResource("3_0mdi1")]
 scale = Vector2(3, 3)
-offset = Vector2(0, 13)
+offset = Vector2(32, 47)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1372564955]
+position = Vector2(96, 97)
 texture = ExtResource("3_kqvht")
 centered = false
-offset = Vector2(-96, -177)
+offset = Vector2(-91, -150)
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=914712534]
-position = Vector2(0, -28)
+position = Vector2(96, 96)
 shape = SubResource("RectangleShape2D_lg0r4")
 
 [node name="HealthComponent" parent="." unique_id=1944934705 instance=ExtResource("6_jfyf1")]
-position = Vector2(-64, -170)
+position = Vector2(32, -32)
+scale = Vector2(1, 0.666)
 
 [node name="Timer" type="Timer" parent="." unique_id=40608170]
 one_shot = true
