@@ -25,7 +25,8 @@ tile_map_data = PackedByteArray("AAAUAAsAAAABAAEAAAAUAAoAAAABAAEAAAAUAAkAAAABAAE
 tile_set = ExtResource("1_rarhs")
 
 [node name="Castle2" parent="." unique_id=1580598003 groups=["Base"] instance=ExtResource("9_q8u5g")]
-position = Vector2(640, 256)
+position = Vector2(512, 192)
+BuildingResourcePath = null
 
 [node name="Barracks" parent="." unique_id=105743704 instance=ExtResource("3_qmy6f")]
 position = Vector2(256, 192)
@@ -105,14 +106,14 @@ offset_bottom = 67.0
 text = "RESET SCENE"
 
 [node name="Worker" parent="." unique_id=1980137832 node_paths=PackedStringArray("treeLayer") instance=ExtResource("6_nxtc6")]
-position = Vector2(576, 448)
+position = Vector2(768, 576)
 treeLayer = NodePath("../TreeTileMapLayer")
 
 [node name="Harpoon Fish" parent="." unique_id=1465977348 instance=ExtResource("10_bjd11")]
 position = Vector2(1152, 128)
 
 [node name="Archer" parent="." unique_id=172825737 instance=ExtResource("12_bjd11")]
-position = Vector2(832, 320)
+position = Vector2(640, 576)
 
 [node name="SelectionManager" parent="." unique_id=588987418 node_paths=PackedStringArray("treeTileMapLayer") instance=ExtResource("1_0bbpv")]
 treeTileMapLayer = NodePath("../TreeTileMapLayer")

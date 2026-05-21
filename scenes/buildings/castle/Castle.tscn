@@ -5,40 +5,43 @@
 [ext_resource type="PackedScene" uid="uid://bxo4obx7s5dql" path="res://scenes/units/player/worker/Worker.tscn" id="2_c3u2i"]
 [ext_resource type="PackedScene" uid="uid://degbw6igj5uch" path="res://scenes/units/shared/SelectionRing.tscn" id="3_3hter"]
 [ext_resource type="PackedScene" uid="uid://dggm7qkrau8nx" path="res://scenes/component/UnitDetectionComponent.tscn" id="3_l6pne"]
+[ext_resource type="Resource" uid="uid://ie81tmvef2k3" path="res://scenes/buildings/castle/castle.tres" id="3_t63eb"]
 [ext_resource type="PackedScene" uid="uid://ldhygolivtsg" path="res://scenes/component/HealthComponent.tscn" id="4_8iw5o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8iw5o"]
-size = Vector2(274, 163)
+size = Vector2(330, 200)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lg0r4"]
-size = Vector2(258.115, 149.72)
+size = Vector2(320, 192)
 
 [node name="Castle" type="StaticBody2D" unique_id=105743704]
 collision_mask = 6
 script = ExtResource("1_xrw3n")
 WorkerScene = ExtResource("2_c3u2i")
+BuildingResourcePath = ExtResource("3_t63eb")
 TrainTime = 2.0
 
 [node name="SelectionRing" parent="." unique_id=1405774456 instance=ExtResource("3_3hter")]
-scale = Vector2(4, 4)
-offset = Vector2(0, 9)
+scale = Vector2(5, 5)
+offset = Vector2(32, 27)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1372564955]
+position = Vector2(160, 160)
 texture = ExtResource("1_lg0r4")
 centered = false
-offset = Vector2(-160, -192)
+offset = Vector2(-160, -224)
 
 [node name="UnitDetectionComponent" parent="." unique_id=1331689136 instance=ExtResource("3_l6pne")]
-position = Vector2(0, -45)
 collision_mask = 2
 monitorable = true
 targetGroup = &"PlayerUnit"
 
 [node name="CollisionShape2D" parent="UnitDetectionComponent" index="0" unique_id=947036371]
+position = Vector2(160, 73)
 shape = SubResource("RectangleShape2D_8iw5o")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=914712534]
-position = Vector2(0, -45)
+position = Vector2(160, 73)
 shape = SubResource("RectangleShape2D_lg0r4")
 
 [node name="HealthComponent" parent="." unique_id=1944934705 instance=ExtResource("4_8iw5o")]

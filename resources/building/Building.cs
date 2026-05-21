@@ -1,8 +1,8 @@
-using System;
 using System.Collections.Generic;
 using Game.Autoload;
 using Game.Component;
 using Game.Globals;
+using Game.Resources.Building;
 using Game.Units;
 using Godot;
 
@@ -10,6 +10,7 @@ namespace Game.Buildings;
 
 public abstract partial class Building : StaticBody2D
 {
+    [Export] public BuildingResource BuildingResourcePath;
 	[Export] public Faction Faction;
     [Export] public float MaxHealth = 500f;
     [Export] public float TrainTime = 3f;
@@ -39,6 +40,11 @@ public abstract partial class Building : StaticBody2D
 
         selectionRing = GetNode<Sprite2D>("SelectionRing");
         selectionRing.Visible = false;
+
+        if(BuildingResourcePath != null)
+        {
+            GD.Print($"Description: {BuildingResourcePath.Description}");
+        }
     }
 
     public virtual void TakeDamage(float amount)
