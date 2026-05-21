@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://coowfgss5y3sj" path="res://scenes/units/player/archer/Archer.tscn" id="12_bjd11"]
 [ext_resource type="PackedScene" uid="uid://dbaeqccn85l1u" path="res://scenes/buildings/archery_range/ArcheryRange.tscn" id="13_qmy6f"]
 [ext_resource type="Script" uid="uid://wmrubcinqmu2" path="res://scenes/Camera2d.cs" id="14_mwfav"]
+[ext_resource type="Script" uid="uid://dc0wx7fgotf6l" path="res://scenes/DebugGrid.cs" id="15_3p2gp"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wp0k4"]
 content_margin_bottom = 20.0
@@ -117,3 +118,6 @@ position = Vector2(704, 448)
 
 [node name="SelectionManager" parent="." unique_id=588987418 node_paths=PackedStringArray("treeTileMapLayer") instance=ExtResource("1_0bbpv")]
 treeTileMapLayer = NodePath("../TreeTileMapLayer")
+
+[node name="DebugGrid" type="Node2D" parent="." unique_id=199937788]
+script = ExtResource("15_3p2gp")

@@ -123,3 +123,4 @@ animation = &"decompose"
 autoplay = "default"
 frame = 6
 frame_progress = 1.0
+offset = Vector2(32, 16)

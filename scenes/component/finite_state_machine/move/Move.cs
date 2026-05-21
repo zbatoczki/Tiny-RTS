@@ -23,9 +23,9 @@ public partial class Move : State
 
     public override State UpdatePhysicsFrame(double delta)
 	{
-        var goToPosition = unit.AttackTarget != null ? unit.AttackTarget.GlobalPosition : unit.targetPosition;
-        
-		var direction = goToPosition - unit.GlobalPosition;
+        var goToPosition = unit.AttackTarget != null ? unit.AttackTarget.CenterPosition : unit.targetPosition;
+
+		var direction = goToPosition - unit.CenterPosition;
 
         unit.FaceRight(direction.X < 0);
 

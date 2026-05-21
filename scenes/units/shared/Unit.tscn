@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://degbw6igj5uch" path="res://scenes/units/shared/SelectionRing.tscn" id="9_71y13"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e0hnn"]
-radius = 32.0
+radius = 30.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_e3b5r"]
 resource_local_to_scene = true

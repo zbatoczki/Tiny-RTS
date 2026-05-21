@@ -24,9 +24,9 @@ public abstract partial class Unit : CharacterBody2D
         get; 
         set
         {
-            if(value == null) return;
             field = value;
-            MoveTo(value.GlobalPosition);
+            if(value != null)
+                MoveTo(value.GlobalPosition);
         }
     }
     
@@ -74,6 +74,12 @@ public abstract partial class Unit : CharacterBody2D
 
 
 #region POSITIONING
+
+    /// <summary>Offset from the root node to the unit's visual center within its 64x64 cell.</summary>
+    public static readonly Vector2 CellCenterOffset = new(32, 32);
+
+    /// <summary>World position of the unit's center (the root node sits at the cell's top-left corner).</summary>
+    public Vector2 CenterPosition => GlobalPosition + CellCenterOffset;
 
     public void FaceRight(bool faceRight)
     {
