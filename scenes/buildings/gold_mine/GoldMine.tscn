@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dy0ld8xk5d245"]
 
-[ext_resource type="Script" uid="uid://bbafkc2yj8oca" path="res://scenes/buildings/GoldMine.cs" id="1_ltrxr"]
+[ext_resource type="Script" uid="uid://bbafkc2yj8oca" path="res://scenes/buildings/gold_mine/GoldMine.cs" id="1_ltrxr"]
 [ext_resource type="Texture2D" uid="uid://c78qc0xfnab0g" path="res://assets/resources/goldmine/goldmine_inactive.png" id="2_ltrxr"]
 [ext_resource type="Texture2D" uid="uid://co86whfl80inc" path="res://assets/resources/goldmine/goldmine_active.png" id="3_6s07i"]
 [ext_resource type="Texture2D" uid="uid://cr1tydn8k2f2g" path="res://assets/resources/goldmine/goldmine_destroyed.png" id="4_nf7bt"]

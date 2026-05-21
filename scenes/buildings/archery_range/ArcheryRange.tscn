@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dbaeqccn85l1u"]
 
-[ext_resource type="Script" uid="uid://6c1ksei10s1k" path="res://scenes/buildings/ArcheryRange.cs" id="1_m1s3s"]
+[ext_resource type="Script" uid="uid://6c1ksei10s1k" path="res://scenes/buildings/archery_range/ArcheryRange.cs" id="1_m1s3s"]
 [ext_resource type="PackedScene" uid="uid://degbw6igj5uch" path="res://scenes/units/shared/SelectionRing.tscn" id="3_0mdi1"]
 [ext_resource type="Texture2D" uid="uid://b24rgui8hsalo" path="res://assets/buildings/blue/archery.png" id="3_kqvht"]
 [ext_resource type="PackedScene" uid="uid://coowfgss5y3sj" path="res://scenes/units/player/archer/Archer.tscn" id="4_4byy1"]

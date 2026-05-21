@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://drst3dcdxv4k0"]
 
 [ext_resource type="Texture2D" uid="uid://cr8kergaqm26e" path="res://assets/buildings/blue/castle.png" id="1_lg0r4"]
-[ext_resource type="Script" uid="uid://ci3uu3cjqjcg8" path="res://scenes/buildings/Castle.cs" id="1_xrw3n"]
+[ext_resource type="Script" uid="uid://ci3uu3cjqjcg8" path="res://scenes/buildings/castle/Castle.cs" id="1_xrw3n"]
 [ext_resource type="PackedScene" uid="uid://bxo4obx7s5dql" path="res://scenes/units/player/worker/Worker.tscn" id="2_c3u2i"]
 [ext_resource type="PackedScene" uid="uid://degbw6igj5uch" path="res://scenes/units/shared/SelectionRing.tscn" id="3_3hter"]
 [ext_resource type="PackedScene" uid="uid://dggm7qkrau8nx" path="res://scenes/component/UnitDetectionComponent.tscn" id="3_l6pne"]

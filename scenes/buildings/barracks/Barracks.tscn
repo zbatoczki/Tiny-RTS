@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bfcnmskvbcevy"]
 
-[ext_resource type="Script" uid="uid://c1luppgqgejr4" path="res://scenes/buildings/Barracks.cs" id="1_63nyx"]
+[ext_resource type="Script" uid="uid://c1luppgqgejr4" path="res://scenes/buildings/barracks/Barracks.cs" id="1_63nyx"]
 [ext_resource type="Texture2D" uid="uid://mlfcbwdgkbcy" path="res://assets/buildings/blue/barracks.png" id="2_4so6g"]
 [ext_resource type="PackedScene" uid="uid://c7khacr0bxvup" path="res://scenes/units/player/Warrior/Warrior.tscn" id="2_rhwkk"]
 [ext_resource type="PackedScene" uid="uid://inc61pd743x5" path="res://scenes/units/player/spearman/Spearman.tscn" id="3_rhwkk"]
