@@ -197,16 +197,10 @@ collision_layer = 0
 collision_mask = 2
 targetGroup = &"PlayerUnit"
 
-[node name="CollisionShape2D" parent="." index="4" unique_id=1633008240]
-position = Vector2(-2, 1)
-scale = Vector2(2, 2)
-
 [node name="AnimatedSprite2D" parent="." index="5" unique_id=290410313]
+position = Vector2(32, 32)
 sprite_frames = SubResource("SpriteFrames_ixigs")
 autoplay = "idle"
 frame = 7
 frame_progress = 1.0
-offset = Vector2(-96, -96)
-
-[node name="SelectionRing" parent="." index="6" unique_id=1405774456]
-offset = Vector2(0, 33)
+offset = Vector2(-96, -104)

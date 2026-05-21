@@ -205,14 +205,14 @@ collision_mask = 4
 targetGroup = &"EnemyUnit"
 
 [node name="CollisionShape2D" parent="." index="4" unique_id=1633008240]
-scale = Vector2(2.5, 2.5)
+scale = Vector2(1, 1)
 
 [node name="AnimatedSprite2D" parent="." index="5" unique_id=290410313]
 sprite_frames = SubResource("SpriteFrames_ecqhu")
 animation = &"move"
+offset = Vector2(-64, -73)
 
-[node name="SelectionRing" parent="." index="6" unique_id=703071632]
+[node name="SelectionRing" parent="." index="6" unique_id=1405774456]
 texture = SubResource("GradientTexture2D_71y13")
-offset = Vector2(0, 35)
 
 [editable path="DamageComponent"]

@@ -7,6 +7,7 @@ public partial class ProjectileComponent : Area2D
 	[Export] public float ArcHeight = 80f;
 	[Export] private bool UseArc = false;
 
+	private readonly Vector2 PositionOffset = new(32, 32);
 	private Unit attackTarget;
 	private Vector2 startPosition;
 	private Vector2 endPosition;
@@ -43,7 +44,7 @@ public partial class ProjectileComponent : Area2D
 	public void Launch(Vector2 from, float damage, Unit target)
 	{
 		startPosition = from;
-		endPosition = target.GlobalPosition;
+		endPosition = target.GlobalPosition + PositionOffset;
 		this.damage = damage;
 		elapsedTime = 0f;
 

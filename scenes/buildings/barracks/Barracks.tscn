@@ -29,7 +29,6 @@ centered = false
 offset = Vector2(-96, -182)
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=914712534]
-visible = false
 position = Vector2(96, 96)
 shape = SubResource("RectangleShape2D_lg0r4")
 

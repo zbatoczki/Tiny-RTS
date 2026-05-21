@@ -17,7 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://degbw6igj5uch" path="res://scenes/units/shared/SelectionRing.tscn" id="15_2q1cq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e0hnn"]
-radius = 6.596229
+radius = 32.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ajryo"]
 atlas = ExtResource("2_ekx0g")
@@ -193,31 +193,32 @@ DeadState = NodePath("../Dead")
 [node name="Dead" parent="StateMachine" unique_id=675850164 instance=ExtResource("8_7lbsj")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1633008240]
-position = Vector2(0, 2)
-scale = Vector2(5, 5)
+position = Vector2(32, 32)
 shape = SubResource("CircleShape2D_e0hnn")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=290410313]
+position = Vector2(32, 32)
 sprite_frames = SubResource("SpriteFrames_hi8vn")
-animation = &"attack"
+animation = &"idle"
 autoplay = "idle"
-frame = 1
 centered = false
-offset = Vector2(-96, -96)
+offset = Vector2(-96, -104)
 
 [node name="HealthComponent" parent="." unique_id=1944934705 instance=ExtResource("12_tepoj")]
-position = Vector2(-32, -70)
+position = Vector2(0, -44)
 scale = Vector2(0.5, 0.5)
 
 [node name="DamageComponent" parent="." unique_id=341774930 instance=ExtResource("13_owb58")]
+position = Vector2(32, 32)
 collision_mask = 4
 targetGroup = &"EnemyUnit"
 
 [node name="UnitDetectionComponent" parent="." unique_id=1331689136 instance=ExtResource("14_sccnl")]
+position = Vector2(32, 32)
 collision_layer = 0
 collision_mask = 4
 targetGroup = &"EnemyUnit"
 
 [node name="SelectionRing" parent="." unique_id=1405774456 instance=ExtResource("15_2q1cq")]
 position = Vector2(0, -1)
-offset = Vector2(-2, 33)
+offset = Vector2(32, 57)

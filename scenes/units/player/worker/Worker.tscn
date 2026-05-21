@@ -360,6 +360,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2d8m4"]
+radius = 34.0
 
 [node name="Worker" unique_id=1980137832 groups=["PlayerUnit"] instance=ExtResource("1_ir85n")]
 z_index = 1
@@ -375,25 +376,21 @@ MoveState = NodePath("../Move")
 DeadState = NodePath("../Dead")
 
 [node name="DamageComponent" parent="." index="2" unique_id=341774930]
-visible = false
-position = Vector2(0, -6)
 collision_mask = 4
 targetGroup = &"EnemyUnit"
 
 [node name="UnitDetectionComponent" parent="." index="3" unique_id=1331689136]
-visible = false
 targetGroup = &"EnemyUnit"
-
-[node name="CollisionShape2D" parent="." index="4" unique_id=1633008240]
-scale = Vector2(1.895, 1.895)
 
 [node name="AnimatedSprite2D" parent="." index="5" unique_id=290410313]
 y_sort_enabled = true
-position = Vector2(2, 0)
+position = Vector2(32, 32)
 sprite_frames = SubResource("SpriteFrames_phryt")
-animation = &"move_gold"
+animation = &"move"
 autoplay = "idle"
-offset = Vector2(-96, -110)
+frame = 1
+frame_progress = 0.24703515
+offset = Vector2(-98, -103)
 
 [node name="ResourceDetector" type="Area2D" parent="." index="6" unique_id=844198648]
 collision_layer = 0
@@ -401,6 +398,10 @@ collision_mask = 32
 input_pickable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ResourceDetector" index="0" unique_id=772626562]
-scale = Vector2(3, 3)
+position = Vector2(32, 32)
 shape = SubResource("CircleShape2D_2d8m4")
 debug_color = Color(0, 0.6, 0, 0.41960785)
+
+[node name="SelectionRing" parent="." index="7" unique_id=1405774456]
+position = Vector2(0, 0)
+offset = Vector2(32, 56)

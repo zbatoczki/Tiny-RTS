@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://degbw6igj5uch" path="res://scenes/units/shared/SelectionRing.tscn" id="9_71y13"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e0hnn"]
-radius = 14.4960375
+radius = 32.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_e3b5r"]
 resource_local_to_scene = true
@@ -57,20 +57,23 @@ DeadState = NodePath("../Dead")
 [node name="Dead" parent="StateMachine" unique_id=675850164 instance=ExtResource("5_fupo1")]
 
 [node name="HealthComponent" parent="." unique_id=1944934705 instance=ExtResource("6_3knaf")]
-position = Vector2(-32, -70)
+position = Vector2(0, -40)
 scale = Vector2(0.5, 0.5)
 
 [node name="DamageComponent" parent="." unique_id=341774930 instance=ExtResource("7_oa6mx")]
+position = Vector2(32, 32)
 
 [node name="UnitDetectionComponent" parent="." unique_id=1331689136 instance=ExtResource("8_mlno1")]
+position = Vector2(32, 32)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1633008240]
+position = Vector2(32, 32)
 shape = SubResource("CircleShape2D_e0hnn")
+
+[node name="SelectionRing" parent="." unique_id=1405774456 instance=ExtResource("9_71y13")]
+position = Vector2(32, 36)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=290410313]
 sprite_frames = SubResource("SpriteFrames_e3b5r")
 animation = &"attack"
 centered = false
-
-[node name="SelectionRing" parent="." unique_id=1405774456 instance=ExtResource("9_71y13")]
-position = Vector2(0, -1)
