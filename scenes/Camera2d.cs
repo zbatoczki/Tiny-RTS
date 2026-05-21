@@ -9,6 +9,7 @@ public partial class Camera2d : Camera2D
     [Export] public float MinZoom          = 0.4f;
     [Export] public float MaxZoom          = 2.0f;
     [Export] public Rect2 MapBounds        = new(0, 0, 3200, 3200);
+    [Export] public bool EnableEdgeScroll    = false;
 
     public override void _Process(double delta)
     {
@@ -16,13 +17,13 @@ public partial class Camera2d : Camera2D
         var mouse  = GetViewport().GetMousePosition();
         var vpSize = GetViewport().GetVisibleRect().Size;
 
-        if (Input.IsActionPressed("ui_left")  || mouse.X < EdgeScrollMargin)
+        if (Input.IsActionPressed("ui_left") || (EnableEdgeScroll && mouse.X < EdgeScrollMargin))
 			move.X -= 1;
-        if (Input.IsActionPressed("ui_right") || mouse.X > vpSize.X - EdgeScrollMargin) 
+        if (Input.IsActionPressed("ui_right") || (EnableEdgeScroll && mouse.X > vpSize.X - EdgeScrollMargin)) 
 			move.X += 1;
-        if (Input.IsActionPressed("ui_up")    || mouse.Y < EdgeScrollMargin)
+        if (Input.IsActionPressed("ui_up") || (EnableEdgeScroll && mouse.Y < EdgeScrollMargin))
 			move.Y -= 1;
-        if (Input.IsActionPressed("ui_down")  || mouse.Y > vpSize.Y - EdgeScrollMargin)
+        if (Input.IsActionPressed("ui_down")|| (EnableEdgeScroll && mouse.Y > vpSize.Y - EdgeScrollMargin))
 			move.Y += 1;
 
         Position += move.Normalized() * MoveSpeed * (float)delta / Zoom.X;

@@ -44,8 +44,9 @@ public sealed class ContextActionHandler(Node2D _sceneRoot, TreeTileMapLayerMana
         if (context.Type == SelectionContext.SelectionType.None) return;
 
         GodotObject target = GetTopColliderAt(mousePosition);
-
+        GD.Print($"ContextActionHandler: Handling right-click with context {context.Type} and target {target}");
         IContextAction action = actions.FirstOrDefault(a => a.CanHandle(context, target));
+        GD.Print($"ContextActionHandler: Resolved action {action}");
         action?.Execute(context, target, mousePosition);
     }
 
@@ -54,7 +55,7 @@ public sealed class ContextActionHandler(Node2D _sceneRoot, TreeTileMapLayerMana
         PhysicsDirectSpaceState2D spaceState = sceneRoot.GetWorld2D().DirectSpaceState;
         var query = new PhysicsPointQueryParameters2D { Position = worldPosition };
         Array<Dictionary> hits = spaceState.IntersectPoint(query);
-
+        GD.Print($"ContextActionHandler: Found {hits.Count} colliders at {worldPosition}");
         if (hits.Count == 0) return null;
 
         foreach (Dictionary hit in hits)

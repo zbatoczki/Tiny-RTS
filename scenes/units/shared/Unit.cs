@@ -19,7 +19,16 @@ public abstract partial class Unit : CharacterBody2D
     public CollisionShape2D  collisionShape;
     public AnimatedSprite2D animatedSprite2D;
     public DamageComponent damageComponent;
-    public Unit AttackTarget {get; set;}
+    public Unit AttackTarget 
+    {
+        get; 
+        set
+        {
+            if(value == null) return;
+            field = value;
+            MoveTo(value.GlobalPosition);
+        }
+    }
     
     
     public StateMachine stateMachine;
