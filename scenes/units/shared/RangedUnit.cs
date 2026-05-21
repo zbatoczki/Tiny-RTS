@@ -26,7 +26,7 @@ public partial class RangedUnit : Unit
 		
 		var projectile = projectileScene.Instantiate<ProjectileComponent>();
 		GetParent().CallDeferred(Node.MethodName.AddChild, projectile);
-		projectile.Launch(GlobalPosition, stats.AttackDamage, AttackTarget);
+		projectile.Launch(CenterPosition, stats.AttackDamage, AttackTarget);
 	}
 
 
