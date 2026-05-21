@@ -20,6 +20,20 @@ public abstract partial class Building : StaticBody2D
     private HealthComponent healthBar;
     private Timer timer;
     private Sprite2D selectionRing;
+    private CollisionShape2D bodyCollisionShape;
+
+    /// <summary>
+    /// World position of the building's footprint center, taken from its body collision shape.
+    /// A shape node's origin is its geometric center, so this is the true middle of the building.
+    /// </summary>
+    public Vector2 CenterPosition
+    {
+        get
+        {
+            bodyCollisionShape ??= GetBodyCollisionShape();
+            return bodyCollisionShape?.GlobalPosition ?? GlobalPosition;
+        }
+    }
 
     protected readonly Queue<(PackedScene unitScene, float waitTime)> queue = new();
 
@@ -103,5 +117,16 @@ public abstract partial class Building : StaticBody2D
      protected virtual void OnSelectionChanged(bool selected)
     {
         GD.Print($"{Name} selected={selected}");
+    }
+
+    /// <summary>Returns the building body's own collision shape (ignores shapes nested in child components).</summary>
+    private CollisionShape2D GetBodyCollisionShape()
+    {
+        foreach (var child in GetChildren())
+        {
+            if (child is CollisionShape2D shape)
+                return shape;
+        }
+        return null;
     }
 }

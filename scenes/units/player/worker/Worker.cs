@@ -38,9 +38,9 @@ public partial class Worker : MeleeUnit
 		resourceDetector.BodyEntered += OnResourceEntered;
 
 		var bases = GetTree().GetNodesInGroup(GlobalGroups.BASE);
-		if (bases.Count != 0)
+		if (bases.Count != 0 && bases.First() is Building castle)
 		{
-			castleLocation = (bases.First() as Node2D).GlobalPosition;
+			castleLocation = castle.CenterPosition;
 		}
 
 		var treeMaplayer = GetTree().GetNodesInGroup(GlobalGroups.TREE_MAP_LAYER);

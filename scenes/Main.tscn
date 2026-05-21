@@ -45,7 +45,7 @@ tile_set = ExtResource("1_rarhs")
 script = ExtResource("6_q8u5g")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=12676452]
-offset = Vector2(640, 640)
+position = Vector2(640, 320)
 script = ExtResource("14_mwfav")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1584375090 node_paths=PackedStringArray("castle", "barracks", "archery")]
