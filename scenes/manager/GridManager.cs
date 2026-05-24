@@ -16,10 +16,12 @@ public partial class GridManager
 	}
 
 	public const int CELL_SIZE = 64;
+	public const int HALF_CELL_SIZE = CELL_SIZE / 2;
 	public int GridWidth { get; private set; }
 	public int GridHeight { get; private set; }
 
-	private (CellState cellState, Node2D node)[,] grid;
+	private readonly (CellState cellState, Node2D node)[,] grid;
+	private readonly AStarGrid2D pathfinder;
 
 	public GridManager(int mapWidth, int mapHeight)
 	{
@@ -27,6 +29,46 @@ public partial class GridManager
 		GridHeight = mapHeight;
 		grid = new (CellState, Node2D)[GridWidth, GridHeight];
 		InitializeGrid();
+
+		pathfinder = new AStarGrid2D
+		{
+			Region = new Rect2I(0, 0, GridWidth, GridHeight),
+			CellSize = new Vector2(CELL_SIZE, CELL_SIZE),
+			DiagonalMode = AStarGrid2D.DiagonalModeEnum.OnlyIfNoObstacles,
+		};
+		pathfinder.Update();
+	}
+
+	private void SetCell(int x, int y, CellState state, Node2D node)
+	{
+		grid[x, y] = (state, node);
+		pathfinder?.SetPointSolid(new Vector2I(x, y), state != CellState.Empty);
+	}
+
+	public Vector2[] FindPath(Vector2 worldFrom, Vector2 worldTo)
+	{
+		var fromV = WorldPositionToGridCell(worldFrom);
+		var toV = WorldPositionToGridCell(worldTo);
+		var fromCell = new Vector2I((int)fromV.X, (int)fromV.Y);
+		var toCell = new Vector2I((int)toV.X, (int)toV.Y);
+
+		if (!IsCellWithinBounds(fromCell.X, fromCell.Y) || !IsCellWithinBounds(toCell.X, toCell.Y))
+			return [];
+
+		// AStarGrid2D refuses to start from a solid cell; temporarily unmark while querying.
+		bool fromWasSolid = pathfinder.IsPointSolid(fromCell);
+		if (fromWasSolid) pathfinder.SetPointSolid(fromCell, false);
+
+		var path = pathfinder.GetPointPath(fromCell, toCell, allowPartialPath: true);
+
+		if (fromWasSolid) pathfinder.SetPointSolid(fromCell, true);
+
+		// GetPointPath returns cell origins (top-left). Shift to cell centers for unit consumers.
+		var halfCell = new Vector2(HALF_CELL_SIZE, HALF_CELL_SIZE);
+		for (int i = 0; i < path.Length; i++)
+			path[i] += halfCell;
+
+		return path;
 	}
 
 	public bool IsCellFree(int x, int y) => grid[x, y].cellState == CellState.Empty;
@@ -51,7 +93,7 @@ public partial class GridManager
 			return false;
 		}
 
-		grid[x, y] = (state, entityNode);
+		SetCell(x, y, state, entityNode);
 		return true;
 	}
 
@@ -124,7 +166,7 @@ public partial class GridManager
 
 				if (!IsCellWithinBounds(x, y)) continue;
 
-				grid[x, y] = (CellState.Building, building);
+				SetCell(x, y, CellState.Building, building);
 			}
 		}
 	}
@@ -145,7 +187,7 @@ public partial class GridManager
 
 				if (!IsCellWithinBounds(x, y) || grid[x, y].node != building) continue;
 
-				grid[x, y] = (CellState.Empty, null);
+				SetCell(x, y, CellState.Empty, null);
 			}
 		}
 	}
@@ -166,7 +208,7 @@ public partial class GridManager
 
 					if (!IsCellWithinBounds(x, y) || grid[x, y].cellState != CellState.Empty) continue;
 
-					grid[x, y] = (CellState.Resource, tree);
+					SetCell(x, y, CellState.Resource, tree);
 				}
 			}
 		}
@@ -186,7 +228,7 @@ public partial class GridManager
 
 				if (!IsCellWithinBounds(x, y) || grid[x, y].node != tree) continue;
 
-				grid[x, y] = (CellState.Empty, null);
+				SetCell(x, y, CellState.Empty, null);
 			}
 		}
 	}

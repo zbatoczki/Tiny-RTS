@@ -1,4 +1,5 @@
 using Godot;
+using Game.Autoload;
 using Game.Component;
 using Game.Resources.Unit;
 using Game.FSM;
@@ -16,6 +17,8 @@ public abstract partial class Unit : CharacterBody2D
     [Export] public bool CanAttack {get; private set;} = true;
 
     public Vector2 targetPosition    = Vector2.Zero;
+    public Vector2[] path = [];
+    public int pathIndex;
     public CollisionShape2D  collisionShape;
     public AnimatedSprite2D animatedSprite2D;
     public DamageComponent damageComponent;
@@ -65,6 +68,22 @@ public abstract partial class Unit : CharacterBody2D
     public override void _PhysicsProcess(double delta)
     {
         stateMachine.UpdatePhysicsFrame(delta);
+        if (path.Length > 0 && AttackTarget == null) QueueRedraw();
+    }
+
+    public override void _Draw()
+    {
+        if (AttackTarget != null || path.Length == 0 || pathIndex >= path.Length) return;
+
+        var color = Colors.Red;
+        Vector2 prev = CellCenterOffset;
+        for (int i = pathIndex; i < path.Length; i++)
+        {
+            Vector2 local = ToLocal(path[i]);
+            DrawLine(prev, local, color, 2.0f);
+            DrawCircle(local, 4.0f, color);
+            prev = local;
+        }
     }
 
     public string GetCurrentState()
@@ -122,6 +141,8 @@ public abstract partial class Unit : CharacterBody2D
     public virtual void MoveTo(Vector2 worldTarget)
     {
         targetPosition = worldTarget;
+        path = GameManager.Instance?.Grid?.FindPath(CenterPosition, worldTarget) ?? [];
+        pathIndex = 0;
         stateMachine.ForceToState<Move>();
     }
 

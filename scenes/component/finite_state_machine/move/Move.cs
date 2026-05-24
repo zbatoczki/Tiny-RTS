@@ -23,14 +23,39 @@ public partial class Move : State
 
     public override State UpdatePhysicsFrame(double delta)
 	{
-        var goToPosition = unit.AttackTarget != null ? unit.AttackTarget.CenterPosition : unit.targetPosition;
+        Vector2 goToPosition;
+        bool atFinalWaypoint;
+
+        if (unit.AttackTarget != null)
+        {
+            // Chasing a moving target — A* path would be stale immediately, use direct steering.
+            goToPosition = unit.AttackTarget.CenterPosition;
+            atFinalWaypoint = true;
+        }
+        else if (unit.path.Length > 0)
+        {
+            while (unit.pathIndex < unit.path.Length - 1 &&
+                   unit.CenterPosition.DistanceTo(unit.path[unit.pathIndex]) <= 5f)
+            {
+                unit.pathIndex++;
+            }
+            goToPosition = unit.path[unit.pathIndex];
+            atFinalWaypoint = unit.pathIndex == unit.path.Length - 1;
+        }
+        else
+        {
+            goToPosition = unit.targetPosition;
+            atFinalWaypoint = true;
+        }
 
 		var direction = goToPosition - unit.CenterPosition;
 
         unit.FaceRight(direction.X < 0);
 
-        if(direction.Length() <= 5f)
+        if(atFinalWaypoint && direction.Length() <= 5f)
         {
+            unit.path = [];
+            unit.QueueRedraw();
             return IdleState;
         }
 
