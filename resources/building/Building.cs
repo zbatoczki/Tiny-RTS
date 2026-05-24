@@ -10,7 +10,7 @@ namespace Game.Buildings;
 
 public abstract partial class Building : StaticBody2D
 {
-    [Export] public BuildingResource BuildingResourcePath;
+    [Export] public BuildingResource BuildingResource;
 	[Export] public Faction Faction;
     [Export] public float MaxHealth = 500f;
     [Export] public float TrainTime = 3f;
@@ -41,13 +41,16 @@ public abstract partial class Building : StaticBody2D
     {
         CurrentHealth = MaxHealth;
         healthBar = GetNodeOrNull<HealthComponent>(nameof(HealthComponent));
+
         if(healthBar != null)
         {
             healthBar.SetMaxValue(MaxHealth);
-            healthBar.SetCurrentHealth(MaxHealth);
-            AddToGroup("Buildings");
-            GameManager.Instance.RegisterBuilding(this);
+            healthBar.SetCurrentHealth(MaxHealth);      
         }
+
+        AddToGroup("Buildings");
+        GameManager.Instance.RegisterBuilding(this);
+
         timer = GetNode<Timer>(nameof(Timer));
         timer.WaitTime = TrainTime;
         timer.Timeout += OnTimeout;
@@ -55,9 +58,9 @@ public abstract partial class Building : StaticBody2D
         selectionRing = GetNode<Sprite2D>("SelectionRing");
         selectionRing.Visible = false;
 
-        if(BuildingResourcePath != null)
+        if(BuildingResource != null)
         {
-            GD.Print($"Description: {BuildingResourcePath.Description}");
+            GD.Print($"Description: {BuildingResource.Description}");
         }
     }
 

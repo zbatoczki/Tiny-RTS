@@ -52,7 +52,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_eglkm"]
-radius = 34.0
+radius = 32.0
 height = 142.0
 
 [node name="Tree" type="StaticBody2D" unique_id=1553542828]
@@ -61,13 +61,15 @@ collision_mask = 2
 script = ExtResource("1_pknr5")
 Type = 1
 TotalResources = 10
+Dimensions = Vector2i(1, 2)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=619849326]
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_3n80q")
 autoplay = "default"
-offset = Vector2(0, -64)
+centered = false
+offset = Vector2(-96, -148)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=716583844]
-position = Vector2(0, -59)
+position = Vector2(0, -48)
 shape = SubResource("CapsuleShape2D_eglkm")

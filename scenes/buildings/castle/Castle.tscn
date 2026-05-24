@@ -18,7 +18,7 @@ size = Vector2(320, 192)
 collision_mask = 6
 script = ExtResource("1_xrw3n")
 WorkerScene = ExtResource("2_c3u2i")
-BuildingResourcePath = ExtResource("3_t63eb")
+BuildingResource = ExtResource("3_t63eb")
 TrainTime = 2.0
 
 [node name="SelectionRing" parent="." unique_id=1405774456 instance=ExtResource("3_3hter")]

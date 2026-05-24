@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Game.Buildings;
 using Game.Globals;
+using Game.Manager;
 using Game.Units;
 using Godot;
 using Game.Autoload;
@@ -24,6 +25,8 @@ public partial class GameManager: Node
     public readonly HashSet<Unit> AllUnits = [];
     public readonly HashSet<Building> AllBuildings = [];
 
+    public GridManager Grid { get; private set; }
+
     public override void _Ready()
     {
         if(Instance != null)
@@ -32,6 +35,8 @@ public partial class GameManager: Node
             return;
         }
         Instance = this;
+
+        Grid = new GridManager(50, 50);
 
         foreach(Faction faction in System.Enum.GetValues<Faction>())
         {
@@ -65,11 +70,13 @@ public partial class GameManager: Node
     public void RegisterBuilding(Building building)
     {
         AllBuildings.Add(building);
+        Grid?.RegisterBuilding(building);
     }
 
     public void UnregisterBuilding(Building building)
     {
         AllBuildings.Remove(building);
+        Grid?.UnregisterBuilding(building);
     }
 
     #endregion

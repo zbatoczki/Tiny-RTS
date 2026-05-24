@@ -16,7 +16,7 @@ collision_mask = 6
 script = ExtResource("1_63nyx")
 WarriorScene = ExtResource("2_rhwkk")
 SpearmanScene = ExtResource("3_rhwkk")
-BuildingResourcePath = ExtResource("4_t5cd1")
+BuildingResource = ExtResource("4_t5cd1")
 
 [node name="SelectionRing" parent="." unique_id=1405774456 instance=ExtResource("4_c08p7")]
 scale = Vector2(3, 3)

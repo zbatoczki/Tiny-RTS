@@ -14,7 +14,7 @@ size = Vector2(192, 192)
 collision_mask = 6
 script = ExtResource("1_m1s3s")
 ArcherScene = ExtResource("4_4byy1")
-BuildingResourcePath = ExtResource("3_boy2a")
+BuildingResource = ExtResource("3_boy2a")
 
 [node name="SelectionRing" parent="." unique_id=1405774456 instance=ExtResource("3_0mdi1")]
 scale = Vector2(3, 3)

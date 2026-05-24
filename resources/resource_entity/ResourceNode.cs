@@ -16,6 +16,7 @@ public abstract partial class ResourceNode : Node2D
 
     [Export] public ResourceType Type;
     [Export] public int          TotalResources   = 1000;
+    [Export] public Vector2I Dimensions {get; private set;} = new (1, 1); 
 
     public Vector2I CellCoordinates {get; set;}
     public bool IsDepleted => RemainingResources <= 0;

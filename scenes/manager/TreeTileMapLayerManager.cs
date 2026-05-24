@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game.Autoload;
 using Game.Resources.Gathering;
 using Godot;
 
@@ -80,6 +81,7 @@ public partial class TreeTileMapLayerManager : TileMapLayer
     {
 		SetCell(cellCoordinates, 1, DEPLETED_TREE_ATLAS_COORD);
 		var treeInstance = treeResources[cellCoordinates];
+		GameManager.Instance.Grid?.UnregisterTree(treeInstance);
 		treeResources.Remove(cellCoordinates);
 		treeInstance.QueueFree();
     }
