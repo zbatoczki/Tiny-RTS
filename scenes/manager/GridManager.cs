@@ -108,26 +108,6 @@ public partial class GridManager
 		}
 	}
 
-	public void UnregisterTree(Tree tree)
-	{
-		var anchorCell = tree.CellCoordinates;
-		var dims = tree.Dimensions;
-
-		for (int dx = 0; dx < dims.X; dx++)
-		{
-			for (int dy = 0; dy < dims.Y; dy++)
-			{
-				int x = anchorCell.X - 1 - dx;
-				int y = anchorCell.Y - 1 - dy;
-
-				if (!IsCellWithinBounds(x, y)) continue;
-				if (grid[x, y].node != tree) continue;
-
-				grid[x, y] = (CellState.Empty, null);
-			}
-		}
-	}
-
 	public void RegisterBuilding(Building building)
 	{
 		var dims = building.BuildingResource?.Dimensions ?? Vector2I.One;
@@ -163,8 +143,7 @@ public partial class GridManager
 				int x = ax + dx;
 				int y = ay + dy;
 
-				if (!IsCellWithinBounds(x, y)) continue;
-				if (grid[x, y].node != building) continue;
+				if (!IsCellWithinBounds(x, y) || grid[x, y].node != building) continue;
 
 				grid[x, y] = (CellState.Empty, null);
 			}
@@ -173,23 +152,41 @@ public partial class GridManager
 
 	public void RegisterTrees(TileMapLayer treeLayer)
 	{
-		GD.Print(treeLayer.GetChildCount());
 		foreach (var tree in treeLayer.GetChildren().OfType<Tree>())
 		{
 			var anchorCell = treeLayer.LocalToMap(tree.Position);
 			var dims = tree.Dimensions;
-			GD.Print($"Registering tree {tree.Name} at cell {anchorCell} with dims {dims}");
+			GD.Print($"Registering tree {tree.Name} at cell {anchorCell}/position {tree.Position} with dims {dims}");
 			for (int dx = 0; dx < dims.X; dx++)
 			{
 				for (int dy = 0; dy < dims.Y; dy++)
 				{
-					int x = anchorCell.X - 1 - dx;
-					int y = anchorCell.Y - 1 - dy;
+					int x = anchorCell.X + dx;
+					int y = anchorCell.Y - dy;
 
-					if (!IsCellWithinBounds(x, y)) continue;
+					if (!IsCellWithinBounds(x, y) || grid[x, y].cellState != CellState.Empty) continue;
 
 					grid[x, y] = (CellState.Resource, tree);
 				}
+			}
+		}
+	}
+
+	public void UnregisterTree(Tree tree)
+	{
+		var anchorCell = tree.CellCoordinates;
+		var dims = tree.Dimensions;
+
+		for (int dx = 0; dx < dims.X; dx++)
+		{
+			for (int dy = 0; dy < dims.Y; dy++)
+			{
+				int x = anchorCell.X + dx;
+				int y = anchorCell.Y - dy;
+
+				if (!IsCellWithinBounds(x, y) || grid[x, y].node != tree) continue;
+
+				grid[x, y] = (CellState.Empty, null);
 			}
 		}
 	}
