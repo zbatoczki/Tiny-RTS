@@ -8,7 +8,7 @@ using Game.Units;
 using Godot;
 using Godot.Collections;
 
-namespace Game.Test;
+namespace Game.SelectionManager;
 
 /// <summary>
 /// Handles all player selection input and fires events when the selection changes.
@@ -27,6 +27,7 @@ public partial class SelectionManager : Node2D
 
     [Signal] public delegate void UnitsSelectedEventHandler(Array<Unit> units);
     [Signal] public delegate void BuildingSelectedEventHandler(Building building);
+    [Signal] public delegate void ResourceSelectedEventHandler(ResourceNode resource);
     [Signal] public delegate void SelectionClearedEventHandler();
 
     // -------------------------------------------------------------------------
@@ -42,6 +43,7 @@ public partial class SelectionManager : Node2D
     private Vector2 _dragStart;
     private readonly List<Unit> _selectedUnits = [];
     private Building _selectedBuilding;
+    private ResourceNode _selectedResource;
 
     private ReferenceRect _selectionBox = null;
     private ContextActionHandler _contextHandler = null;
@@ -134,6 +136,10 @@ public partial class SelectionManager : Node2D
                 case Unit unit:
                     SelectUnits([unit]);
                     return;
+
+                case ResourceNode resource:
+                    SelectResource(resource);
+                    return;
             }
         }
 
@@ -203,6 +209,15 @@ public partial class SelectionManager : Node2D
         EmitSignal(SignalName.BuildingSelected, _selectedBuilding);
     }
 
+    private void SelectResource(ResourceNode resource)
+    {
+        ClearSelection();
+
+        _selectedResource = resource;
+
+        EmitSignal(SignalName.ResourceSelected, _selectedResource);
+    }
+
     private void ClearSelection()
     {
         _selectedUnits.ForEach(unit =>
@@ -214,6 +229,8 @@ public partial class SelectionManager : Node2D
 
         _selectedBuilding?.SetSelected(false);
         _selectedBuilding = null;
+
+        _selectedResource = null;
 
         _currentContext = SelectionContext.Empty;
         EmitSignal(SignalName.SelectionCleared);

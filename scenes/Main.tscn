@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://drst3dcdxv4k0" path="res://scenes/buildings/castle/Castle.tscn" id="9_q8u5g"]
 [ext_resource type="PackedScene" uid="uid://dr2a5dv1lisis" path="res://scenes/units/enemy/harpoon fish/HarpoonFish.tscn" id="10_bjd11"]
 [ext_resource type="PackedScene" uid="uid://coowfgss5y3sj" path="res://scenes/units/player/archer/Archer.tscn" id="12_bjd11"]
+[ext_resource type="PackedScene" uid="uid://cv61oyhiqo531" path="res://scenes/ui/SelectionWindow.tscn" id="12_ft6cd"]
 [ext_resource type="PackedScene" uid="uid://dbaeqccn85l1u" path="res://scenes/buildings/archery_range/ArcheryRange.tscn" id="13_qmy6f"]
 [ext_resource type="Script" uid="uid://wmrubcinqmu2" path="res://scenes/Camera2d.cs" id="14_mwfav"]
 [ext_resource type="Script" uid="uid://dc0wx7fgotf6l" path="res://scenes/DebugGrid.cs" id="15_3p2gp"]
@@ -67,6 +68,7 @@ text = "DEBUG TEXT HERE"
 script = ExtResource("7_nxtc6")
 
 [node name="PanelContainer" type="PanelContainer" parent="UI" unique_id=916671450]
+visible = false
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
@@ -106,6 +108,9 @@ offset_top = 36.0
 offset_right = 148.0
 offset_bottom = 67.0
 text = "RESET SCENE"
+
+[node name="SelectionWindow" parent="UI" unique_id=1334838068 node_paths=PackedStringArray("selectionManager") instance=ExtResource("12_ft6cd")]
+selectionManager = NodePath("../../SelectionManager")
 
 [node name="Worker" parent="." unique_id=1980137832 node_paths=PackedStringArray("treeLayer") instance=ExtResource("6_nxtc6")]
 position = Vector2(512, 384)
