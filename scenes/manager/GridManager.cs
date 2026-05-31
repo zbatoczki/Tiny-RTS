@@ -232,4 +232,20 @@ public partial class GridManager
 			}
 		}
 	}
+
+	public void RegisterGoldmine(GoldMine goldMine)
+	{
+		var anchorCell = (Vector2I)WorldPositionToGridCell(goldMine.GlobalPosition);
+		var dims = goldMine.Dimensions;
+		for (int dx = 0; dx < dims.X; dx++)
+		{
+			for (int dy = 0; dy < dims.Y; dy++)
+			{
+				int x = anchorCell.X + dx;
+				int y = anchorCell.Y - dy;
+				if (!IsCellWithinBounds(x, y) || grid[x, y].cellState != CellState.Empty) continue;
+				SetCell(x, y, CellState.Resource, goldMine);
+			}
+		}
+	}
 }

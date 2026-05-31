@@ -23,10 +23,10 @@ public abstract partial class ResourceNode : Node2D
     public int  RemainingResources {get; set;}
 
 
-    protected void InitializeResource()
+    protected void InitializeResource(StringName stringName)
     {
         RemainingResources = TotalResources;
-        AddToGroup("resource_nodes");
+        AddToGroup(stringName);
     }
 
 

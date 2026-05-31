@@ -9,11 +9,12 @@
 radius = 44.0
 height = 159.0
 
-[node name="GoldMine" type="StaticBody2D" unique_id=93055991]
+[node name="GoldMine" type="StaticBody2D" unique_id=93055991 groups=["GoldResource"]]
 collision_layer = 32
 collision_mask = 6
 script = ExtResource("1_ltrxr")
 TotalResources = 10
+Dimensions = Vector2i(3, 2)
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=914712534]
 position = Vector2(96, 68)

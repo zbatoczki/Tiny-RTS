@@ -1,4 +1,5 @@
 using Game.Component;
+using Game.Groups;
 using Game.Resources;
 using Game.Resources.Gathering;
 using Game.Units;
@@ -23,7 +24,7 @@ public partial class GoldMine : ResourceNode
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		InitializeResource();
+		InitializeResource(GlobalGroups.GOLD_RESOURCE);
 		inactiveSprite = GetNode<Sprite2D>("Inactive");
 		activeSprite = GetNode<Sprite2D>("Active");
 		destroyedSprite = GetNode<Sprite2D>("Destroyed");

@@ -1,3 +1,4 @@
+using Game.Groups;
 using Game.Resources.Gathering;
 using Godot;
 
@@ -11,7 +12,7 @@ public partial class Tree : ResourceNode
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		InitializeResource();
+		InitializeResource(GlobalGroups.TREE_RESOURCE);
 		animatedSprite2D = GetNode<AnimatedSprite2D>(nameof(AnimatedSprite2D));
 		collisionShape2D = GetNode<CollisionShape2D>(nameof(CollisionShape2D));
 	}

@@ -45,6 +45,7 @@ PlayerUnit=""
 EnemyUnit=""
 Base=""
 TreeMapLayer=""
+GoldResource=""
 
 [input]
 
