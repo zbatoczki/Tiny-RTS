@@ -47,6 +47,10 @@ Base=""
 TreeMapLayer=""
 GoldResource=""
 
+[gui]
+
+theme/custom="uid://c6sye7jrjlk7h"
+
 [input]
 
 left_click={
