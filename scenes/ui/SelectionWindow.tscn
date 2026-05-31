@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cv61oyhiqo531"]
 
 [ext_resource type="Script" uid="uid://de3v6egb07vaf" path="res://scenes/ui/SelectionWindow.cs" id="1_hoei1"]
+[ext_resource type="PackedScene" uid="uid://dnnrumv61551e" path="res://scenes/ui/UnitCard.tscn" id="2_nkpt4"]
 
 [node name="SelectionWindow" type="Control" unique_id=1334838068]
 layout_mode = 3
@@ -9,7 +10,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_vertical = 8
 mouse_filter = 2
 script = ExtResource("1_hoei1")
 
@@ -18,56 +18,26 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -112.0
-offset_right = 662.0
+offset_top = -406.0
+offset_right = 793.0
 grow_vertical = 0
 theme_override_constants/separation = 8
 
 [node name="ActionsPanel" type="PanelContainer" parent="PanelsRow" unique_id=1786165009]
-custom_minimum_size = Vector2(280, 200)
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelsRow/ActionsPanel" unique_id=715769734]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="PanelsRow/ActionsPanel/VBoxContainer" unique_id=2078504907]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
-
-[node name="ActionsContent" type="VBoxContainer" parent="PanelsRow/ActionsPanel/VBoxContainer/MarginContainer" unique_id=1976744664]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="PanelsRow/ActionsPanel/VBoxContainer/MarginContainer/ActionsContent" unique_id=1304948353]
+[node name="ActionsContent" type="VBoxContainer" parent="PanelsRow/ActionsPanel" unique_id=809021282]
+unique_name_in_owner = true
 layout_mode = 2
-theme_type_variation = &"PanelContainerAlternate"
+size_flags_horizontal = 0
+theme_override_constants/separation = 16
 
-[node name="Button" type="Button" parent="PanelsRow/ActionsPanel/VBoxContainer/MarginContainer/ActionsContent/PanelContainer" unique_id=1317738368]
+[node name="Control" parent="PanelsRow/ActionsPanel/ActionsContent" unique_id=1372546865 instance=ExtResource("2_nkpt4")]
 layout_mode = 2
-text = "Action 1"
-
-[node name="PanelContainer2" type="PanelContainer" parent="PanelsRow/ActionsPanel/VBoxContainer/MarginContainer/ActionsContent" unique_id=1518663594]
-layout_mode = 2
-theme_type_variation = &"PanelContainerAlternate"
-
-[node name="Button" type="Button" parent="PanelsRow/ActionsPanel/VBoxContainer/MarginContainer/ActionsContent/PanelContainer2" unique_id=1913337521]
-layout_mode = 2
-text = "Action 1"
-
-[node name="PanelContainer3" type="PanelContainer" parent="PanelsRow/ActionsPanel/VBoxContainer/MarginContainer/ActionsContent" unique_id=1631440127]
-layout_mode = 2
-theme_type_variation = &"PanelContainerAlternate"
-
-[node name="Button" type="Button" parent="PanelsRow/ActionsPanel/VBoxContainer/MarginContainer/ActionsContent/PanelContainer3" unique_id=1727465203]
-layout_mode = 2
-text = "Action 1"
 
 [node name="InformationPanel" type="PanelContainer" parent="PanelsRow" unique_id=1272837414]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(280, 200)
 layout_mode = 2
 

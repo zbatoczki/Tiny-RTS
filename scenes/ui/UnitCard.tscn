@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://dnnrumv61551e"]
+
+[ext_resource type="Texture2D" uid="uid://bn5nlig7h285o" path="res://assets/ui/icons/units/worker_icon.png" id="1_q7410"]
+
+[node name="Control" type="PanelContainer" unique_id=1372546865]
+offset_right = 48.0
+offset_bottom = 48.0
+tooltip_text = "This is a tool tip."
+theme_type_variation = &"PanelContainerAlternate"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=361220640]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/separation = 4
+
+[node name="UnitName" type="Label" parent="VBoxContainer" unique_id=829950935]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Worker"
+horizontal_alignment = 1
+
+[node name="UnitIcon" type="TextureRect" parent="VBoxContainer" unique_id=476012962]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(108, 108)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("1_q7410")
+expand_mode = 1
+
+[node name="CostPanel" type="HBoxContainer" parent="VBoxContainer" unique_id=923540272]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CostPanel" unique_id=624803492]
+layout_mode = 2
+
+[node name="TrainButton" type="Button" parent="VBoxContainer" unique_id=876091070]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+text = "Train"

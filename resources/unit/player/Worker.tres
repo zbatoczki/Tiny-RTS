@@ -6,4 +6,8 @@
 script = ExtResource("1_ca8hu")
 Name = "Worker"
 MaxHealth = 5.0
+ResourceCosts = Dictionary[int, float]({
+1: 10.0,
+2: 10.0
+})
 metadata/_custom_type_script = "uid://dllaeorx6nqxd"

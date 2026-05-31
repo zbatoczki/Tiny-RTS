@@ -1,6 +1,8 @@
+using System;
 using Game.Buildings;
 using Game.Globals;
 using Game.Resources;
+using Game.Resources.Unit;
 using Game.SelectionManager;
 using Game.Units;
 using Godot;
@@ -9,6 +11,8 @@ using Godot.Collections;
 public partial class SelectionWindow : Control
 {
 	[Export] private SelectionManager selectionManager;
+
+	private PackedScene unitCard = GD.Load<PackedScene>("res://scenes/ui/UnitCard.tscn");
 
 	private VBoxContainer actionsContent;
 	private VBoxContainer infoContent;
@@ -91,17 +95,60 @@ public partial class SelectionWindow : Control
 		switch (building)
 		{
 			case Barracks barracks:
-				AddActionButton("Train Warrior", () => barracks.TrainUnit(UnitTypes.Warrior));
-				AddActionButton("Train Spearman", () => barracks.TrainUnit(UnitTypes.Spearman));
+				AddUnitCards(barracks.UnitStats, barracks.TrainUnit);
 				break;
 			// TODO: Castle, ArcheryRange, GoldMine action lists drop in here.
 		}
 	}
 
-	private void AddActionButton(string text, System.Action onPressed)
+	private void AddUnitCards(Array<UnitStats> unitStats, Func<UnitTypes, bool> onTrain)
 	{
-		var btn = new Button { Text = text };
-		btn.Pressed += onPressed;
-		actionsContent.AddChild(btn);
+		foreach (var stats in unitStats)
+		{
+			var unitCardInstance = unitCard.Instantiate<PanelContainer>();
+			unitCardInstance.GetNode<Label>("%UnitName").Text = stats.Name;
+
+			var unitIcon = unitCardInstance.GetNode<TextureRect>("%UnitIcon");
+			unitIcon.Texture = GD.Load<Texture2D>(stats.IconPath);
+
+			SetCostsPanel(unitCardInstance, stats.ResourceCosts);
+
+			var trainButton = unitCardInstance.GetNode<Button>("%TrainButton");
+			trainButton.Pressed += () =>
+			{
+				if (onTrain == null) return;
+				onTrain((UnitTypes)Enum.Parse(typeof(UnitTypes), stats.Name));
+			};
+			actionsContent.AddChild(unitCardInstance);
+		}
+	}
+
+	private void SetCostsPanel(PanelContainer cardInstance, Dictionary<ResourceType, float> costs)
+	{
+		foreach (var (resourceType, amount) in costs)
+		{
+			var costLabel = new Label { Text = amount.ToString() };
+			var resourceIcon = new TextureRect{Texture = new PlaceholderTexture2D(){Size = new Vector2(32,32)}};
+
+			switch (resourceType)
+			{
+				case ResourceType.Gold:
+					resourceIcon.Texture = GD.Load<Texture2D>("res://assets/resources/gold_atlus.tres");
+					break;
+				case ResourceType.Wood:
+					resourceIcon.Texture = GD.Load<Texture2D>("res://assets/resources/wood_atlus.tres");
+					break;
+			}
+
+			resourceIcon.ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;
+			resourceIcon.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
+			resourceIcon.CustomMinimumSize = new Vector2(32,32);
+
+			var hBox = new HBoxContainer();
+			hBox.AddChild(resourceIcon);
+			hBox.AddChild(costLabel);
+
+			cardInstance.GetNode<HBoxContainer>("%CostPanel").AddChild(hBox);
+		}
 	}
 }

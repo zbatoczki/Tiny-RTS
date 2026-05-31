@@ -7,4 +7,9 @@ script = ExtResource("1_bvhvo")
 Name = "Spearman"
 AttackRange = 15.0
 VisionRange = 15.0
+IconPath = "res://assets/ui/icons/units/spearman_icon.png"
+ResourceCosts = Dictionary[int, float]({
+0: 25.0,
+1: 75.0
+})
 metadata/_custom_type_script = "uid://dllaeorx6nqxd"

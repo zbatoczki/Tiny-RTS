@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://bjc3nxyjhll5o"]
+
+[ext_resource type="Texture2D" uid="uid://bn5nlig7h285o" path="res://assets/ui/icons/units/worker_icon.png" id="1_13if0"]
+
+[node name="Control" type="PanelContainer" unique_id=1372546865]
+offset_right = 134.0
+offset_bottom = 178.0
+tooltip_text = "This is a tool tip."
+theme_type_variation = &"PanelContainerAlternate"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=724646875]
+layout_mode = 2
+theme_override_constants/separation = -16
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=2103946468]
+layout_mode = 2
+text = "Worker"
+horizontal_alignment = 1
+
+[node name="ActionIcon" type="TextureRect" parent="VBoxContainer" unique_id=231472282]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("1_13if0")
+expand_mode = 1
+
+[node name="ActionButton" type="Button" parent="VBoxContainer" unique_id=1110157336]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Train"

@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" format=3 uid="uid://do65jv1pctwtc"]
+
+[ext_resource type="Texture2D" uid="uid://bv75fqf10thj2" path="res://assets/resources/wood_no_shadow.png" id="1_ic1dg"]
+
+[resource]
+atlas = ExtResource("1_ic1dg")
+region = Rect2(39, 72, 49, 28)
