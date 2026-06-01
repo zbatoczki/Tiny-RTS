@@ -16,12 +16,16 @@ public partial class SelectionWindow : Control
 	private PackedScene unitCard = GD.Load<PackedScene>("res://scenes/ui/UnitCard.tscn");
 	private PackedScene resourceCostPanel = GD.Load<PackedScene>("res://scenes/ui/ResourceCostPanel.tscn");
 
-	private VBoxContainer actionsContent;
+	private PanelContainer actionsPanel;
+	private PanelContainer infoPanel;
+	private GridContainer actionsContent;
 	private VBoxContainer infoContent;
 
 	public override void _Ready()
 	{
-		actionsContent = GetNode<VBoxContainer>("%ActionsContent");
+		actionsPanel = GetNode<PanelContainer>("%ActionsPanel");
+		infoPanel = GetNode<PanelContainer>("%InformationPanel");
+		actionsContent = GetNode<GridContainer>("%ActionsContent");
 		infoContent = GetNode<VBoxContainer>("%InformationContent");
 
 		ConnectSignals();
@@ -44,44 +48,77 @@ public partial class SelectionWindow : Control
 
 	private void OnUnitsSelected(Array<Unit> units)
 	{
-		ClearPanels();
+		ClearPanelContents();
 		if (units.Count == 0) { OnSelectionCleared(); return; }
 		Visible = true;
-
+		
 		infoContent.AddChild(new Label { Text = units.Count == 1 ? units[0].Name : $"{units.Count} units selected" });
+
+		if(units.Count == 1)
+		{
+			var unit = units[0];
+			infoContent.AddChild(new Label { Text = $"Faction: {unit.stats.Faction}" });
+			infoContent.AddChild(new Label { Text = $"HP: {unit.CurrentHealth:F0} / {unit.stats.MaxHealth:F0}" });
+			infoContent.AddChild(new Label { Text = $"Attack: {unit.stats.AttackDamage}" });
+			infoContent.AddChild(new Label { Text = $"Attack Speed: {unit.stats.AttackSpeed}s" });
+			infoContent.AddChild(new Label { Text = $"Movement Speed: {unit.stats.MovementSpeed}" });
+			infoContent.AddChild(new Label { Text = $"Gather Rate: {unit.stats.GatherRate}" });
+		}
+		
+		
 		// TODO: per-unit actions (move, attack, gather...) and stats (HP, faction, type)
+
+		ShowPanels();
 	}
 
 	private void OnBuildingSelected(Building building)
 	{
-		ClearPanels();
+		ClearPanelContents();
 		Visible = true;
 
 		PopulateBuildingInfo(building);
 		PopulateBuildingActions(building);
+
+		ShowPanels();
 	}
 
 	private void OnResourceSelected(ResourceNode resource)
 	{
-		ClearPanels();
+		ClearPanelContents();
 		Visible = true;
 
 		infoContent.AddChild(new Label { Text = resource.Name });
 		infoContent.AddChild(new Label { Text = $"Type: {resource.Type}" });
 		infoContent.AddChild(new Label { Text = $"Remaining: {resource.RemainingResources} / {resource.TotalResources}" });
 		// TODO: resource-specific actions (none for now)
+
+		ShowPanels();
 	}
 
 	private void OnSelectionCleared()
 	{
-		ClearPanels();
+		ClearPanelContents();
 		Visible = false;
 	}
 
-	private void ClearPanels()
+	private void ShowPanels()
 	{
-		foreach (Node child in actionsContent.GetChildren()) child.QueueFree();
-		foreach (Node child in infoContent.GetChildren()) child.QueueFree();
+		actionsPanel.Visible = actionsContent.GetChildCount() > 0;
+		infoPanel.Visible = infoContent.GetChildCount() > 0;
+	}
+
+	private void ClearPanelContents()
+	{
+		foreach (Node child in actionsContent.GetChildren())
+		{
+			actionsContent.RemoveChild(child);
+			child.QueueFree();
+		}
+		foreach (Node child in infoContent.GetChildren())
+		{
+			infoContent.RemoveChild(child);
+			child.QueueFree();
+		}
 	}
 
 	private void PopulateBuildingInfo(Building building)
@@ -105,9 +142,6 @@ public partial class SelectionWindow : Control
 
 	private void AddUnitCards(Array<UnitStats> unitStats, Func<UnitTypes, bool> onTrain)
 	{
-		List<HBoxContainer> hboxContainerRows = [];
-		int rowCount = 0;
-		HBoxContainer hboxContainer = new();
 		foreach (var stats in unitStats)
 		{
 			var unitCardInstance = unitCard.Instantiate<PanelContainer>();
@@ -126,29 +160,18 @@ public partial class SelectionWindow : Control
 				onTrain(Enum.Parse<UnitTypes>(stats.Name));
 			};
 
-			hboxContainer.AddChild(unitCardInstance);
-			rowCount++;
-
-			if (rowCount >= 2)
-			{
-				hboxContainerRows.Add(hboxContainer);
-				hboxContainer = new();
-				rowCount = 0;
-			}
-		}
-		if(hboxContainer.GetChildCount() > 0)
-		{
-			hboxContainerRows.Add(hboxContainer);
-		}
-
-		foreach(var row in hboxContainerRows)
-		{
-			actionsContent.AddChild(row);
+			actionsContent.AddChild(unitCardInstance);
 		}
 	}
 
 	private void SetCostsPanel(PanelContainer cardInstance, Godot.Collections.Dictionary<ResourceType, float> costs)
 	{
+		var costPanel = cardInstance.GetNode<HBoxContainer>("%CostPanel");
+		foreach (Node child in costPanel.GetChildren())
+		{
+			costPanel.RemoveChild(child);
+			child.QueueFree();
+		}
 		foreach (var (resourceType, amount) in costs)
 		{
 			var costPanelInstance = resourceCostPanel.Instantiate<HBoxContainer>();
@@ -166,8 +189,7 @@ public partial class SelectionWindow : Control
 			}
 			
 			costPanelInstance.GetNode<TextureRect>("ResourceIcon").Texture = resourceIcon;
-
-			cardInstance.GetNode<HBoxContainer>("%CostPanel").AddChild(costPanelInstance);
+			costPanel.AddChild(costPanelInstance);
 		}
 	}
 }

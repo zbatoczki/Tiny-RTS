@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dnnrumv61551e"]
 
 [ext_resource type="Texture2D" uid="uid://ci1rxjdgyl2ka" path="res://assets/ui/icons/units/warrior_atlas.tres" id="1_q7410"]
+[ext_resource type="PackedScene" uid="uid://btfklltgvbty7" path="res://scenes/ui/ResourceCostPanel.tscn" id="2_ig1yn"]
 
 [node name="UnitCard" type="PanelContainer" unique_id=1372546865]
 offset_right = 144.0
@@ -39,6 +40,12 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+
+[node name="ResourceCostPanel" parent="VBoxContainer/CostPanel" unique_id=1530260662 instance=ExtResource("2_ig1yn")]
+layout_mode = 2
+
+[node name="ResourceCostPanel2" parent="VBoxContainer/CostPanel" unique_id=468287284 instance=ExtResource("2_ig1yn")]
+layout_mode = 2
 
 [node name="TrainButton" type="Button" parent="VBoxContainer" unique_id=876091070]
 unique_name_in_owner = true

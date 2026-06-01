@@ -11,7 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://c5fgnm0wp186w" path="res://scenes/ui/ResourcesUi.tscn" id="8_jlsqs"]
 [ext_resource type="PackedScene" uid="uid://dy0ld8xk5d245" path="res://scenes/buildings/gold_mine/GoldMine.tscn" id="9_lhr70"]
 [ext_resource type="PackedScene" uid="uid://drst3dcdxv4k0" path="res://scenes/buildings/castle/Castle.tscn" id="9_q8u5g"]
-[ext_resource type="PackedScene" uid="uid://dr2a5dv1lisis" path="res://scenes/units/enemy/harpoon fish/HarpoonFish.tscn" id="10_bjd11"]
 [ext_resource type="PackedScene" uid="uid://coowfgss5y3sj" path="res://scenes/units/player/archer/Archer.tscn" id="12_bjd11"]
 [ext_resource type="PackedScene" uid="uid://cv61oyhiqo531" path="res://scenes/ui/SelectionWindow.tscn" id="12_ft6cd"]
 [ext_resource type="PackedScene" uid="uid://dbaeqccn85l1u" path="res://scenes/buildings/archery_range/ArcheryRange.tscn" id="13_qmy6f"]
@@ -115,9 +114,6 @@ selectionManager = NodePath("../../SelectionManager")
 [node name="Worker" parent="." unique_id=1980137832 node_paths=PackedStringArray("treeLayer") instance=ExtResource("6_nxtc6")]
 position = Vector2(512, 384)
 treeLayer = NodePath("../TreeTileMapLayer")
-
-[node name="Harpoon Fish" parent="." unique_id=1465977348 instance=ExtResource("10_bjd11")]
-position = Vector2(1088, 192)
 
 [node name="Archer" parent="." unique_id=172825737 instance=ExtResource("12_bjd11")]
 position = Vector2(704, 448)

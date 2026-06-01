@@ -12,6 +12,9 @@
 [ext_resource type="Texture2D" uid="uid://c4rw6ppti7f3d" path="res://assets/units/player/pawn/pawn_run_wood.png" id="10_2rd3q"]
 [ext_resource type="Texture2D" uid="uid://d2c6txamrye2y" path="res://assets/units/player/pawn/pawn_run_gold.png" id="10_phryt"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_phryt"]
+size = Vector2(128, 128)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_b3epq"]
 atlas = ExtResource("2_3j8ay")
 region = Rect2(0, 0, 192, 192)
@@ -359,9 +362,6 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_2d8m4"]
-radius = 34.0
-
 [node name="Worker" unique_id=1980137832 groups=["PlayerUnit"] instance=ExtResource("1_ir85n")]
 z_index = 1
 collision_layer = 2
@@ -382,15 +382,9 @@ targetGroup = &"EnemyUnit"
 [node name="UnitDetectionComponent" parent="." index="3" unique_id=1331689136]
 targetGroup = &"EnemyUnit"
 
-[node name="AnimatedSprite2D" parent="." index="5" unique_id=290410313]
-y_sort_enabled = true
-position = Vector2(32, 32)
-sprite_frames = SubResource("SpriteFrames_phryt")
-animation = &"move"
-autoplay = "idle"
-frame = 1
-frame_progress = 0.24703515
-offset = Vector2(-98, -103)
+[node name="SelectionRing" parent="." index="5" unique_id=1405774456]
+position = Vector2(0, 0)
+offset = Vector2(32, 56)
 
 [node name="ResourceDetector" type="Area2D" parent="." index="6" unique_id=844198648]
 collision_layer = 0
@@ -399,9 +393,15 @@ input_pickable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ResourceDetector" index="0" unique_id=772626562]
 position = Vector2(32, 32)
-shape = SubResource("CircleShape2D_2d8m4")
+shape = SubResource("RectangleShape2D_phryt")
 debug_color = Color(0, 0.6, 0, 0.41960785)
 
-[node name="SelectionRing" parent="." index="7" unique_id=1405774456]
-position = Vector2(0, 0)
-offset = Vector2(32, 56)
+[node name="AnimatedSprite2D" parent="." index="7" unique_id=290410313]
+y_sort_enabled = true
+position = Vector2(32, 32)
+sprite_frames = SubResource("SpriteFrames_phryt")
+animation = &"move"
+autoplay = "idle"
+frame = 1
+frame_progress = 0.24703515
+offset = Vector2(-98, -103)

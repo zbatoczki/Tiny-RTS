@@ -27,11 +27,11 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 8
 
-[node name="ActionsContent" type="VBoxContainer" parent="PanelsRow/ActionsPanel" unique_id=809021282]
+[node name="ActionsContent" type="GridContainer" parent="PanelsRow/ActionsPanel" unique_id=526129473]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_constants/separation = 16
+columns = 3
 
 [node name="InformationPanel" type="PanelContainer" parent="PanelsRow" unique_id=1272837414]
 unique_name_in_owner = true

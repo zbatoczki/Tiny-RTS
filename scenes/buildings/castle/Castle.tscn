@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://ldhygolivtsg" path="res://scenes/component/HealthComponent.tscn" id="4_8iw5o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8iw5o"]
-size = Vector2(330, 200)
+size = Vector2(360, 230)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lg0r4"]
 size = Vector2(320, 192)
@@ -37,7 +37,7 @@ monitorable = true
 targetGroup = &"PlayerUnit"
 
 [node name="CollisionShape2D" parent="UnitDetectionComponent" index="0" unique_id=947036371]
-position = Vector2(160, 73)
+position = Vector2(160, 82)
 shape = SubResource("RectangleShape2D_8iw5o")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=914712534]

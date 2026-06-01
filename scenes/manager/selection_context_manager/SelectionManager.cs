@@ -68,7 +68,7 @@ public partial class SelectionManager : Node2D
     // Input
     // -------------------------------------------------------------------------
 
-    public override void _Input(InputEvent evt)
+    public override void _UnhandledInput(InputEvent evt)
     {
         HandleLeftClickDragStart(evt);
         HandleLeftClickDragHold();

@@ -35,8 +35,8 @@ public abstract partial class Unit : CharacterBody2D
     
     
     public StateMachine stateMachine;
+    public float CurrentHealth { get; private set; }
     private HealthComponent healthComponent;
-    private float currentHealth;
     private Sprite2D selectionRing;
 
     public override void _Ready()
@@ -55,7 +55,7 @@ public abstract partial class Unit : CharacterBody2D
         damageComponent.BodyEntered += OnEnemyEntered;
         damageComponent.BodyExited += OnEnemyExit;
 
-        currentHealth = stats.MaxHealth;
+        CurrentHealth = stats.MaxHealth;
         healthComponent.SetMaxValue(stats.MaxHealth);
     }
 
@@ -127,9 +127,9 @@ public abstract partial class Unit : CharacterBody2D
 
     public void TakeDamage(float incomingDamage)
     {
-        currentHealth -= incomingDamage;
-        healthComponent.SetCurrentHealth(currentHealth);
-        if(currentHealth < 1)
+        CurrentHealth -= incomingDamage;
+        healthComponent.SetCurrentHealth(CurrentHealth);
+        if(CurrentHealth < 1)
             stateMachine.ForceToState<Dead>();
     }
 

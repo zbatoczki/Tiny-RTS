@@ -12,6 +12,6 @@ AttackRange = 5.0
 VisionRange = 15.0
 IconPath = "res://assets/ui/icons/units/warrior_atlas.tres"
 ResourceCosts = Dictionary[int, float]({
-0: 100.0
+0: 150.0
 })
 metadata/_custom_type_script = "uid://dllaeorx6nqxd"
