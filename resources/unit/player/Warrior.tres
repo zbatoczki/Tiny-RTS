@@ -5,11 +5,12 @@
 [resource]
 script = ExtResource("1_5b3lj")
 Name = "Warrior"
+Description = "A hard hitting unit that costs a lot of gold."
 MaxHealth = 20.0
 AttackDamage = 2.0
 AttackRange = 5.0
 VisionRange = 15.0
-IconPath = "res://assets/ui/icons/units/warrior_icon.png"
+IconPath = "res://assets/ui/icons/units/warrior_atlas.tres"
 ResourceCosts = Dictionary[int, float]({
 0: 100.0
 })

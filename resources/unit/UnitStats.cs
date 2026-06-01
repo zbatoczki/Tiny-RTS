@@ -8,6 +8,7 @@ namespace Game.Resources.Unit;
 public partial class UnitStats : Resource
 {
     [Export] public string Name { get; set; }
+    [Export] public string Description { get; set; }
     [Export] public float MaxHealth { get; set; } = 10f;
     [Export] public float AttackSpeed { get; set; } = 1f; //in seconds for cooldown
     [Export] public float AttackDamage { get; set; } = 1f;
@@ -16,6 +17,6 @@ public partial class UnitStats : Resource
     [Export] public float VisionRange { get; set; } = 1f;
     [Export] public float GatherRate {get; set; } = 1f;
     [Export] public Faction Faction {get; set;}
-    [Export] public string IconPath { get; set; }
+    [Export(PropertyHint.File, "*.tres")] public string IconPath { get; set; }
     [Export] public Dictionary<ResourceType, float> ResourceCosts { get; set; }
 }

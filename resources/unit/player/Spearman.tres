@@ -5,9 +5,10 @@
 [resource]
 script = ExtResource("1_bvhvo")
 Name = "Spearman"
+Description = "A moderate military unit with a long range."
 AttackRange = 15.0
 VisionRange = 15.0
-IconPath = "res://assets/ui/icons/units/spearman_icon.png"
+IconPath = "res://assets/ui/icons/units/spearman_atlas.tres"
 ResourceCosts = Dictionary[int, float]({
 0: 25.0,
 1: 75.0

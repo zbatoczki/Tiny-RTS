@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Game.Buildings;
 using Game.Globals;
 using Game.Resources;
@@ -13,6 +14,7 @@ public partial class SelectionWindow : Control
 	[Export] private SelectionManager selectionManager;
 
 	private PackedScene unitCard = GD.Load<PackedScene>("res://scenes/ui/UnitCard.tscn");
+	private PackedScene resourceCostPanel = GD.Load<PackedScene>("res://scenes/ui/ResourceCostPanel.tscn");
 
 	private VBoxContainer actionsContent;
 	private VBoxContainer infoContent;
@@ -103,13 +105,17 @@ public partial class SelectionWindow : Control
 
 	private void AddUnitCards(Array<UnitStats> unitStats, Func<UnitTypes, bool> onTrain)
 	{
+		List<HBoxContainer> hboxContainerRows = [];
+		int rowCount = 0;
+		HBoxContainer hboxContainer = new();
 		foreach (var stats in unitStats)
 		{
 			var unitCardInstance = unitCard.Instantiate<PanelContainer>();
 			unitCardInstance.GetNode<Label>("%UnitName").Text = stats.Name;
+			unitCardInstance.TooltipText = stats.Description;
 
 			var unitIcon = unitCardInstance.GetNode<TextureRect>("%UnitIcon");
-			unitIcon.Texture = GD.Load<Texture2D>(stats.IconPath);
+			unitIcon.Texture = GD.Load<AtlasTexture>(stats.IconPath);
 
 			SetCostsPanel(unitCardInstance, stats.ResourceCosts);
 
@@ -117,38 +123,51 @@ public partial class SelectionWindow : Control
 			trainButton.Pressed += () =>
 			{
 				if (onTrain == null) return;
-				onTrain((UnitTypes)Enum.Parse(typeof(UnitTypes), stats.Name));
+				onTrain(Enum.Parse<UnitTypes>(stats.Name));
 			};
-			actionsContent.AddChild(unitCardInstance);
+
+			hboxContainer.AddChild(unitCardInstance);
+			rowCount++;
+
+			if (rowCount >= 2)
+			{
+				hboxContainerRows.Add(hboxContainer);
+				hboxContainer = new();
+				rowCount = 0;
+			}
+		}
+		if(hboxContainer.GetChildCount() > 0)
+		{
+			hboxContainerRows.Add(hboxContainer);
+		}
+
+		foreach(var row in hboxContainerRows)
+		{
+			actionsContent.AddChild(row);
 		}
 	}
 
-	private void SetCostsPanel(PanelContainer cardInstance, Dictionary<ResourceType, float> costs)
+	private void SetCostsPanel(PanelContainer cardInstance, Godot.Collections.Dictionary<ResourceType, float> costs)
 	{
 		foreach (var (resourceType, amount) in costs)
 		{
-			var costLabel = new Label { Text = amount.ToString() };
-			var resourceIcon = new TextureRect{Texture = new PlaceholderTexture2D(){Size = new Vector2(32,32)}};
+			var costPanelInstance = resourceCostPanel.Instantiate<HBoxContainer>();
+			costPanelInstance.GetNode<Label>("ResourceCostLabel").Text = amount.ToString();
 
-			switch (resourceType)
+			Texture2D resourceIcon = new PlaceholderTexture2D(){Size = new Vector2(32,32)};
+
+			if(resourceType == ResourceType.Gold)
 			{
-				case ResourceType.Gold:
-					resourceIcon.Texture = GD.Load<Texture2D>("res://assets/resources/gold_atlus.tres");
-					break;
-				case ResourceType.Wood:
-					resourceIcon.Texture = GD.Load<Texture2D>("res://assets/resources/wood_atlus.tres");
-					break;
+				resourceIcon = GD.Load<Texture2D>("res://assets/resources/gold_atlus.tres");
 			}
+			else if(resourceType == ResourceType.Wood)
+			{
+				resourceIcon = GD.Load<Texture2D>("res://assets/resources/wood_atlus.tres");
+			}
+			
+			costPanelInstance.GetNode<TextureRect>("ResourceIcon").Texture = resourceIcon;
 
-			resourceIcon.ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;
-			resourceIcon.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
-			resourceIcon.CustomMinimumSize = new Vector2(32,32);
-
-			var hBox = new HBoxContainer();
-			hBox.AddChild(resourceIcon);
-			hBox.AddChild(costLabel);
-
-			cardInstance.GetNode<HBoxContainer>("%CostPanel").AddChild(hBox);
+			cardInstance.GetNode<HBoxContainer>("%CostPanel").AddChild(costPanelInstance);
 		}
 	}
 }

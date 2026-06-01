@@ -6,6 +6,7 @@
 script = ExtResource("1_ca8hu")
 Name = "Worker"
 MaxHealth = 5.0
+IconPath = "res://assets/ui/icons/units/worker_atlas.tres"
 ResourceCosts = Dictionary[int, float]({
 1: 10.0,
 2: 10.0

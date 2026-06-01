@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" format=3 uid="uid://bdwd77j5a8r51"]
+
+[ext_resource type="Texture2D" uid="uid://ds6yaijfx0epy" path="res://assets/ui/icons/units/spearman_icon.png" id="1_mxxim"]
+
+[resource]
+atlas = ExtResource("1_mxxim")
+region = Rect2(52, 58, 150, 129)

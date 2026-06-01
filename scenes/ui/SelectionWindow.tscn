@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://cv61oyhiqo531"]
 
 [ext_resource type="Script" uid="uid://de3v6egb07vaf" path="res://scenes/ui/SelectionWindow.cs" id="1_hoei1"]
-[ext_resource type="PackedScene" uid="uid://dnnrumv61551e" path="res://scenes/ui/UnitCard.tscn" id="2_nkpt4"]
 
 [node name="SelectionWindow" type="Control" unique_id=1334838068]
 layout_mode = 3
@@ -26,6 +25,7 @@ theme_override_constants/separation = 8
 [node name="ActionsPanel" type="PanelContainer" parent="PanelsRow" unique_id=1786165009]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 8
 
 [node name="ActionsContent" type="VBoxContainer" parent="PanelsRow/ActionsPanel" unique_id=809021282]
 unique_name_in_owner = true
@@ -33,13 +33,11 @@ layout_mode = 2
 size_flags_horizontal = 0
 theme_override_constants/separation = 16
 
-[node name="Control" parent="PanelsRow/ActionsPanel/ActionsContent" unique_id=1372546865 instance=ExtResource("2_nkpt4")]
-layout_mode = 2
-
 [node name="InformationPanel" type="PanelContainer" parent="PanelsRow" unique_id=1272837414]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(280, 200)
 layout_mode = 2
+size_flags_vertical = 8
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelsRow/InformationPanel" unique_id=1846227308]
 layout_mode = 2

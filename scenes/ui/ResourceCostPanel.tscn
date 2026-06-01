@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://btfklltgvbty7"]
+
+[ext_resource type="Texture2D" uid="uid://c3rgwmm3na15q" path="res://assets/resources/gold_atlus.tres" id="1_4aye5"]
+
+[node name="ResourceCostPanel" type="HBoxContainer" unique_id=1530260662]
+
+[node name="ResourceIcon" type="TextureRect" parent="." unique_id=1722493991]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("1_4aye5")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="ResourceCostLabel" type="Label" parent="." unique_id=1109538291]
+layout_mode = 2
+text = "250"
