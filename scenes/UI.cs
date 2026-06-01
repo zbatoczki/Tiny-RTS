@@ -36,6 +36,10 @@ public partial class UI : CanvasLayer
     private void OnResetButtonPressed()
     {
         ResourceManager.Instance.InitializeResources();
+        // Grid lives on the GameManager autoload and survives the reload.
+        // Clear it now, while the current scene's nodes are still valid, so it
+        // doesn't retain references to nodes that ReloadCurrentScene will free.
+        GameManager.Instance.Grid.Reset();
         GetTree().ReloadCurrentScene();
     }
 

@@ -1,6 +1,8 @@
 using Game.Autoload;
 using Game.Globals;
+using Game.Resources.Unit;
 using Godot;
+using Godot.Collections;
 
 namespace Game.Buildings;
 
@@ -8,6 +10,7 @@ public partial class ArcheryRange : Building
 {
 	
 	[Export] public PackedScene ArcherScene;
+	[Export] public Array<UnitStats> UnitStats {get; private set;}
 
 	public override void _Ready()
 	{

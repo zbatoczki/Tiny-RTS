@@ -5,6 +5,11 @@
 [resource]
 script = ExtResource("1_f0e6b")
 Name = "Archer"
+Description = "A ranged unit"
 AttackRange = 30.0
 VisionRange = 30.0
+IconPath = "uid://bhqr0k4x7mepl"
+ResourceCosts = Dictionary[int, float]({
+1: 100.0
+})
 metadata/_custom_type_script = "uid://dllaeorx6nqxd"

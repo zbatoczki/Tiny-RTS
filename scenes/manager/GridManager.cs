@@ -108,6 +108,14 @@ public partial class GridManager
 		}
 	}
 
+	// Clears all registered cells. Call after a scene reload so the grid does not
+	// retain references to freed (disposed) nodes from the previous scene.
+	public void Reset()
+	{
+		InitializeGrid();
+		pathfinder?.FillSolidRegion(pathfinder.Region, false);
+	}
+
 	public void DebugPrintGrid()
 	{
 		var sb = new System.Text.StringBuilder();
@@ -145,7 +153,12 @@ public partial class GridManager
 			{
 				var (state, node) = grid[x, y];
 				if (state == CellState.Empty) continue;
-				GD.Print($"  ({x},{y}) {state} -> {node?.Name} [{node?.GetType().Name}]");
+				if (!GodotObject.IsInstanceValid(node))
+				{
+					GD.Print($"  ({x},{y}) {state} -> <freed>");
+					continue;
+				}
+				GD.Print($"  ({x},{y}) {state} -> {node.Name} [{node.GetType().Name}]");
 			}
 		}
 	}

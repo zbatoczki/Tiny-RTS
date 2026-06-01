@@ -11,6 +11,18 @@
 [ext_resource type="Texture2D" uid="uid://bnu647v3ruy88" path="res://assets/units/player/spearman/spearman_attack_up.png" id="7_ocwlj"]
 [ext_resource type="Texture2D" uid="uid://cqrpudcsm17ot" path="res://assets/units/player/spearman/spearman_attack_upright.png" id="8_27y23"]
 
+[sub_resource type="Gradient" id="Gradient_ql2tn"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.55331415, 0.7550432)
+colors = PackedColorArray(0.6431373, 1, 0.6431373, 0, 0, 1, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_71y13"]
+gradient = SubResource("Gradient_ql2tn")
+width = 65
+height = 13
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_e2kbd"]
 atlas = ExtResource("3_w3xgq")
 region = Rect2(0, 0, 320, 320)
@@ -281,18 +293,6 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="Gradient" id="Gradient_ql2tn"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.55331415, 0.7550432)
-colors = PackedColorArray(0.6431373, 1, 0.6431373, 0, 0, 1, 0, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_71y13"]
-gradient = SubResource("Gradient_ql2tn")
-width = 65
-height = 13
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-
 [node name="Spearman" unique_id=1980137832 groups=["PlayerUnit"] instance=ExtResource("1_ot8j7")]
 collision_layer = 2
 script = ExtResource("2_vvqbw")
@@ -308,16 +308,15 @@ collision_mask = 4
 targetGroup = &"EnemyUnit"
 
 [node name="CollisionShape2D" parent="." index="4" unique_id=1633008240]
-position = Vector2(0, -6)
-scale = Vector2(2, 2)
+scale = Vector2(1, 1)
 
-[node name="AnimatedSprite2D" parent="." index="5" unique_id=290410313]
-sprite_frames = SubResource("SpriteFrames_gppyl")
-animation = &"attack_upright"
-offset = Vector2(-160, -171)
-
-[node name="SelectionRing" parent="." index="6" unique_id=1405774456]
+[node name="SelectionRing" parent="." index="5" unique_id=1405774456]
 texture = SubResource("GradientTexture2D_71y13")
 offset = Vector2(0, 21)
+
+[node name="AnimatedSprite2D" parent="." index="6" unique_id=290410313]
+sprite_frames = SubResource("SpriteFrames_gppyl")
+animation = &"idle"
+offset = Vector2(-128, -136)
 
 [editable path="DamageComponent"]

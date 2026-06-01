@@ -136,6 +136,9 @@ public partial class SelectionWindow : Control
 			case Barracks barracks:
 				AddUnitCards(barracks.UnitStats, barracks.TrainUnit);
 				break;
+			case ArcheryRange archeryRange:
+				AddUnitCards(archeryRange.UnitStats, archeryRange.TrainUnit);
+				break;
 			// TODO: Castle, ArcheryRange, GoldMine action lists drop in here.
 		}
 	}
