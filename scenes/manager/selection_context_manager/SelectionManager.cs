@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Game.Buildings;
 using Game.Context;
+using Game.Context.Actions;
+using Game.Groups;
 using Game.InputMap;
 using Game.Resources;
 using Game.Selection;
@@ -48,6 +50,12 @@ public partial class SelectionManager : Node2D
     private ReferenceRect _selectionBox = null;
     private ContextActionHandler _contextHandler = null;
     private SelectionContext _currentContext = SelectionContext.Empty;
+
+    /// <summary>
+    /// A command based on selection from action panel.
+    /// </summary>
+    public enum PendingCommand { None, Move, Attack }
+    private PendingCommand _pendingCommand = PendingCommand.None;
 
     // Small threshold: drags shorter than this are treated as clicks.
     private const float CLICK_THRESHOLD = 6f;
@@ -108,15 +116,20 @@ public partial class SelectionManager : Node2D
         Vector2 endPosition = GetGlobalMousePosition();
         float dragDistance = _dragStart.DistanceTo(endPosition);
 
+        if (_pendingCommand != PendingCommand.None)
+        {
+            if (dragDistance <= CLICK_THRESHOLD)
+                ExecutePendingCommand(endPosition);
+            _pendingCommand = PendingCommand.None;
+            return;
+        }
+
         if (dragDistance <= CLICK_THRESHOLD)
             HandleSingleClick(_dragStart);
         else
             HandleBoxSelection(_dragStart, endPosition);
     }
 
-    // -------------------------------------------------------------------------
-    // Single click — selects a unit, building, or clears selection
-    // -------------------------------------------------------------------------
 
     private void HandleSingleClick(Vector2 worldPosition)
     {
@@ -147,10 +160,6 @@ public partial class SelectionManager : Node2D
         ClearSelection();
     }
 
-    // -------------------------------------------------------------------------
-    // Box selection — selects all units inside the drag rect
-    // -------------------------------------------------------------------------
-
     private void HandleBoxSelection(Vector2 start, Vector2 end)
     {
         ClearSelection();
@@ -169,14 +178,16 @@ public partial class SelectionManager : Node2D
             SelectUnits(units);
     }
 
-    // -------------------------------------------------------------------------
-    // Right-click — delegate entirely to ContextActionHandler
-    // -------------------------------------------------------------------------
-
     private void HandleRightClick(InputEvent evt)
     {
         if (!evt.IsActionPressed(InputMapping.RIGHT_CLICK)) return;
         if (Input.IsActionPressed(InputMapping.LEFT_CLICK)) return;   // ignore while dragging
+
+        if (_pendingCommand != PendingCommand.None)
+        {
+            _pendingCommand = PendingCommand.None;
+            return;
+        }
 
         _contextHandler.HandleRightClick(_currentContext, GetGlobalMousePosition());
     }
@@ -232,11 +243,64 @@ public partial class SelectionManager : Node2D
 
         _selectedResource = null;
 
+        _pendingCommand = PendingCommand.None;
         _currentContext = SelectionContext.Empty;
         EmitSignal(SignalName.SelectionCleared);
     }
 
 	#endregion
+
+    #region UNIT COMMANDS (driven by the action panel)
+
+    /// <summary>Arms a move order; the next left-click moves the selection to that point.</summary>
+    public void BeginMoveCommand()
+    {
+        if (_currentContext.HasUnits) _pendingCommand = PendingCommand.Move;
+    }
+
+    /// <summary>Arms an attack order; the next left-click attacks the target there (or attack-moves).</summary>
+    public void BeginAttackCommand()
+    {
+        if (_currentContext.HasUnits) _pendingCommand = PendingCommand.Attack;
+    }
+
+    /// <summary>Immediately halts every selected unit.</summary>
+    public void StopSelectedUnits()
+    {
+        foreach (Unit unit in _selectedUnits)
+            unit.Stop();
+    }
+
+    private void ExecutePendingCommand(Vector2 worldPosition)
+    {
+        if (!_currentContext.HasUnits) return;
+
+        switch (_pendingCommand)
+        {
+            case PendingCommand.Move:
+                new MoveAction().Execute(_currentContext, null, worldPosition);
+                break;
+
+            case PendingCommand.Attack:
+                GodotObject target = GetTopColliderAt(worldPosition);
+                if (target is Unit enemy && enemy.IsInGroup(GlobalGroups.ENEMY_UNIT))
+                    new AttackAction().Execute(_currentContext, enemy, worldPosition);
+                else
+                    // Attack-move: no enemy under the cursor, so just move there.
+                    new MoveAction().Execute(_currentContext, null, worldPosition);
+                break;
+        }
+    }
+
+    private GodotObject GetTopColliderAt(Vector2 worldPosition)
+    {
+        foreach (Dictionary hit in QueryPointAt(worldPosition))
+            if (hit.TryGetValue("collider", out Variant v))
+                return (GodotObject)v.Obj;
+        return null;
+    }
+
+    #endregion
 
     #region PHYSICS QUERIES
 

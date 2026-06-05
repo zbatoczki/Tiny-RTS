@@ -146,6 +146,17 @@ public abstract partial class Unit : CharacterBody2D
         stateMachine.ForceToState<Move>();
     }
 
+    /// <summary>Halts the unit: clears its path and attack target and returns it to Idle.</summary>
+    public virtual void Stop()
+    {
+        AttackTarget = null;
+        path = [];
+        pathIndex = 0;
+        targetPosition = Vector2.Zero;
+        Velocity = Vector2.Zero;
+        stateMachine.ForceToState<Idle>();
+    }
+
 #endregion
 
 

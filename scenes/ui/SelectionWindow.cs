@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Game.Buildings;
 using Game.Globals;
 using Game.Resources;
+using Game.Resources.Building;
 using Game.Resources.Unit;
 using Game.SelectionManager;
 using Game.Units;
@@ -13,6 +15,8 @@ public partial class SelectionWindow : Control
 {
 	[Export] private SelectionManager selectionManager;
 
+	[Export] private Array<BuildingResource> buildableBuildings = [];
+
 	private PackedScene unitCard = GD.Load<PackedScene>("res://scenes/ui/UnitCard.tscn");
 	private PackedScene resourceCostPanel = GD.Load<PackedScene>("res://scenes/ui/ResourceCostPanel.tscn");
 
@@ -20,6 +24,8 @@ public partial class SelectionWindow : Control
 	private PanelContainer infoPanel;
 	private GridContainer actionsContent;
 	private VBoxContainer infoContent;
+
+	private readonly List<Unit> selectedUnits = [];
 
 	public override void _Ready()
 	{
@@ -49,9 +55,12 @@ public partial class SelectionWindow : Control
 	private void OnUnitsSelected(Array<Unit> units)
 	{
 		ClearPanelContents();
+		selectedUnits.Clear();
 		if (units.Count == 0) { OnSelectionCleared(); return; }
 		Visible = true;
-		
+
+		selectedUnits.AddRange(units);
+
 		infoContent.AddChild(new Label { Text = units.Count == 1 ? units[0].Name : $"{units.Count} units selected" });
 
 		if(units.Count == 1)
@@ -64,9 +73,8 @@ public partial class SelectionWindow : Control
 			infoContent.AddChild(new Label { Text = $"Movement Speed: {unit.stats.MovementSpeed}" });
 			infoContent.AddChild(new Label { Text = $"Gather Rate: {unit.stats.GatherRate}" });
 		}
-		
-		
-		// TODO: per-unit actions (move, attack, gather...) and stats (HP, faction, type)
+
+		RenderUnitActions();
 
 		ShowPanels();
 	}
@@ -97,6 +105,7 @@ public partial class SelectionWindow : Control
 
 	private void OnSelectionCleared()
 	{
+		selectedUnits.Clear();
 		ClearPanelContents();
 		Visible = false;
 	}
@@ -109,11 +118,7 @@ public partial class SelectionWindow : Control
 
 	private void ClearPanelContents()
 	{
-		foreach (Node child in actionsContent.GetChildren())
-		{
-			actionsContent.RemoveChild(child);
-			child.QueueFree();
-		}
+		ClearActionsContent();
 		foreach (Node child in infoContent.GetChildren())
 		{
 			infoContent.RemoveChild(child);
@@ -140,6 +145,69 @@ public partial class SelectionWindow : Control
 				AddUnitCards(archeryRange.UnitStats, archeryRange.TrainUnit);
 				break;
 			// TODO: Castle, ArcheryRange, GoldMine action lists drop in here.
+		}
+	}
+
+	private void RenderUnitActions()
+	{
+		ClearActionsContent();
+
+		AddActionButton("Move", () => selectionManager.BeginMoveCommand());
+		AddActionButton("Attack", () => selectionManager.BeginAttackCommand());
+		AddActionButton("Stop", () => selectionManager.StopSelectedUnits());
+
+		bool allWorkers = selectedUnits.Count > 0 && selectedUnits.All(u => u is Worker);
+		if (allWorkers)
+			AddNavButton("Build", RenderBuildMenu);
+	}
+
+	private void RenderBuildMenu()
+	{
+		ClearActionsContent();
+
+		AddNavButton("< Back", RenderUnitActions);
+
+		int rendered = 0;
+		foreach (BuildingResource building in buildableBuildings)
+		{
+			if (building == null) continue;   // skip empty inspector slots
+			string label = string.IsNullOrWhiteSpace(building.Name) ? "(unnamed building)" : building.Name;
+			AddActionButton(label, () => OnBuildingChosen(building), building.Description);
+			rendered++;
+		}
+
+		if (rendered == 0)
+			actionsContent.AddChild(new Label { Text = "No buildings available" });
+	}
+
+	private void OnBuildingChosen(BuildingResource building)
+	{
+		// TODO: handle building placement flow (ghost + grid validation + spend resources).
+		GD.Print($"SelectionWindow: build requested for '{building.Name}'.");
+	}
+
+	private void AddActionButton(string text, Action onPressed, string tooltip = null)
+	{
+		var button = new Button { Text = text };
+		if (!string.IsNullOrEmpty(tooltip)) button.TooltipText = tooltip;
+		button.Pressed += onPressed;
+		actionsContent.AddChild(button);
+	}
+
+	/// <summary>
+	/// Adds a button that rebuilds the action list when pressed. The rebuild is deferred so the
+	/// button finishes consuming its own click before it is freed — otherwise the release event
+	/// falls through to the world and re-triggers unit selection.
+	/// </summary>
+	private void AddNavButton(string text, Action navigate)
+		=> AddActionButton(text, () => Callable.From(navigate).CallDeferred());
+
+	private void ClearActionsContent()
+	{
+		foreach (Node child in actionsContent.GetChildren())
+		{
+			actionsContent.RemoveChild(child);
+			child.QueueFree();
 		}
 	}
 

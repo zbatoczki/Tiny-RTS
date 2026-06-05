@@ -13,8 +13,11 @@
 [ext_resource type="PackedScene" uid="uid://drst3dcdxv4k0" path="res://scenes/buildings/castle/Castle.tscn" id="9_q8u5g"]
 [ext_resource type="PackedScene" uid="uid://coowfgss5y3sj" path="res://scenes/units/player/archer/Archer.tscn" id="12_bjd11"]
 [ext_resource type="PackedScene" uid="uid://cv61oyhiqo531" path="res://scenes/ui/SelectionWindow.tscn" id="12_ft6cd"]
+[ext_resource type="Script" uid="uid://bnmrquguhq1rt" path="res://resources/building/BuildingResource.cs" id="13_nfivy"]
 [ext_resource type="PackedScene" uid="uid://dbaeqccn85l1u" path="res://scenes/buildings/archery_range/ArcheryRange.tscn" id="13_qmy6f"]
+[ext_resource type="Resource" uid="uid://dt2ftiiros40i" path="res://scenes/buildings/archery_range/archery_range.tres" id="14_1nqs0"]
 [ext_resource type="Script" uid="uid://wmrubcinqmu2" path="res://scenes/Camera2d.cs" id="14_mwfav"]
+[ext_resource type="Resource" uid="uid://bb3k1i83qw4qn" path="res://scenes/buildings/barracks/barracks.tres" id="15_1iba3"]
 [ext_resource type="Script" uid="uid://dc0wx7fgotf6l" path="res://scenes/DebugGrid.cs" id="15_3p2gp"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wp0k4"]
@@ -110,6 +113,7 @@ text = "RESET SCENE"
 
 [node name="SelectionWindow" parent="UI" unique_id=1334838068 node_paths=PackedStringArray("selectionManager") instance=ExtResource("12_ft6cd")]
 selectionManager = NodePath("../../SelectionManager")
+buildableBuildings = Array[ExtResource("13_nfivy")]([ExtResource("14_1nqs0"), ExtResource("15_1iba3")])
 
 [node name="Worker" parent="." unique_id=1980137832 node_paths=PackedStringArray("treeLayer") instance=ExtResource("6_nxtc6")]
 position = Vector2(512, 384)

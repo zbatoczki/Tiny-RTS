@@ -14,11 +14,12 @@ script = ExtResource("1_hoei1")
 
 [node name="PanelsRow" type="HBoxContainer" parent="." unique_id=387752012]
 layout_mode = 1
-anchors_preset = 2
+anchors_preset = 12
 anchor_top = 1.0
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -406.0
-offset_right = 793.0
+offset_top = -200.0
+grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 8
 
@@ -37,6 +38,7 @@ columns = 3
 unique_name_in_owner = true
 custom_minimum_size = Vector2(280, 200)
 layout_mode = 2
+size_flags_horizontal = 10
 size_flags_vertical = 8
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelsRow/InformationPanel" unique_id=1846227308]

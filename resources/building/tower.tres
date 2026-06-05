@@ -5,6 +5,9 @@
 
 [resource]
 script = ExtResource("1_w0kxv")
+Name = "Tower"
+Description = "Defensive structure that attacks nearby enemies."
+Dimensions = Vector2i(1, 1)
 AttackRadius = 2
 BuildingScene = ExtResource("1_55ps4")
 metadata/_custom_type_script = "uid://bnmrquguhq1rt"
