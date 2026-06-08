@@ -1,6 +1,7 @@
 using System.Linq;
 using Game.Buildings;
 using Godot;
+using Game.Globals;
 using Tree = Game.Resources.Tree;
 
 namespace Game.Manager;
@@ -15,8 +16,6 @@ public partial class GridManager
 		Building
 	}
 
-	public const int CELL_SIZE = 64;
-	public const int HALF_CELL_SIZE = CELL_SIZE / 2;
 	public int GridWidth { get; private set; }
 	public int GridHeight { get; private set; }
 
@@ -33,7 +32,7 @@ public partial class GridManager
 		pathfinder = new AStarGrid2D
 		{
 			Region = new Rect2I(0, 0, GridWidth, GridHeight),
-			CellSize = new Vector2(CELL_SIZE, CELL_SIZE),
+			CellSize = new Vector2(GlobalValues.CELL_SIZE, GlobalValues.CELL_SIZE),
 			DiagonalMode = AStarGrid2D.DiagonalModeEnum.OnlyIfNoObstacles,
 		};
 		pathfinder.Update();
@@ -49,8 +48,8 @@ public partial class GridManager
 	{
 		var fromV = WorldPositionToGridCell(worldFrom);
 		var toV = WorldPositionToGridCell(worldTo);
-		var fromCell = new Vector2I((int)fromV.X, (int)fromV.Y);
-		var toCell = new Vector2I((int)toV.X, (int)toV.Y);
+		var fromCell = new Vector2I(fromV.X, fromV.Y);
+		var toCell = new Vector2I(toV.X, toV.Y);
 
 		if (!IsCellWithinBounds(fromCell.X, fromCell.Y) || !IsCellWithinBounds(toCell.X, toCell.Y))
 			return [];
@@ -64,7 +63,7 @@ public partial class GridManager
 		if (fromWasSolid) pathfinder.SetPointSolid(fromCell, true);
 
 		// GetPointPath returns cell origins (top-left). Shift to cell centers for unit consumers.
-		var halfCell = new Vector2(HALF_CELL_SIZE, HALF_CELL_SIZE);
+		var halfCell = new Vector2(GlobalValues.HALF_CELL_SIZE, GlobalValues.HALF_CELL_SIZE);
 		for (int i = 0; i < path.Length; i++)
 			path[i] += halfCell;
 
@@ -75,18 +74,17 @@ public partial class GridManager
 
 	public bool IsCellWithinBounds(int x, int y) => x >= 0 && x < GridWidth && y >= 0 && y < GridHeight;
 
-	public static Vector2 WorldPositionToGridCell(Vector2 worldPos)
+	public static Vector2I WorldPositionToGridCell(Vector2 worldPos)
 	{
-		var x = Mathf.Floor(worldPos.X / CELL_SIZE);
-		var y = Mathf.Floor(worldPos.Y / CELL_SIZE);
-		return new Vector2(x, y);
+		Vector2 tilePsotion = (worldPos / GlobalValues.CELL_SIZE).Floor();
+		return new Vector2I((int)tilePsotion.X, (int)tilePsotion.Y);
 	}
 
 	public bool TryRegisterEntityAtCell(Vector2 cellPos, CellState state, Node2D entityNode)
 	{
 		var cellPosition = WorldPositionToGridCell(cellPos);
-		var x = (int)cellPosition.X;
-		var y = (int)cellPosition.Y;
+		var x = cellPosition.X;
+		var y = cellPosition.Y;
 
 		if(!IsCellFree(x, y))
 		{
@@ -167,8 +165,8 @@ public partial class GridManager
 	{
 		var dims = building.BuildingResource?.Dimensions ?? Vector2I.One;
 		var anchorCell = WorldPositionToGridCell(building.GlobalPosition);
-		int ax = (int)anchorCell.X;
-		int ay = (int)anchorCell.Y;
+		int ax = anchorCell.X;
+		int ay = anchorCell.Y;
 
 		for (int dx = 0; dx < dims.X; dx++)
 		{
@@ -188,8 +186,8 @@ public partial class GridManager
 	{
 		var dims = building.BuildingResource?.Dimensions ?? Vector2I.One;
 		var anchorCell = WorldPositionToGridCell(building.GlobalPosition);
-		int ax = (int)anchorCell.X;
-		int ay = (int)anchorCell.Y;
+		int ax = anchorCell.X;
+		int ay = anchorCell.Y;
 
 		for (int dx = 0; dx < dims.X; dx++)
 		{
@@ -248,7 +246,7 @@ public partial class GridManager
 
 	public void RegisterGoldmine(GoldMine goldMine)
 	{
-		var anchorCell = (Vector2I)WorldPositionToGridCell(goldMine.GlobalPosition);
+		var anchorCell = WorldPositionToGridCell(goldMine.GlobalPosition);
 		var dims = goldMine.Dimensions;
 		for (int dx = 0; dx < dims.X; dx++)
 		{

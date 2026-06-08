@@ -24,3 +24,9 @@ public static class AttackAnimationDirections
     public static readonly StringName UpRight = "attack_upright";
     public static readonly StringName DownRight = "attack_downright";
 }
+
+public static class GlobalValues
+{
+    public const int CELL_SIZE = 64;
+    public const int HALF_CELL_SIZE = CELL_SIZE / 2;
+}

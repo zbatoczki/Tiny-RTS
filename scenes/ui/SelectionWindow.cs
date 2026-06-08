@@ -13,8 +13,9 @@ using Godot.Collections;
 
 public partial class SelectionWindow : Control
 {
-	[Export] private SelectionManager selectionManager;
+	[Signal] public delegate void BuildRequestedEventHandler(BuildingResource building);
 
+	[Export] private SelectionManager selectionManager;
 	[Export] private Array<BuildingResource> buildableBuildings = [];
 
 	private PackedScene unitCard = GD.Load<PackedScene>("res://scenes/ui/UnitCard.tscn");
@@ -182,8 +183,7 @@ public partial class SelectionWindow : Control
 
 	private void OnBuildingChosen(BuildingResource building)
 	{
-		// TODO: handle building placement flow (ghost + grid validation + spend resources).
-		GD.Print($"SelectionWindow: build requested for '{building.Name}'.");
+		EmitSignal(SignalName.BuildRequested, building);
 	}
 
 	private void AddActionButton(string text, Action onPressed, string tooltip = null)

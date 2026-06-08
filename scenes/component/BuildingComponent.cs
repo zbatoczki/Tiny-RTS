@@ -1,4 +1,5 @@
 using Game.Autoload;
+using Game.Globals;
 using Godot;
 
 namespace Game.Component;
@@ -16,7 +17,7 @@ public partial class BuildingComponent : Node2D
 
 	public Vector2I GetGridCellPosition()
 	{
-		var gridPosition = (GlobalPosition / 64).Floor();
+		var gridPosition = (GlobalPosition / GlobalValues.CELL_SIZE).Floor();
 		return new Vector2I((int)gridPosition.X, (int)gridPosition.Y);
 	}
 
