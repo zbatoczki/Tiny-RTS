@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://bfcnmskvbcevy"]
 
 [ext_resource type="Script" uid="uid://c1luppgqgejr4" path="res://scenes/buildings/barracks/Barracks.cs" id="1_63nyx"]
-[ext_resource type="Texture2D" uid="uid://mlfcbwdgkbcy" path="res://assets/buildings/blue/barracks.png" id="2_4so6g"]
 [ext_resource type="PackedScene" uid="uid://c7khacr0bxvup" path="res://scenes/units/player/Warrior/Warrior.tscn" id="2_rhwkk"]
 [ext_resource type="PackedScene" uid="uid://inc61pd743x5" path="res://scenes/units/player/spearman/Spearman.tscn" id="3_rhwkk"]
 [ext_resource type="Resource" uid="uid://ckbhnj3a6j54" path="res://resources/unit/player/Warrior.tres" id="4_4bjer"]
@@ -9,6 +8,7 @@
 [ext_resource type="Resource" uid="uid://bb3k1i83qw4qn" path="res://scenes/buildings/barracks/barracks.tres" id="4_t5cd1"]
 [ext_resource type="PackedScene" uid="uid://ldhygolivtsg" path="res://scenes/component/HealthComponent.tscn" id="5_2j4ot"]
 [ext_resource type="Resource" uid="uid://oc2u7ody1242" path="res://resources/unit/player/Spearman.tres" id="5_4bjer"]
+[ext_resource type="PackedScene" uid="uid://b4cqa2hswb6bs" path="res://scenes/buildings/barracks/BarracksSprite2D.tscn" id="9_4bjer"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lg0r4"]
 size = Vector2(192, 192)
@@ -25,12 +25,6 @@ BuildingResource = ExtResource("4_t5cd1")
 scale = Vector2(3, 3)
 offset = Vector2(32, 56)
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1372564955]
-position = Vector2(96, 128)
-texture = ExtResource("2_4so6g")
-centered = false
-offset = Vector2(-96, -182)
-
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=914712534]
 position = Vector2(96, 96)
 shape = SubResource("RectangleShape2D_lg0r4")
@@ -41,3 +35,5 @@ scale = Vector2(1, 0.666)
 
 [node name="Timer" type="Timer" parent="." unique_id=40608170]
 one_shot = true
+
+[node name="BarracksSprite2D" parent="." unique_id=359843201 instance=ExtResource("9_4bjer")]

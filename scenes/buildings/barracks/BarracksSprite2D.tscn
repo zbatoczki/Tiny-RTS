@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://b4cqa2hswb6bs"]
+
+[ext_resource type="Texture2D" uid="uid://mlfcbwdgkbcy" path="res://assets/buildings/blue/barracks.png" id="1_xb75l"]
+
+[node name="BarracksSprite2D" type="Sprite2D" unique_id=359843201]
+position = Vector2(96, 96)
+texture = ExtResource("1_xb75l")
+offset = Vector2(0, -23)

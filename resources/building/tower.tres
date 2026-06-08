@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://qt45nbj5xyoo" path="res://scenes/buildings/tower/Tower.tscn" id="1_55ps4"]
 [ext_resource type="Script" uid="uid://bnmrquguhq1rt" path="res://resources/building/BuildingResource.cs" id="1_w0kxv"]
+[ext_resource type="PackedScene" uid="uid://dpr4aq1706q4d" path="res://scenes/buildings/tower/TowerSprite2D.tscn" id="2_q53hc"]
 
 [resource]
 script = ExtResource("1_w0kxv")
@@ -10,4 +11,5 @@ Description = "Defensive structure that attacks nearby enemies."
 Dimensions = Vector2i(1, 1)
 AttackRadius = 2
 BuildingScene = ExtResource("1_55ps4")
+SpriteScene = ExtResource("2_q53hc")
 metadata/_custom_type_script = "uid://bnmrquguhq1rt"

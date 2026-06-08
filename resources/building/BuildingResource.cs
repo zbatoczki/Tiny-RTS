@@ -12,5 +12,6 @@ public partial class BuildingResource : Resource
 	[Export] public int ResourceRadius {get; private set;}
 	[Export] public int AttackRadius {get; private set;}
 	[Export] public PackedScene BuildingScene {get; private set;}
+	[Export] public PackedScene SpriteScene {get; private set;}
 	[Export] public bool IsResourceDropOff {get; private set;}
 }

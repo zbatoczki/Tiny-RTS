@@ -259,4 +259,13 @@ public partial class GridManager
 			}
 		}
 	}
+
+    public Vector2I GetMouseGridCellPositionWithDimensionOffset(Vector2 dimensions, Vector2 tileMapGlobalMousePosition)
+    {
+        Vector2 mouseGridPosition = tileMapGlobalMousePosition / GlobalValues.CELL_SIZE;
+		mouseGridPosition -= dimensions / 2;
+		mouseGridPosition = mouseGridPosition.Round();
+		return new Vector2I((int)mouseGridPosition.X, (int)mouseGridPosition.Y);
+    }
+
 }

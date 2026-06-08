@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://cv7momkuslcxo"]
+
+[ext_resource type="Texture2D" uid="uid://b24rgui8hsalo" path="res://assets/buildings/blue/archery.png" id="1_fs7o6"]
+
+[node name="ArcheryRangeSprite2D" type="Sprite2D" unique_id=199598897]
+position = Vector2(96, 97)
+texture = ExtResource("1_fs7o6")
+centered = false
+offset = Vector2(-91, -150)

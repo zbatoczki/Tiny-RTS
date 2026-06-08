@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="BuildingResource" format=3 uid="uid://dt2ftiiros40i"]
 
+[ext_resource type="PackedScene" uid="uid://cv7momkuslcxo" path="res://scenes/buildings/archery_range/ArcheryRangeSprite2D.tscn" id="1_1nvne"]
 [ext_resource type="Script" uid="uid://bnmrquguhq1rt" path="res://resources/building/BuildingResource.cs" id="1_frn1a"]
 
 [resource]
@@ -7,4 +8,5 @@ script = ExtResource("1_frn1a")
 Name = "Archery Range"
 Description = "Used to train archers."
 Dimensions = Vector2i(3, 3)
+SpriteScene = ExtResource("1_1nvne")
 metadata/_custom_type_script = "uid://bnmrquguhq1rt"
