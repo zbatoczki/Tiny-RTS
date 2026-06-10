@@ -3,8 +3,10 @@ using Game.Autoload;
 using Game.Component;
 using Game.Globals;
 using Game.Resources.Building;
+using Game.Resources.Unit;
 using Game.Units;
 using Godot;
+using Godot.Collections;
 
 namespace Game.Buildings;
 
@@ -12,6 +14,7 @@ public abstract partial class Building : StaticBody2D
 {
     [Export] public BuildingResource BuildingResource;
 	[Export] public Faction Faction;
+    [Export] public Array<UnitStats> BuildableUnits {get; private set;}
     [Export] public float MaxHealth = 500f;
     [Export] public float TrainTime = 3f;
 
@@ -35,7 +38,7 @@ public abstract partial class Building : StaticBody2D
         }
     }
 
-    protected readonly Queue<(PackedScene unitScene, float waitTime)> queue = new();
+    protected readonly Queue<(Unit unitToSpawn, float waitTime)> queue = new();
 
     public void OnReady()
     {
@@ -82,7 +85,7 @@ public abstract partial class Building : StaticBody2D
 
     private void OnTimeout()
     {
-        SpawnUnit(queue.Dequeue().unitScene);
+        SpawnUnit(queue.Dequeue().unitToSpawn);
         if(queue.Count > 0)
         {
             timer.WaitTime = queue.Peek().waitTime;
@@ -90,9 +93,9 @@ public abstract partial class Building : StaticBody2D
         }
     }
 
-    protected void Enqueue(PackedScene scene, float time)
+    protected void Enqueue(Unit unitToSpawn, float time)
     {
-        queue.Enqueue((scene, time));
+        queue.Enqueue((unitToSpawn, time));
         if(queue.Count == 1)
         {
             timer.WaitTime = time;
@@ -100,14 +103,39 @@ public abstract partial class Building : StaticBody2D
         }
     }
 
-    public abstract bool TrainUnit(UnitTypes unitType);
-
-    private void SpawnUnit(PackedScene scene)
+    public bool TrainUnit(UnitStats unitType)
     {
-        if(scene == null) return;
-        var unit = scene.Instantiate<Unit>();
+		int woodCost = unitType.ResourceCosts.TryGetValue(ResourceType.Wood, out int wCost) ? wCost : 0;
+		int goldCost = unitType.ResourceCosts.TryGetValue(ResourceType.Gold, out int gCost) ? gCost : 0;
+		int foodCost = unitType.ResourceCosts.TryGetValue(ResourceType.Food, out int fCost) ? fCost : 0;	
+
+		if(!GameManager.Instance.CanTrain(Faction.Player)) return false;
+		if(!ResourceManager.Instance.Spend(Faction, woodCost, goldCost, foodCost)) return false;
+
+        Unit unitToSpawn = InstantiateUnit(unitType.UnitScene, unitType);
+
+		Enqueue(unitToSpawn, TrainTime);
+		return true;
+    }
+
+    private Unit InstantiateUnit(PackedScene unitScene, UnitStats statsToAssign)
+    {
+        if(unitScene == null)
+        {
+            GD.PushError($"Cannot spawn unit for building {Name} because the PackedScene is null.");
+            return null;
+        }
+        var unit = unitScene.Instantiate<Unit>();
+        unit.stats = statsToAssign;
         unit.stats.Faction = Faction;
         unit.GlobalPosition = GlobalPosition + new Vector2(GD.RandRange(-128, 128), 96);
+        return unit;
+    }
+
+
+
+    private void SpawnUnit(Unit unit)
+    {
         GetParent().AddChild(unit);
     }
 

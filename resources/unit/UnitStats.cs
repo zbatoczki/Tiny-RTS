@@ -17,6 +17,7 @@ public partial class UnitStats : Resource
     [Export] public float VisionRange { get; set; } = 1f;
     [Export] public float GatherRate {get; set; } = 1f;
     [Export] public Faction Faction {get; set;}
+    [Export] public PackedScene UnitScene { get; set; }
     [Export(PropertyHint.File, "*.tres")] public string IconPath { get; set; }
-    [Export] public Dictionary<ResourceType, float> ResourceCosts { get; set; }
+    [Export] public Dictionary<ResourceType, int> ResourceCosts { get; set; }
 }

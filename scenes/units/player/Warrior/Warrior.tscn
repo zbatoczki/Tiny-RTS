@@ -1,11 +1,22 @@
 [gd_scene format=3 uid="uid://c7khacr0bxvup"]
 
 [ext_resource type="PackedScene" uid="uid://h3uqbq6gpnda" path="res://scenes/units/shared/MeleeUnit.tscn" id="1_uw5nf"]
-[ext_resource type="Resource" uid="uid://ckbhnj3a6j54" path="res://resources/unit/player/Warrior.tres" id="2_ecqhu"]
 [ext_resource type="Texture2D" uid="uid://dlxx3x73w346q" path="res://assets/units/player/warrior/warrior_attack1.png" id="2_uend3"]
 [ext_resource type="Texture2D" uid="uid://cdatrolay1i5f" path="res://assets/units/player/warrior/warrior_attack2.png" id="3_ecqhu"]
 [ext_resource type="Texture2D" uid="uid://gpyer8u7np3i" path="res://assets/units/player/warrior/warrior_idle.png" id="4_trdmy"]
 [ext_resource type="Texture2D" uid="uid://34ess0ahh1rh" path="res://assets/units/player/warrior/warrior_move.png" id="5_iwa0e"]
+
+[sub_resource type="Gradient" id="Gradient_ql2tn"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.55331415, 0.7550432)
+colors = PackedColorArray(0.6431373, 1, 0.6431373, 0, 0, 1, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_71y13"]
+gradient = SubResource("Gradient_ql2tn")
+width = 65
+height = 13
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uend3"]
 atlas = ExtResource("2_uend3")
@@ -95,7 +106,7 @@ region = Rect2(768, 0, 192, 192)
 atlas = ExtResource("5_iwa0e")
 region = Rect2(960, 0, 192, 192)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_ecqhu"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_uend3"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -180,21 +191,9 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="Gradient" id="Gradient_ql2tn"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.55331415, 0.7550432)
-colors = PackedColorArray(0.6431373, 1, 0.6431373, 0, 0, 1, 0, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_71y13"]
-gradient = SubResource("Gradient_ql2tn")
-width = 65
-height = 13
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-
 [node name="Warrior" unique_id=1980137832 groups=["PlayerUnit"] instance=ExtResource("1_uw5nf")]
 collision_layer = 2
-stats = ExtResource("2_ecqhu")
+stats = null
 
 [node name="DamageComponent" parent="." index="2" unique_id=341774930]
 collision_mask = 4
@@ -207,12 +206,12 @@ targetGroup = &"EnemyUnit"
 [node name="CollisionShape2D" parent="." index="4" unique_id=1633008240]
 scale = Vector2(1, 1)
 
-[node name="AnimatedSprite2D" parent="." index="5" unique_id=290410313]
-sprite_frames = SubResource("SpriteFrames_ecqhu")
+[node name="SelectionRing" parent="." index="5" unique_id=1405774456]
+texture = SubResource("GradientTexture2D_71y13")
+
+[node name="AnimatedSprite2D" parent="." index="6" unique_id=290410313]
+sprite_frames = SubResource("SpriteFrames_uend3")
 animation = &"move"
 offset = Vector2(-64, -73)
-
-[node name="SelectionRing" parent="." index="6" unique_id=1405774456]
-texture = SubResource("GradientTexture2D_71y13")
 
 [editable path="DamageComponent"]

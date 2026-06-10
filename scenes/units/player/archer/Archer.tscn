@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://bvlm0hhpo8n3b" path="res://scenes/component/projectiles/Arrow.tscn" id="2_0v0tm"]
 [ext_resource type="Texture2D" uid="uid://bjttc4wi3y28b" path="res://assets/units/player/archer/archer_shoot.png" id="2_ekx0g"]
 [ext_resource type="Texture2D" uid="uid://dmyjqu6vh5utw" path="res://assets/units/player/archer/archer_idle.png" id="3_0v0tm"]
-[ext_resource type="Resource" uid="uid://cvsqm6sr2wo1m" path="res://resources/unit/player/Archer.tres" id="3_wn2nt"]
 [ext_resource type="PackedScene" uid="uid://br8m4v3ew4uej" path="res://scenes/component/finite_state_machine/StateMachine.tscn" id="4_2q1cq"]
 [ext_resource type="Texture2D" uid="uid://dd5iyjo5rkmfj" path="res://assets/units/player/archer/archer_run.png" id="4_wn2nt"]
 [ext_resource type="PackedScene" uid="uid://cp3r6nh3o4qgb" path="res://scenes/component/finite_state_machine/idle/Idle.tscn" id="5_42oc0"]
@@ -170,7 +169,6 @@ collision_layer = 2
 script = ExtResource("1_pqda4")
 projectileScene = ExtResource("2_0v0tm")
 ProjectileLaunchAnimationFrame = 5
-stats = ExtResource("3_wn2nt")
 
 [node name="StateMachine" parent="." unique_id=1526190014 node_paths=PackedStringArray("StartingState") instance=ExtResource("4_2q1cq")]
 StartingState = NodePath("Idle")

@@ -4,67 +4,6 @@ using Godot;
 
 public partial class UI : CanvasLayer
 {
-	[Export] private Castle castle;
-	[Export] private Barracks barracks;
-    [Export] private ArcheryRange archery;
 	
-	private Button trainWorkerButton;
-	private Button trainWarriorButton;
-	private Button trainSpearmanButton;
-	private Button trainArcherButton;
-	private Button resetButton;
-
-	public override void _Ready()
-	{
-		trainWorkerButton = GetNode<Button>("%TrainWorkerButton");
-		trainWorkerButton.Pressed += OnTrainWorkerButtonPressed;
-		
-
-		trainWarriorButton = GetNode<Button>("%TrainWarriorButton");
-		trainWarriorButton.Pressed += OnTrainWarriorButtonPressed;
-
-		trainSpearmanButton = GetNode<Button>("%TrainSpearmanButton");
-		trainSpearmanButton.Pressed += OnTrainSpearmanButtonPressed;
-
-		trainArcherButton = GetNode<Button>("%TrainArcherButton");
-		trainArcherButton.Pressed += OnTrainArcherButtonPressed;
-
-		resetButton = GetNode<Button>("ResetButton");
-		resetButton.Pressed += OnResetButtonPressed;
-	}
-
-    private void OnResetButtonPressed()
-    {
-        ResourceManager.Instance.InitializeResources();
-        // Grid lives on the GameManager autoload and survives the reload.
-        // Clear it now, while the current scene's nodes are still valid, so it
-        // doesn't retain references to nodes that ReloadCurrentScene will free.
-        GameManager.Instance.Grid.Reset();
-        GetTree().ReloadCurrentScene();
-    }
-
-
-    private void OnTrainArcherButtonPressed()
-    {
-        archery.TrainUnit(Game.Globals.UnitTypes.Archer);
-    }
-
-
-    private void OnTrainSpearmanButtonPressed()
-    {
-        barracks.TrainUnit(Game.Globals.UnitTypes.Spearman);
-    }
-
-
-    private void OnTrainWarriorButtonPressed()
-    {
-        barracks.TrainUnit(Game.Globals.UnitTypes.Warrior);
-    }
-
-
-    private void OnTrainWorkerButtonPressed()
-    {
-        castle.TrainUnit(Game.Globals.UnitTypes.Worker);
-    }
 
 }

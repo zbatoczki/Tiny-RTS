@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://btfklltgvbty7"]
 
-[ext_resource type="Texture2D" uid="uid://c3rgwmm3na15q" path="res://assets/resources/gold_atlus.tres" id="1_4aye5"]
+[ext_resource type="Texture2D" uid="uid://c3rgwmm3na15q" path="res://assets/resources/gold_atlas_texture.tres" id="1_4aye5"]
 
 [node name="ResourceCostPanel" type="HBoxContainer" unique_id=1530260662]
 

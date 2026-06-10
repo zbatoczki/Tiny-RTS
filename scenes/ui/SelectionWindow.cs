@@ -137,16 +137,7 @@ public partial class SelectionWindow : Control
 
 	private void PopulateBuildingActions(Building building)
 	{
-		switch (building)
-		{
-			case Barracks barracks:
-				AddUnitCards(barracks.UnitStats, barracks.TrainUnit);
-				break;
-			case ArcheryRange archeryRange:
-				AddUnitCards(archeryRange.UnitStats, archeryRange.TrainUnit);
-				break;
-			// TODO: Castle, ArcheryRange, GoldMine action lists drop in here.
-		}
+		AddUnitCards(building.BuildableUnits, building.TrainUnit);
 	}
 
 	private void RenderUnitActions()
@@ -211,31 +202,31 @@ public partial class SelectionWindow : Control
 		}
 	}
 
-	private void AddUnitCards(Array<UnitStats> unitStats, Func<UnitTypes, bool> onTrain)
+	private void AddUnitCards(Array<UnitStats> unitTypes, Func<UnitStats, bool> onTrain)
 	{
-		foreach (var stats in unitStats)
+		foreach (var unitType in unitTypes)
 		{
 			var unitCardInstance = unitCard.Instantiate<PanelContainer>();
-			unitCardInstance.GetNode<Label>("%UnitName").Text = stats.Name;
-			unitCardInstance.TooltipText = stats.Description;
+			unitCardInstance.GetNode<Label>("%UnitName").Text = unitType.Name;
+			unitCardInstance.TooltipText = unitType.Description;
 
 			var unitIcon = unitCardInstance.GetNode<TextureRect>("%UnitIcon");
-			unitIcon.Texture = GD.Load<AtlasTexture>(stats.IconPath);
+			unitIcon.Texture = GD.Load<AtlasTexture>(unitType.IconPath);
 
-			SetCostsPanel(unitCardInstance, stats.ResourceCosts);
+			SetCostsPanel(unitCardInstance, unitType.ResourceCosts);
 
 			var trainButton = unitCardInstance.GetNode<Button>("%TrainButton");
 			trainButton.Pressed += () =>
 			{
-				if (onTrain == null) return;
-				onTrain(Enum.Parse<UnitTypes>(stats.Name));
+				if (onTrain == null) { GD.PushError("Train function is null."); return;}
+				onTrain(unitType);
 			};
 
 			actionsContent.AddChild(unitCardInstance);
 		}
 	}
 
-	private void SetCostsPanel(PanelContainer cardInstance, Godot.Collections.Dictionary<ResourceType, float> costs)
+	private void SetCostsPanel(PanelContainer cardInstance, Godot.Collections.Dictionary<ResourceType, int> costs)
 	{
 		var costPanel = cardInstance.GetNode<HBoxContainer>("%CostPanel");
 		foreach (Node child in costPanel.GetChildren())
@@ -243,22 +234,24 @@ public partial class SelectionWindow : Control
 			costPanel.RemoveChild(child);
 			child.QueueFree();
 		}
-		foreach (var (resourceType, amount) in costs)
+		foreach ((ResourceType resourceType, int amount) in costs)
 		{
 			var costPanelInstance = resourceCostPanel.Instantiate<HBoxContainer>();
 			costPanelInstance.GetNode<Label>("ResourceCostLabel").Text = amount.ToString();
 
 			Texture2D resourceIcon = new PlaceholderTexture2D(){Size = new Vector2(32,32)};
 
-			if(resourceType == ResourceType.Gold)
+			string textureFileName = $"{resourceType.ToString().ToLower()}_atlas_texture.tres";
+			string textureFilePath = $"res://assets/resources/{textureFileName}";
+			try
 			{
-				resourceIcon = GD.Load<Texture2D>("res://assets/resources/gold_atlus.tres");
+				resourceIcon = GD.Load<Texture2D>(textureFilePath);
 			}
-			else if(resourceType == ResourceType.Wood)
+			catch (Exception )
 			{
-				resourceIcon = GD.Load<Texture2D>("res://assets/resources/wood_atlus.tres");
+				GD.PushError($"Resource icon not found at path {textureFilePath}");
 			}
-			
+
 			costPanelInstance.GetNode<TextureRect>("ResourceIcon").Texture = resourceIcon;
 			costPanel.AddChild(costPanelInstance);
 		}

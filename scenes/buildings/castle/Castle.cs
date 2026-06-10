@@ -8,8 +8,6 @@ namespace Game.Buildings;
 
 public partial class Castle : Building
 {
-	[Export] public PackedScene WorkerScene;
-
 	private UnitDetectionComponent unitDetectionComponent;
 
 	public override void _Ready()
@@ -17,15 +15,6 @@ public partial class Castle : Building
 		OnReady();
 		unitDetectionComponent = GetNode<UnitDetectionComponent>(nameof(UnitDetectionComponent));
 		unitDetectionComponent.UnitDetected += OnUnitDetected;
-	}
-
-	public override bool TrainUnit(UnitTypes _)
-	{
-		var (goldCost, woodCost) = Costs.Worker;
-		if(!GameManager.Instance.CanTrain(Faction.Player)) return false;
-		if(!ResourceManager.Instance.Spend(Faction, woodCost, goldCost)) return false;
-		Enqueue(WorkerScene, TrainTime);
-		return true;
 	}
 
 	private void OnUnitDetected(Unit unit)

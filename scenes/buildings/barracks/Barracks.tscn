@@ -1,8 +1,6 @@
 [gd_scene format=3 uid="uid://bfcnmskvbcevy"]
 
 [ext_resource type="Script" uid="uid://c1luppgqgejr4" path="res://scenes/buildings/barracks/Barracks.cs" id="1_63nyx"]
-[ext_resource type="PackedScene" uid="uid://c7khacr0bxvup" path="res://scenes/units/player/Warrior/Warrior.tscn" id="2_rhwkk"]
-[ext_resource type="PackedScene" uid="uid://inc61pd743x5" path="res://scenes/units/player/spearman/Spearman.tscn" id="3_rhwkk"]
 [ext_resource type="Resource" uid="uid://ckbhnj3a6j54" path="res://resources/unit/player/Warrior.tres" id="4_4bjer"]
 [ext_resource type="PackedScene" uid="uid://degbw6igj5uch" path="res://scenes/units/shared/SelectionRing.tscn" id="4_c08p7"]
 [ext_resource type="Resource" uid="uid://bb3k1i83qw4qn" path="res://scenes/buildings/barracks/barracks.tres" id="4_t5cd1"]
@@ -16,10 +14,8 @@ size = Vector2(192, 192)
 [node name="Barracks" type="StaticBody2D" unique_id=105743704]
 collision_mask = 6
 script = ExtResource("1_63nyx")
-WarriorScene = ExtResource("2_rhwkk")
-SpearmanScene = ExtResource("3_rhwkk")
-UnitStats = Array[Object]([ExtResource("4_4bjer"), ExtResource("5_4bjer")])
 BuildingResource = ExtResource("4_t5cd1")
+BuildableUnits = Array[Object]([ExtResource("5_4bjer"), ExtResource("4_4bjer")])
 
 [node name="SelectionRing" parent="." unique_id=1405774456 instance=ExtResource("4_c08p7")]
 scale = Vector2(3, 3)

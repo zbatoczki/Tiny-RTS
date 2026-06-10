@@ -20,9 +20,8 @@
 [ext_resource type="Script" uid="uid://wmrubcinqmu2" path="res://scenes/Camera2d.cs" id="14_mwfav"]
 [ext_resource type="Resource" uid="uid://bb3k1i83qw4qn" path="res://scenes/buildings/barracks/barracks.tres" id="15_1iba3"]
 [ext_resource type="Script" uid="uid://dc0wx7fgotf6l" path="res://scenes/DebugGrid.cs" id="15_3p2gp"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wp0k4"]
-content_margin_bottom = 20.0
+[ext_resource type="Resource" uid="uid://1t4poprufd14" path="res://resources/unit/player/Worker.tres" id="20_yxlcp"]
+[ext_resource type="Resource" uid="uid://cvsqm6sr2wo1m" path="res://resources/unit/player/Archer.tres" id="21_1iba3"]
 
 [node name="Main" type="Node" unique_id=330848765]
 script = ExtResource("1_cvmbd")
@@ -67,11 +66,8 @@ script = ExtResource("6_q8u5g")
 position = Vector2(640, 320)
 script = ExtResource("14_mwfav")
 
-[node name="UI" type="CanvasLayer" parent="." unique_id=1584375090 node_paths=PackedStringArray("castle", "barracks", "archery")]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1584375090]
 script = ExtResource("5_qmy6f")
-castle = NodePath("../Castle2")
-barracks = NodePath("../Barracks")
-archery = NodePath("../ArcheryRange")
 
 [node name="ResourcesUI" parent="UI" unique_id=1113608158 instance=ExtResource("8_jlsqs")]
 
@@ -83,41 +79,6 @@ offset_right = 155.0
 offset_bottom = 48.0
 text = "DEBUG TEXT HERE"
 script = ExtResource("7_nxtc6")
-
-[node name="PanelContainer" type="PanelContainer" parent="UI" unique_id=916671450]
-visible = false
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -31.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_wp0k4")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/PanelContainer" unique_id=652172023]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="TrainWorkerButton" type="Button" parent="UI/PanelContainer/HBoxContainer" unique_id=525383106]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Train Worker (10 gold)"
-
-[node name="TrainWarriorButton" type="Button" parent="UI/PanelContainer/HBoxContainer" unique_id=1576265488]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Train Warrior (100 gold)"
-
-[node name="TrainSpearmanButton" type="Button" parent="UI/PanelContainer/HBoxContainer" unique_id=961533029]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Train Spearman (50 gold, 75 wood"
-
-[node name="TrainArcherButton" type="Button" parent="UI/PanelContainer/HBoxContainer" unique_id=1718658902]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Train Archer (75 gold, 50 wood)"
 
 [node name="ResetButton" type="Button" parent="UI" unique_id=1901668927]
 offset_left = 40.0
@@ -133,6 +94,8 @@ buildableBuildings = Array[ExtResource("13_nfivy")]([ExtResource("14_1nqs0"), Ex
 [node name="Worker" parent="." unique_id=1980137832 node_paths=PackedStringArray("treeLayer") instance=ExtResource("6_nxtc6")]
 position = Vector2(512, 384)
 treeLayer = NodePath("../TreeTileMapLayer")
+stats = ExtResource("20_yxlcp")
 
 [node name="Archer" parent="." unique_id=172825737 instance=ExtResource("12_bjd11")]
 position = Vector2(704, 448)
+stats = ExtResource("21_1iba3")

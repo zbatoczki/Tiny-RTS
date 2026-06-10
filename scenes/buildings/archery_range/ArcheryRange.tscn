@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://degbw6igj5uch" path="res://scenes/units/shared/SelectionRing.tscn" id="3_0mdi1"]
 [ext_resource type="Resource" uid="uid://dt2ftiiros40i" path="res://scenes/buildings/archery_range/archery_range.tres" id="3_boy2a"]
 [ext_resource type="Resource" uid="uid://cvsqm6sr2wo1m" path="res://resources/unit/player/Archer.tres" id="3_y437p"]
-[ext_resource type="PackedScene" uid="uid://coowfgss5y3sj" path="res://scenes/units/player/archer/Archer.tscn" id="4_4byy1"]
 [ext_resource type="PackedScene" uid="uid://ldhygolivtsg" path="res://scenes/component/HealthComponent.tscn" id="6_jfyf1"]
 [ext_resource type="PackedScene" uid="uid://cv7momkuslcxo" path="res://scenes/buildings/archery_range/ArcheryRangeSprite2D.tscn" id="6_y437p"]
 
@@ -14,9 +13,8 @@ size = Vector2(192, 192)
 [node name="ArcheryRange" type="StaticBody2D" unique_id=105743704]
 collision_mask = 6
 script = ExtResource("1_m1s3s")
-ArcherScene = ExtResource("4_4byy1")
-UnitStats = Array[Object]([ExtResource("3_y437p")])
 BuildingResource = ExtResource("3_boy2a")
+BuildableUnits = Array[Object]([ExtResource("3_y437p")])
 
 [node name="SelectionRing" parent="." unique_id=1405774456 instance=ExtResource("3_0mdi1")]
 scale = Vector2(3, 3)

@@ -1,11 +1,13 @@
 [gd_resource type="Resource" script_class="UnitStats" format=3 uid="uid://1t4poprufd14"]
 
 [ext_resource type="Script" uid="uid://dllaeorx6nqxd" path="res://resources/unit/UnitStats.cs" id="1_ca8hu"]
+[ext_resource type="PackedScene" uid="uid://bxo4obx7s5dql" path="res://scenes/units/player/worker/Worker.tscn" id="1_k33j5"]
 
 [resource]
 script = ExtResource("1_ca8hu")
 Name = "Worker"
 MaxHealth = 5.0
+UnitScene = ExtResource("1_k33j5")
 IconPath = "res://assets/ui/icons/units/worker_atlas.tres"
 ResourceCosts = Dictionary[int, float]({
 1: 10.0,
