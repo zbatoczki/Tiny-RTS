@@ -156,6 +156,7 @@ centered = false
 offset = Vector2(-34, -29)
 
 [node name="SpriteRoot" type="Node2D" parent="." unique_id=1510040086]
+modulate = Color(1, 1, 1, 0.3529412)
 
 [node name="UpDownRoot" type="Node2D" parent="SpriteRoot" unique_id=757695574]
 unique_name_in_owner = true

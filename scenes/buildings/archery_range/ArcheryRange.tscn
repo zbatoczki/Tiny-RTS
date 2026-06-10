@@ -4,8 +4,16 @@
 [ext_resource type="PackedScene" uid="uid://degbw6igj5uch" path="res://scenes/units/shared/SelectionRing.tscn" id="3_0mdi1"]
 [ext_resource type="Resource" uid="uid://dt2ftiiros40i" path="res://scenes/buildings/archery_range/archery_range.tres" id="3_boy2a"]
 [ext_resource type="Resource" uid="uid://cvsqm6sr2wo1m" path="res://resources/unit/player/Archer.tres" id="3_y437p"]
+[ext_resource type="Shader" uid="uid://cm1u1eo3tr7lm" path="res://scripts/shaders/build_progress.gdshader" id="6_68sli"]
 [ext_resource type="PackedScene" uid="uid://ldhygolivtsg" path="res://scenes/component/HealthComponent.tscn" id="6_jfyf1"]
 [ext_resource type="PackedScene" uid="uid://cv7momkuslcxo" path="res://scenes/buildings/archery_range/ArcheryRangeSprite2D.tscn" id="6_y437p"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ujt7q"]
+resource_local_to_scene = true
+shader = ExtResource("6_68sli")
+shader_parameter/progress = 0.0
+shader_parameter/ghost_alpha = 0.35
+shader_parameter/edge_softness = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lg0r4"]
 size = Vector2(192, 192)
@@ -15,12 +23,14 @@ collision_mask = 6
 script = ExtResource("1_m1s3s")
 BuildingResource = ExtResource("3_boy2a")
 BuildableUnits = Array[Object]([ExtResource("3_y437p")])
+testBuildTime = 10.0
 
 [node name="SelectionRing" parent="." unique_id=1405774456 instance=ExtResource("3_0mdi1")]
 scale = Vector2(3, 3)
 offset = Vector2(32, 47)
 
 [node name="ArcheryRangeSprite2D" parent="." unique_id=199598897 instance=ExtResource("6_y437p")]
+material = SubResource("ShaderMaterial_ujt7q")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=914712534]
 position = Vector2(96, 96)

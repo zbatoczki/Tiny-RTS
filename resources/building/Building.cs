@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Game.Autoload;
 using Game.Component;
 using Game.Globals;
@@ -17,6 +18,8 @@ public abstract partial class Building : StaticBody2D
     [Export] public Array<UnitResource> BuildableUnits {get; private set;}
     [Export] public float MaxHealth = 500f;
     [Export] public float TrainTime = 3f;
+    [Export] private bool testAutoBuild = true;
+    [Export] private float testBuildTime = 3f;
 
     public float CurrentHealth {get; protected set;}
 
@@ -25,10 +28,15 @@ public abstract partial class Building : StaticBody2D
     private Sprite2D selectionRing;
     private CollisionShape2D bodyCollisionShape;
 
-    /// <summary>
-    /// World position of the building's footprint center, taken from its body collision shape.
-    /// A shape node's origin is its geometric center, so this is the true middle of the building.
-    /// </summary>
+
+    private ShaderMaterial buildMaterial;
+    private float buildProgress = 1f;
+    private Tween buildTween;
+
+    [Export] public float BuildInterpolationTime = 0.25f;
+
+    public bool IsUnderConstruction => buildProgress < 1f;
+
     public Vector2 CenterPosition
     {
         get
@@ -60,6 +68,13 @@ public abstract partial class Building : StaticBody2D
 
         selectionRing = GetNode<Sprite2D>("SelectionRing");
         selectionRing.Visible = false;
+
+        SetupBuildVisual();
+
+        if(testAutoBuild)
+        {
+            RunTestBuildAnimation();
+        }
 
         if(BuildingResource != null)
         {
@@ -132,8 +147,6 @@ public abstract partial class Building : StaticBody2D
         return unit;
     }
 
-
-
     private void SpawnUnit(Unit unit)
     {
         GetParent().AddChild(unit);
@@ -160,4 +173,58 @@ public abstract partial class Building : StaticBody2D
         }
         return null;
     }
+
+    #region BUILD PROGRESS VISUALS
+    private void SetupBuildVisual()
+    {
+        foreach (var child in GetChildren().Where(node => node is Sprite2D).Cast<Sprite2D>())
+        {
+            if (child.Material is ShaderMaterial shader)
+            {
+                buildMaterial = (ShaderMaterial)shader.Duplicate();
+                child.Material = buildMaterial;
+                SetBuildProgress(buildProgress);
+                return;
+            }
+        }
+    }
+
+    private void RunTestBuildAnimation()
+    {
+        SetBuildProgress(0f);
+
+        if (buildTween != null && buildTween.IsValid())
+        {
+            buildTween.Kill();
+        }
+
+        buildTween = CreateTween();
+        buildTween.TweenMethod(Callable.From<float>(ApplyBuildProgress), 0f, 1f, testBuildTime);
+    }
+
+    public void SetBuildProgress(float value, bool interpolate = false)
+    {
+        float target = Mathf.Clamp(value, 0f, 1f);
+
+        if (buildTween != null && buildTween.IsValid())
+        {
+            buildTween.Kill();
+        }
+
+        if (!interpolate)
+        {
+            ApplyBuildProgress(target);
+            return;
+        }
+
+        buildTween = CreateTween();
+        buildTween.TweenMethod(Callable.From<float>(ApplyBuildProgress), buildProgress, target, BuildInterpolationTime);
+    }
+
+    private void ApplyBuildProgress(float value)
+    {
+        buildProgress = value;
+        buildMaterial?.SetShaderParameter("progress", buildProgress);
+    }
+    #endregion
 }

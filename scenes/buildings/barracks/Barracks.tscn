@@ -6,16 +6,25 @@
 [ext_resource type="Resource" uid="uid://bb3k1i83qw4qn" path="res://scenes/buildings/barracks/barracks.tres" id="4_t5cd1"]
 [ext_resource type="PackedScene" uid="uid://ldhygolivtsg" path="res://scenes/component/HealthComponent.tscn" id="5_2j4ot"]
 [ext_resource type="Resource" uid="uid://oc2u7ody1242" path="res://resources/unit/player/Spearman.tres" id="5_4bjer"]
+[ext_resource type="Shader" uid="uid://cm1u1eo3tr7lm" path="res://scripts/shaders/build_progress.gdshader" id="8_beu8b"]
 [ext_resource type="PackedScene" uid="uid://b4cqa2hswb6bs" path="res://scenes/buildings/barracks/BarracksSprite2D.tscn" id="9_4bjer"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lg0r4"]
 size = Vector2(192, 192)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_beu8b"]
+resource_local_to_scene = true
+shader = ExtResource("8_beu8b")
+shader_parameter/progress = 1.0
+shader_parameter/ghost_alpha = 0.35
+shader_parameter/edge_softness = 0.0
 
 [node name="Barracks" type="StaticBody2D" unique_id=105743704]
 collision_mask = 6
 script = ExtResource("1_63nyx")
 BuildingResource = ExtResource("4_t5cd1")
 BuildableUnits = Array[Object]([ExtResource("5_4bjer"), ExtResource("4_4bjer")])
+testBuildTime = 20.0
 
 [node name="SelectionRing" parent="." unique_id=1405774456 instance=ExtResource("4_c08p7")]
 scale = Vector2(3, 3)
@@ -33,3 +42,4 @@ scale = Vector2(1, 0.666)
 one_shot = true
 
 [node name="BarracksSprite2D" parent="." unique_id=359843201 instance=ExtResource("9_4bjer")]
+material = SubResource("ShaderMaterial_beu8b")

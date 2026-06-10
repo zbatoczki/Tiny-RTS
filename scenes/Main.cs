@@ -9,11 +9,15 @@ namespace Game;
 public partial class Main : Node
 {
     private TileMapLayer treeLayer;
-
+    private Button resetButton;
     public override void _Ready()
     {
 
         treeLayer = GetNode<TileMapLayer>("TreeTileMapLayer");
+
+        resetButton = GetNode<Button>("%ResetButton");
+        resetButton.Pressed += () => GetTree().ReloadCurrentScene();
+
         CallDeferred(nameof(RegisterTreesInGrid));
         CallDeferred(nameof(RegisterGoldminesInGrid));
         CallDeferred(nameof(PrintGridAfterRegistration));
