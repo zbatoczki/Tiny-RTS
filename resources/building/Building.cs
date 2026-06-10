@@ -103,16 +103,16 @@ public abstract partial class Building : StaticBody2D
         }
     }
 
-    public bool TrainUnit(UnitStats unitType)
+    public bool TrainUnit(UnitStats unit)
     {
-		int woodCost = unitType.ResourceCosts.TryGetValue(ResourceType.Wood, out int wCost) ? wCost : 0;
-		int goldCost = unitType.ResourceCosts.TryGetValue(ResourceType.Gold, out int gCost) ? gCost : 0;
-		int foodCost = unitType.ResourceCosts.TryGetValue(ResourceType.Food, out int fCost) ? fCost : 0;	
+		int woodCost = unit.ResourceCosts.TryGetValue(ResourceType.Wood, out int wCost) ? wCost : 0;
+		int goldCost = unit.ResourceCosts.TryGetValue(ResourceType.Gold, out int gCost) ? gCost : 0;
+		int foodCost = unit.ResourceCosts.TryGetValue(ResourceType.Food, out int fCost) ? fCost : 0;	
 
 		if(!GameManager.Instance.CanTrain(Faction.Player)) return false;
 		if(!ResourceManager.Instance.Spend(Faction, woodCost, goldCost, foodCost)) return false;
 
-        Unit unitToSpawn = InstantiateUnit(unitType.UnitScene, unitType);
+        Unit unitToSpawn = InstantiateUnit(unit.UnitScene, unit);
 
 		Enqueue(unitToSpawn, TrainTime);
 		return true;

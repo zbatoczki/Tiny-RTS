@@ -202,24 +202,24 @@ public partial class SelectionWindow : Control
 		}
 	}
 
-	private void AddUnitCards(Array<UnitStats> unitTypes, Func<UnitStats, bool> onTrain)
+	private void AddUnitCards(Array<UnitStats> units, Func<UnitStats, bool> onTrain)
 	{
-		foreach (var unitType in unitTypes)
+		foreach (var unit in units)
 		{
 			var unitCardInstance = unitCard.Instantiate<PanelContainer>();
-			unitCardInstance.GetNode<Label>("%UnitName").Text = unitType.Name;
-			unitCardInstance.TooltipText = unitType.Description;
+			unitCardInstance.GetNode<Label>("%UnitName").Text = unit.Name;
+			unitCardInstance.TooltipText = unit.Description;
 
 			var unitIcon = unitCardInstance.GetNode<TextureRect>("%UnitIcon");
-			unitIcon.Texture = GD.Load<AtlasTexture>(unitType.IconPath);
+			unitIcon.Texture = GD.Load<AtlasTexture>(unit.IconPath);
 
-			SetCostsPanel(unitCardInstance, unitType.ResourceCosts);
+			SetCostsPanel(unitCardInstance, unit.ResourceCosts);
 
 			var trainButton = unitCardInstance.GetNode<Button>("%TrainButton");
 			trainButton.Pressed += () =>
 			{
 				if (onTrain == null) { GD.PushError("Train function is null."); return;}
-				onTrain(unitType);
+				onTrain(unit);
 			};
 
 			actionsContent.AddChild(unitCardInstance);
