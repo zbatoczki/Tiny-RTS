@@ -12,7 +12,7 @@ public abstract partial class Unit : CharacterBody2D
     [Signal]
     public delegate void UnitDiedEventHandler(Unit unit);
 
-    [Export] public UnitStats stats;
+    [Export] public UnitResource stats;
     [Export] public bool HasAttackDirections {get; private set;} = false;
     [Export] public bool CanAttack {get; private set;} = true;
 

@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="UnitStats" format=3 uid="uid://cvsqm6sr2wo1m"]
+[gd_resource type="Resource" script_class="UnitResource" format=3 uid="uid://cvsqm6sr2wo1m"]
 
 [ext_resource type="PackedScene" uid="uid://coowfgss5y3sj" path="res://scenes/units/player/archer/Archer.tscn" id="1_bm8e0"]
-[ext_resource type="Script" uid="uid://dllaeorx6nqxd" path="res://resources/unit/UnitStats.cs" id="1_f0e6b"]
+[ext_resource type="Script" uid="uid://di1a42v830fv4" path="res://resources/unit/UnitResource.cs" id="1_f0e6b"]
 
 [resource]
 script = ExtResource("1_f0e6b")
@@ -14,4 +14,4 @@ IconPath = "uid://bhqr0k4x7mepl"
 ResourceCosts = Dictionary[int, float]({
 1: 100.0
 })
-metadata/_custom_type_script = "uid://dllaeorx6nqxd"
+metadata/_custom_type_script = "uid://di1a42v830fv4"

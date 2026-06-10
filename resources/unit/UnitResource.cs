@@ -5,7 +5,7 @@ using Godot.Collections;
 namespace Game.Resources.Unit;
 
 [GlobalClass]
-public partial class UnitStats : Resource
+public partial class UnitResource : Resource
 {
     [Export] public string Name { get; set; }
     [Export] public string Description { get; set; }

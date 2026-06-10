@@ -14,7 +14,7 @@ public abstract partial class Building : StaticBody2D
 {
     [Export] public BuildingResource BuildingResource;
 	[Export] public Faction Faction;
-    [Export] public Array<UnitStats> BuildableUnits {get; private set;}
+    [Export] public Array<UnitResource> BuildableUnits {get; private set;}
     [Export] public float MaxHealth = 500f;
     [Export] public float TrainTime = 3f;
 
@@ -103,7 +103,7 @@ public abstract partial class Building : StaticBody2D
         }
     }
 
-    public bool TrainUnit(UnitStats unit)
+    public bool TrainUnit(UnitResource unit)
     {
 		int woodCost = unit.ResourceCosts.TryGetValue(ResourceType.Wood, out int wCost) ? wCost : 0;
 		int goldCost = unit.ResourceCosts.TryGetValue(ResourceType.Gold, out int gCost) ? gCost : 0;
@@ -118,7 +118,7 @@ public abstract partial class Building : StaticBody2D
 		return true;
     }
 
-    private Unit InstantiateUnit(PackedScene unitScene, UnitStats statsToAssign)
+    private Unit InstantiateUnit(PackedScene unitScene, UnitResource statsToAssign)
     {
         if(unitScene == null)
         {

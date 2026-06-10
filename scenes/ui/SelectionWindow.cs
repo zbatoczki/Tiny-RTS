@@ -202,7 +202,7 @@ public partial class SelectionWindow : Control
 		}
 	}
 
-	private void AddUnitCards(Array<UnitStats> units, Func<UnitStats, bool> onTrain)
+	private void AddUnitCards(Array<UnitResource> units, Func<UnitResource, bool> onTrain)
 	{
 		foreach (var unit in units)
 		{
