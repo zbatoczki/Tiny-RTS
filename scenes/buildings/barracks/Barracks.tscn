@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://c1luppgqgejr4" path="res://scenes/buildings/barracks/Barracks.cs" id="1_63nyx"]
 [ext_resource type="Resource" uid="uid://ckbhnj3a6j54" path="res://resources/unit/player/Warrior.tres" id="4_4bjer"]
 [ext_resource type="PackedScene" uid="uid://degbw6igj5uch" path="res://scenes/units/shared/SelectionRing.tscn" id="4_c08p7"]
-[ext_resource type="Resource" uid="uid://bb3k1i83qw4qn" path="res://scenes/buildings/barracks/barracks.tres" id="4_t5cd1"]
 [ext_resource type="PackedScene" uid="uid://ldhygolivtsg" path="res://scenes/component/HealthComponent.tscn" id="5_2j4ot"]
 [ext_resource type="Resource" uid="uid://oc2u7ody1242" path="res://resources/unit/player/Spearman.tres" id="5_4bjer"]
 [ext_resource type="Shader" uid="uid://cm1u1eo3tr7lm" path="res://scripts/shaders/build_progress.gdshader" id="8_beu8b"]
@@ -22,7 +21,6 @@ shader_parameter/edge_softness = 0.0
 [node name="Barracks" type="StaticBody2D" unique_id=105743704]
 collision_mask = 6
 script = ExtResource("1_63nyx")
-BuildingResource = ExtResource("4_t5cd1")
 BuildableUnits = Array[Object]([ExtResource("5_4bjer"), ExtResource("4_4bjer")])
 testBuildTime = 20.0
 

@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="BuildingResource" format=3 uid="uid://bb3k1i83qw4qn"]
 
 [ext_resource type="Script" uid="uid://bnmrquguhq1rt" path="res://resources/building/BuildingResource.cs" id="1_4dipk"]
+[ext_resource type="PackedScene" uid="uid://bfcnmskvbcevy" path="res://scenes/buildings/barracks/Barracks.tscn" id="1_6t8sv"]
 [ext_resource type="PackedScene" uid="uid://b4cqa2hswb6bs" path="res://scenes/buildings/barracks/BarracksSprite2D.tscn" id="1_egjw2"]
 
 [resource]
@@ -8,5 +9,10 @@ script = ExtResource("1_4dipk")
 Name = "Barracks"
 Description = "Used to train warrirors"
 Dimensions = Vector2i(3, 3)
+BuildingScene = ExtResource("1_6t8sv")
 SpriteScene = ExtResource("1_egjw2")
+ResourceCosts = Dictionary[int, int]({
+0: 100,
+1: 100
+})
 metadata/_custom_type_script = "uid://bnmrquguhq1rt"

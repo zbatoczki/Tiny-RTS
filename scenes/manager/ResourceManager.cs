@@ -82,9 +82,10 @@ public partial class ResourceManager : Node
 	{
 		foreach (Faction f in System.Enum.GetValues<Faction>())
         { 
-			gold[f] = 200;
-			wood[f] = 200; 
-			food[f] = 200; 
+			//TODO: Configure starting resources dynamically
+			gold[f] = 10000;
+			wood[f] = 10000; 
+			food[f] = 10000; 
 		}
 	}
 }

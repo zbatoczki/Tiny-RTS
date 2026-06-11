@@ -6,13 +6,12 @@
 [ext_resource type="PackedScene" uid="uid://cumv0eyejwhi3" path="res://scenes/manager/BuildingManager.tscn" id="2_1nqs0"]
 [ext_resource type="PackedScene" uid="uid://bfcnmskvbcevy" path="res://scenes/buildings/barracks/Barracks.tscn" id="3_qmy6f"]
 [ext_resource type="Script" uid="uid://bod58brbc03l2" path="res://scenes/UI.cs" id="5_qmy6f"]
-[ext_resource type="PackedScene" uid="uid://bxo4obx7s5dql" path="res://scenes/units/player/worker/Worker.tscn" id="6_nxtc6"]
 [ext_resource type="Script" uid="uid://b7ti4x8efvo3i" path="res://scenes/manager/TreeTileMapLayerManager.cs" id="6_q8u5g"]
+[ext_resource type="Resource" uid="uid://ie81tmvef2k3" path="res://scenes/buildings/castle/castle.tres" id="7_ebg2g"]
 [ext_resource type="Script" uid="uid://dhhqge6ld1u72" path="res://scenes/LabelTest.cs" id="7_nxtc6"]
 [ext_resource type="PackedScene" uid="uid://c5fgnm0wp186w" path="res://scenes/ui/ResourcesUi.tscn" id="8_jlsqs"]
 [ext_resource type="PackedScene" uid="uid://dy0ld8xk5d245" path="res://scenes/buildings/gold_mine/GoldMine.tscn" id="9_lhr70"]
 [ext_resource type="PackedScene" uid="uid://drst3dcdxv4k0" path="res://scenes/buildings/castle/Castle.tscn" id="9_q8u5g"]
-[ext_resource type="PackedScene" uid="uid://coowfgss5y3sj" path="res://scenes/units/player/archer/Archer.tscn" id="12_bjd11"]
 [ext_resource type="PackedScene" uid="uid://cv61oyhiqo531" path="res://scenes/ui/SelectionWindow.tscn" id="12_ft6cd"]
 [ext_resource type="Script" uid="uid://bnmrquguhq1rt" path="res://resources/building/BuildingResource.cs" id="13_nfivy"]
 [ext_resource type="PackedScene" uid="uid://dbaeqccn85l1u" path="res://scenes/buildings/archery_range/ArcheryRange.tscn" id="13_qmy6f"]
@@ -20,8 +19,6 @@
 [ext_resource type="Script" uid="uid://wmrubcinqmu2" path="res://scenes/Camera2d.cs" id="14_mwfav"]
 [ext_resource type="Resource" uid="uid://bb3k1i83qw4qn" path="res://scenes/buildings/barracks/barracks.tres" id="15_1iba3"]
 [ext_resource type="Script" uid="uid://dc0wx7fgotf6l" path="res://scenes/DebugGrid.cs" id="15_3p2gp"]
-[ext_resource type="Resource" uid="uid://1t4poprufd14" path="res://resources/unit/player/Worker.tres" id="20_yxlcp"]
-[ext_resource type="Resource" uid="uid://cvsqm6sr2wo1m" path="res://resources/unit/player/Archer.tres" id="21_1iba3"]
 
 [node name="Main" type="Node" unique_id=330848765]
 script = ExtResource("1_cvmbd")
@@ -46,13 +43,18 @@ tile_set = ExtResource("1_rarhs")
 
 [node name="Castle2" parent="." unique_id=1580598003 groups=["Base"] instance=ExtResource("9_q8u5g")]
 position = Vector2(640, 64)
+BuildingResource = ExtResource("7_ebg2g")
 
 [node name="Barracks" parent="." unique_id=105743704 instance=ExtResource("3_qmy6f")]
 position = Vector2(192, 64)
+BuildingResource = ExtResource("15_1iba3")
+testAutoBuild = false
 testBuildTime = 10.0
 
 [node name="ArcheryRange" parent="." unique_id=972537190 instance=ExtResource("13_qmy6f")]
 position = Vector2(192, 320)
+BuildingResource = ExtResource("14_1nqs0")
+testAutoBuild = false
 
 [node name="GoldMine" parent="." unique_id=829714884 instance=ExtResource("9_lhr70")]
 position = Vector2(896, 512)
@@ -92,12 +94,3 @@ text = "RESET SCENE"
 [node name="SelectionWindow" parent="UI" unique_id=1334838068 node_paths=PackedStringArray("selectionManager") instance=ExtResource("12_ft6cd")]
 selectionManager = NodePath("../../SelectionManager")
 buildableBuildings = Array[ExtResource("13_nfivy")]([ExtResource("14_1nqs0"), ExtResource("15_1iba3")])
-
-[node name="Worker" parent="." unique_id=1980137832 node_paths=PackedStringArray("treeLayer") instance=ExtResource("6_nxtc6")]
-position = Vector2(512, 384)
-treeLayer = NodePath("../TreeTileMapLayer")
-stats = ExtResource("20_yxlcp")
-
-[node name="Archer" parent="." unique_id=172825737 instance=ExtResource("12_bjd11")]
-position = Vector2(704, 448)
-stats = ExtResource("21_1iba3")

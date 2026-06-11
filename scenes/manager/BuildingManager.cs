@@ -5,6 +5,8 @@ using Game.InputMap;
 using System;
 using Game.Autoload;
 using Game.Globals;
+using Game.Buildings;
+using System.Collections.Generic;
 
 public partial class BuildingManager : Node
 {
@@ -24,12 +26,15 @@ public partial class BuildingManager : Node
 
 	private BuildingGhost buildingGhost;
 	private Vector2 buildingGhostDimensions;
+
 	private GridManager gridManager;
+	private ResourceManager resourceManager;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		gridManager = GameManager.Instance.Grid;
+		resourceManager = ResourceManager.Instance;
 		selectionWindow.BuildRequested += OnBuildRequested;
 	}
 
@@ -64,11 +69,26 @@ public partial class BuildingManager : Node
 			return;
 		}
 
-        Node2D building = toPlaceBuildingResource.BuildingScene.Instantiate<Node2D>();
-		GetParent().AddChild(building);
+        Building building = toPlaceBuildingResource.BuildingScene.Instantiate<Building>();
+		building.BuildingResource = toPlaceBuildingResource;
+
+		//TODO: Check the grid is open for the building at hovered cell position
+		var costs = building.BuildingResource.ResourceCosts;
+		var woodCost = costs.GetValueOrDefault(ResourceType.Wood);
+		var foodCost = costs.GetValueOrDefault(ResourceType.Food);
+		var goldCost = costs.GetValueOrDefault(ResourceType.Gold);
+		if(!resourceManager.Spend(building.Faction, woodCost, goldCost, foodCost))
+		{
+			//TODO: Notify player on screen that there are not enough resources
+			GD.PushWarning("Not enough resources");
+			return;
+		}
+
 		building.GlobalPosition = hoveredGridArea.Position  * GlobalValues.CELL_SIZE;
+		GetParent().AddChild(building);
+		gridManager.RegisterBuilding(building);
+
 		ChangeState(BuildState.Idle);
-		//TODO: subtract resources, add building to grid manager
     }
 
     public override void _Process(double _)

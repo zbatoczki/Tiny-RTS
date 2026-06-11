@@ -1,11 +1,17 @@
 [gd_resource type="Resource" script_class="BuildingResource" format=3 uid="uid://ie81tmvef2k3"]
 
 [ext_resource type="Script" uid="uid://bnmrquguhq1rt" path="res://resources/building/BuildingResource.cs" id="1_0k2vb"]
+[ext_resource type="PackedScene" uid="uid://drst3dcdxv4k0" path="res://scenes/buildings/castle/Castle.tscn" id="1_6q5tl"]
 
 [resource]
 script = ExtResource("1_0k2vb")
 Name = "Castle"
 Description = "Main building for a player. If no castles remain, the player is eliminated. Used to train workers and used as a drop off for resources."
 Dimensions = Vector2i(5, 3)
+BuildingScene = ExtResource("1_6q5tl")
 IsResourceDropOff = true
+ResourceCosts = Dictionary[int, int]({
+0: 500,
+1: 500
+})
 metadata/_custom_type_script = "uid://bnmrquguhq1rt"

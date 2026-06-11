@@ -1,4 +1,6 @@
+using Game.Globals;
 using Godot;
+using Godot.Collections;
 
 namespace Game.Resources.Building;
 
@@ -14,4 +16,5 @@ public partial class BuildingResource : Resource
 	[Export] public PackedScene BuildingScene {get; private set;}
 	[Export] public PackedScene SpriteScene {get; private set;}
 	[Export] public bool IsResourceDropOff {get; private set;}
+	[Export] public Dictionary<ResourceType, int> ResourceCosts { get; set; }
 }

@@ -5,7 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://degbw6igj5uch" path="res://scenes/units/shared/SelectionRing.tscn" id="3_3hter"]
 [ext_resource type="Resource" uid="uid://1t4poprufd14" path="res://resources/unit/player/Worker.tres" id="3_epchf"]
 [ext_resource type="PackedScene" uid="uid://dggm7qkrau8nx" path="res://scenes/component/UnitDetectionComponent.tscn" id="3_l6pne"]
-[ext_resource type="Resource" uid="uid://ie81tmvef2k3" path="res://scenes/buildings/castle/castle.tres" id="3_t63eb"]
 [ext_resource type="PackedScene" uid="uid://ldhygolivtsg" path="res://scenes/component/HealthComponent.tscn" id="4_8iw5o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8iw5o"]
@@ -17,7 +16,6 @@ size = Vector2(320, 192)
 [node name="Castle" type="StaticBody2D" unique_id=105743704]
 collision_mask = 6
 script = ExtResource("1_xrw3n")
-BuildingResource = ExtResource("3_t63eb")
 BuildableUnits = Array[Object]([ExtResource("3_epchf")])
 TrainTime = 2.0
 
