@@ -32,7 +32,7 @@ public partial class UnitManager : Node2D
 
 	public override void _Ready()
 	{
-		GD.Print("UnitManager ready");
+
 	}
 
 

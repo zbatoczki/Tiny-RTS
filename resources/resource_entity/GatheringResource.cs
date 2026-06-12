@@ -45,7 +45,7 @@ public partial class GatheringResource : Resource
 
         int gathered = Mathf.Clamp(Mathf.Min(amount, CurrentCharges), 0, CurrentCharges);
         CurrentCharges -= gathered;
-        GD.Print($"Current charges for resource at {CellCorrdinates}: {CurrentCharges}");
+
         EmitSignal(SignalName.ResourceGathered, CellCorrdinates, gathered);
 
         if (IsDepleted)

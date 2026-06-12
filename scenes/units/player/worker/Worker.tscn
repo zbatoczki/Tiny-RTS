@@ -11,8 +11,8 @@
 [ext_resource type="Texture2D" uid="uid://c4rw6ppti7f3d" path="res://assets/units/player/pawn/pawn_run_wood.png" id="10_2rd3q"]
 [ext_resource type="Texture2D" uid="uid://d2c6txamrye2y" path="res://assets/units/player/pawn/pawn_run_gold.png" id="10_phryt"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_phryt"]
-size = Vector2(128, 128)
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_2rd3q"]
+b = Vector2(64, 0)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b3epq"]
 atlas = ExtResource("2_3j8ay")
@@ -386,15 +386,34 @@ offset = Vector2(32, 56)
 
 [node name="ResourceDetector" type="Area2D" parent="." index="6" unique_id=844198648]
 collision_layer = 0
-collision_mask = 32
+collision_mask = 33
 input_pickable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ResourceDetector" index="0" unique_id=772626562]
 position = Vector2(32, 32)
-shape = SubResource("RectangleShape2D_phryt")
+shape = SubResource("SegmentShape2D_2rd3q")
+debug_color = Color(0, 0.6, 0, 0.41960785)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="ResourceDetector" index="1" unique_id=122742724]
+position = Vector2(32, 32)
+rotation = 1.5707964
+shape = SubResource("SegmentShape2D_2rd3q")
+debug_color = Color(0, 0.6, 0, 0.41960785)
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="ResourceDetector" index="2" unique_id=476698749]
+position = Vector2(32, 32)
+rotation = 3.1415927
+shape = SubResource("SegmentShape2D_2rd3q")
+debug_color = Color(0, 0.6, 0, 0.41960785)
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="ResourceDetector" index="3" unique_id=599253821]
+position = Vector2(32, 32)
+rotation = -1.5707964
+shape = SubResource("SegmentShape2D_2rd3q")
 debug_color = Color(0, 0.6, 0, 0.41960785)
 
 [node name="AnimatedSprite2D" parent="." index="7" unique_id=290410313]
+visible = false
 y_sort_enabled = true
 position = Vector2(32, 32)
 sprite_frames = SubResource("SpriteFrames_2rd3q")

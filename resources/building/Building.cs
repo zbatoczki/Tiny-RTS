@@ -78,7 +78,7 @@ public abstract partial class Building : StaticBody2D
 
         if(BuildingResource != null)
         {
-            GD.Print($"Description: {BuildingResource.Description}");
+
         }
     }
 
@@ -160,7 +160,7 @@ public abstract partial class Building : StaticBody2D
 
      protected virtual void OnSelectionChanged(bool selected)
     {
-        GD.Print($"{Name} selected={selected}");
+
     }
 
     /// <summary>Returns the building body's own collision shape (ignores shapes nested in child components).</summary>

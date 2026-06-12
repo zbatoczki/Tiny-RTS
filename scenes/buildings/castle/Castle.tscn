@@ -7,11 +7,12 @@
 [ext_resource type="PackedScene" uid="uid://dggm7qkrau8nx" path="res://scenes/component/UnitDetectionComponent.tscn" id="3_l6pne"]
 [ext_resource type="PackedScene" uid="uid://ldhygolivtsg" path="res://scenes/component/HealthComponent.tscn" id="4_8iw5o"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8iw5o"]
-size = Vector2(360, 230)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8qsed"]
+radius = 108.74
+height = 343.51
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lg0r4"]
-size = Vector2(320, 192)
+size = Vector2(320, 169)
 
 [node name="Castle" type="StaticBody2D" unique_id=105743704]
 collision_mask = 6
@@ -35,11 +36,12 @@ monitorable = true
 targetGroup = &"PlayerUnit"
 
 [node name="CollisionShape2D" parent="UnitDetectionComponent" index="0" unique_id=947036371]
-position = Vector2(160, 82)
-shape = SubResource("RectangleShape2D_8iw5o")
+position = Vector2(160, 74)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_8qsed")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=914712534]
-position = Vector2(160, 73)
+position = Vector2(160, 84.5)
 shape = SubResource("RectangleShape2D_lg0r4")
 
 [node name="HealthComponent" parent="." unique_id=1944934705 instance=ExtResource("4_8iw5o")]

@@ -19,6 +19,8 @@
 [ext_resource type="Script" uid="uid://wmrubcinqmu2" path="res://scenes/Camera2d.cs" id="14_mwfav"]
 [ext_resource type="Resource" uid="uid://bb3k1i83qw4qn" path="res://scenes/buildings/barracks/barracks.tres" id="15_1iba3"]
 [ext_resource type="Script" uid="uid://dc0wx7fgotf6l" path="res://scenes/DebugGrid.cs" id="15_3p2gp"]
+[ext_resource type="PackedScene" uid="uid://bxo4obx7s5dql" path="res://scenes/units/player/worker/Worker.tscn" id="20_1nqs0"]
+[ext_resource type="Resource" uid="uid://1t4poprufd14" path="res://resources/unit/player/Worker.tres" id="21_1iba3"]
 
 [node name="Main" type="Node" unique_id=330848765]
 script = ExtResource("1_cvmbd")
@@ -94,3 +96,8 @@ text = "RESET SCENE"
 [node name="SelectionWindow" parent="UI" unique_id=1334838068 node_paths=PackedStringArray("selectionManager") instance=ExtResource("12_ft6cd")]
 selectionManager = NodePath("../../SelectionManager")
 buildableBuildings = Array[ExtResource("13_nfivy")]([ExtResource("14_1nqs0"), ExtResource("15_1iba3")])
+
+[node name="Worker" parent="." unique_id=1980137832 node_paths=PackedStringArray("treeLayer") instance=ExtResource("20_1nqs0")]
+position = Vector2(576, 384)
+treeLayer = NodePath("../TreeTileMapLayer")
+stats = ExtResource("21_1iba3")

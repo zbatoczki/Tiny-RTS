@@ -34,8 +34,6 @@ public partial class ResourcesUi : PanelContainer
 	{
 		if(faction != (int) Faction.Player) return;
 
-		GD.Print($"{woodCountLabel} |{goldCountLabel} |{foodCountLabel}");
-
 		woodCountLabel.AnimateTo(wood);
 		goldCountLabel.AnimateTo(gold);
 		foodCountLabel.AnimateTo(food);

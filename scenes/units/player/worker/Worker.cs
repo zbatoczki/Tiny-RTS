@@ -24,7 +24,7 @@ public partial class Worker : MeleeUnit
 	};
 
 	public bool HasInventory => CurrentInventory.Any(resource => resource.Value > 0);
-	public ResourceNode GatheringResourceTarget {get; set;}
+	public ResourceNode GatheringResourceTarget {get; set{ field = value; GD.Print(GatheringResourceTarget);}}
 
 	private Area2D resourceDetector;
 	private Vector2? castleLocation;
@@ -52,14 +52,18 @@ public partial class Worker : MeleeUnit
 
     private void OnResourceEntered(Node2D body)
     {
-		var node = body as ResourceNode;
-		GD.Print(node + ":" + GatheringResourceTarget);
-        if (node != null && !node.IsDepleted && node == GatheringResourceTarget)
+		if(body is Castle)
+		{
+			DropOffResources();
+			return;
+		}
+
+        if (body is ResourceNode node && !node.IsDepleted && node == GatheringResourceTarget)
         {
             if (node is GoldMine goldmine)
-			{
+            {
                 goldmine.EnterMine(this);
-			}
+            }
             stateMachine.ForceToState<Gather>();
         }
     }
@@ -109,7 +113,7 @@ public partial class Worker : MeleeUnit
 		else if(GatheringResourceTarget.Type == ResourceType.Wood)
 		{
 			Vector2I lastTreeCellPosition = GatheringResourceTarget.CellCoordinates;
-	
+
 			if (!GatheringResourceTarget.IsDepleted)
 			{
 				MoveTo(treeLayer.GetGlobalPosition(GatheringResourceTarget.CellCoordinates));

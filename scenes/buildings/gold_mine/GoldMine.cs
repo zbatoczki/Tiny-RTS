@@ -37,7 +37,6 @@ public partial class GoldMine : ResourceNode
 
     private void OnResourceDepleted(Vector2I _)
     {
-		GD.Print($"Gold mine at {CellCoordinates} is depleted.");
         SetActiveSprite(SpriteStates.DESTRYOED);
     }
 
