@@ -3,6 +3,7 @@ using System.Linq;
 using Game.Autoload;
 using Game.Component;
 using Game.Globals;
+using Game.Manager;
 using Game.Resources.Building;
 using Game.Resources.Unit;
 using Game.Units;
@@ -20,8 +21,10 @@ public abstract partial class Building : StaticBody2D
     [Export] public float TrainTime = 3f;
     [Export] private bool testAutoBuild = true;
     [Export] private float testBuildTime = 3f;
+    [Export] public float BuildInterpolationTime = 0.25f;
 
     public float CurrentHealth {get; protected set;}
+    public bool IsUnderConstruction => buildProgress < 1f;
 
     private HealthComponent healthBar;
     private Timer timer;
@@ -32,10 +35,6 @@ public abstract partial class Building : StaticBody2D
     private ShaderMaterial buildMaterial;
     private float buildProgress = 1f;
     private Tween buildTween;
-
-    [Export] public float BuildInterpolationTime = 0.25f;
-
-    public bool IsUnderConstruction => buildProgress < 1f;
 
     public Vector2 CenterPosition
     {
@@ -75,11 +74,6 @@ public abstract partial class Building : StaticBody2D
         {
             RunTestBuildAnimation();
         }
-
-        if(BuildingResource != null)
-        {
-
-        }
     }
 
     public virtual void TakeDamage(float amount)
@@ -118,16 +112,16 @@ public abstract partial class Building : StaticBody2D
         }
     }
 
-    public bool TrainUnit(UnitResource unit)
+    public bool TrainUnit(UnitResource unitResource)
     {
-		int woodCost = unit.ResourceCosts.TryGetValue(ResourceType.Wood, out int wCost) ? wCost : 0;
-		int goldCost = unit.ResourceCosts.TryGetValue(ResourceType.Gold, out int gCost) ? gCost : 0;
-		int foodCost = unit.ResourceCosts.TryGetValue(ResourceType.Food, out int fCost) ? fCost : 0;	
+		int woodCost = unitResource.ResourceCosts.TryGetValue(ResourceType.Wood, out int wCost) ? wCost : 0;
+		int goldCost = unitResource.ResourceCosts.TryGetValue(ResourceType.Gold, out int gCost) ? gCost : 0;
+		int foodCost = unitResource.ResourceCosts.TryGetValue(ResourceType.Food, out int fCost) ? fCost : 0;	
 
 		if(!GameManager.Instance.CanTrain(Faction.Player)) return false;
 		if(!ResourceManager.Instance.Spend(Faction, woodCost, goldCost, foodCost)) return false;
 
-        Unit unitToSpawn = InstantiateUnit(unit.UnitScene, unit);
+        Unit unitToSpawn = InstantiateUnit(unitResource.UnitScene, unitResource);
 
 		Enqueue(unitToSpawn, TrainTime);
 		return true;
@@ -143,7 +137,11 @@ public abstract partial class Building : StaticBody2D
         var unit = unitScene.Instantiate<Unit>();
         unit.stats = statsToAssign;
         unit.stats.Faction = Faction;
-        unit.GlobalPosition = GlobalPosition + new Vector2(GD.RandRange(-128, 128), 96);
+
+        var rootCell = GridManager.WorldPositionToGridCell(GlobalPosition);
+        List<Vector2I> adjacentCells = GameManager.Instance.Grid.GetAdjecentCells(rootCell, BuildingResource.Dimensions, true);
+        unit.GlobalPosition = adjacentCells[ (int)(GD.Randi() % adjacentCells.Count) ] * GlobalValues.CELL_SIZE; //get random position
+        
         return unit;
     }
 

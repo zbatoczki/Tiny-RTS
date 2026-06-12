@@ -3,6 +3,7 @@ using Game.Buildings;
 using Godot;
 using Game.Globals;
 using Tree = Game.Resources.Tree;
+using System.Collections.Generic;
 
 namespace Game.Manager;
 
@@ -267,5 +268,44 @@ public partial class GridManager
 		mouseGridPosition = mouseGridPosition.Round();
 		return new Vector2I((int)mouseGridPosition.X, (int)mouseGridPosition.Y);
     }
+
+	/// <summary>
+	/// Finds adjacent cells relative to a root grid cell position and dimensions. Can choose if only open cells are selected.
+	/// </summary>
+	/// <returns>Returns an enumerable of Vector2I representing adjacent cells</returns>
+	public List<Vector2I> GetAdjecentCells(Vector2I rootCell, Vector2I dimension, bool openCellsOnly = false)
+	{
+		List<Vector2I> result = [];
+		if (dimension.X <= 0 || dimension.Y <= 0)
+			return result;
+
+		// The footprint spans rootCell (top-left) to rootCell + dimension - 1 (bottom-right).
+		int left = rootCell.X - 1;
+		int right = rootCell.X + dimension.X;
+		int top = rootCell.Y - 1;
+		int bottom = rootCell.Y + dimension.Y;
+
+		void TryAdd(int x, int y)
+		{
+			if (!openCellsOnly || IsCellFree(x, y))
+				result.Add(new Vector2I(x, y));
+		}
+
+		// Top and bottom rows, including the four corners.
+		for (int x = left; x <= right; x++)
+		{
+			TryAdd(x, top);
+			TryAdd(x, bottom);
+		}
+
+		// Left and right columns, excluding the corners already added above.
+		for (int y = rootCell.Y; y < rootCell.Y + dimension.Y; y++)
+		{
+			TryAdd(left, top);
+			TryAdd(right, top);
+		}
+
+		return result;
+	}
 
 }

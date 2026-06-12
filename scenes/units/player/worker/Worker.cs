@@ -105,7 +105,6 @@ public partial class Worker : MeleeUnit
 
 	private void ReturnToResource()
 	{
-		
 		if(GatheringResourceTarget.Type == ResourceType.Gold && !GatheringResourceTarget.IsDepleted)
 		{
 			MoveTo(GatheringResourceTarget.CellCoordinates);

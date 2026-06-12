@@ -413,7 +413,6 @@ shape = SubResource("SegmentShape2D_2rd3q")
 debug_color = Color(0, 0.6, 0, 0.41960785)
 
 [node name="AnimatedSprite2D" parent="." index="7" unique_id=290410313]
-visible = false
 y_sort_enabled = true
 position = Vector2(32, 32)
 sprite_frames = SubResource("SpriteFrames_2rd3q")

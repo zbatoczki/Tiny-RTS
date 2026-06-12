@@ -145,7 +145,7 @@ public partial class BuildingManager : Node
 	/// <summary>Whether the building being placed fits and is affordable at the given area.</summary>
 	private bool IsBuildingPlaceableAtArea(Rect2I tileArea)
 	{
-		//check if there is room at the grid area and if the player has enough resources to place the building
+		//TODO: check if there is room at the grid area and if the player has enough resources to place the building
 		return true;
 	}
 
@@ -173,7 +173,8 @@ public partial class BuildingManager : Node
 		if(currentBuildState == BuildState.PlacingBuilding)
 		{
 			buildingGhost = buildingGhostScene.Instantiate<BuildingGhost>();
-			buildingGhost.GlobalPosition = tileMapLayer.GetGlobalMousePosition();
+			var mouseGridPosition = gridManager.GetMouseGridCellPositionWithDimensionOffset(buildingGhostDimensions, tileMapLayer.GetGlobalMousePosition());
+			buildingGhost.GlobalPosition = mouseGridPosition * GlobalValues.CELL_SIZE;
 			GetParent().AddChild(buildingGhost);
 		}
 	}
@@ -183,7 +184,7 @@ public partial class BuildingManager : Node
         ChangeState(BuildState.PlacingBuilding);
 		hoveredGridArea.Size = building.Dimensions;
 
-		var buildingSprite = building.SpriteScene.Instantiate<Node2D>();
+		var buildingSprite = building.SpriteScene.Instantiate<Sprite2D>();
 		buildingGhost.AddSpriteNode(buildingSprite);
 		buildingGhost.SetMarkerDimensions(building.Dimensions);
 		buildingGhostDimensions = building.Dimensions;

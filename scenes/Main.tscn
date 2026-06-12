@@ -94,6 +94,7 @@ offset_bottom = 67.0
 text = "RESET SCENE"
 
 [node name="SelectionWindow" parent="UI" unique_id=1334838068 node_paths=PackedStringArray("selectionManager") instance=ExtResource("12_ft6cd")]
+visible = false
 selectionManager = NodePath("../../SelectionManager")
 buildableBuildings = Array[ExtResource("13_nfivy")]([ExtResource("14_1nqs0"), ExtResource("15_1iba3")])
 
