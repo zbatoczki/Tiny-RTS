@@ -5,8 +5,6 @@ using Game.FSM;
 using System.Linq;
 using Game.Buildings;
 using Game.Globals;
-using System.Resources;
-using Game.Autoload;
 using ResourceManager = Game.Autoload.ResourceManager;
 using Game.Groups;
 namespace Game.Units;
@@ -70,6 +68,8 @@ public partial class Worker : MeleeUnit
 
 	public void DropOffResources()
 	{
+		if(!HasInventory) return;
+
 		foreach(KeyValuePair<ResourceType, int> resource in CurrentInventory)
 		{
 			ResourceType resourceType = resource.Key;
