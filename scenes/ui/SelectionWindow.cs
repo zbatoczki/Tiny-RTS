@@ -131,7 +131,7 @@ public partial class SelectionWindow : Control
 	{
 		string displayName = building.BuildingResource?.Name ?? building.Name;
 		infoContent.AddChild(new Label { Text = displayName });
-		infoContent.AddChild(new Label { Text = $"Faction: {building.Faction}" });
+		infoContent.AddChild(new Label { Text = $"Faction: {building.BuildingResource.Faction}" });
 		infoContent.AddChild(new Label { Text = $"HP: {building.CurrentHealth:F0} / {building.MaxHealth:F0}" });
 	}
 

@@ -18,9 +18,9 @@ public partial class ResourcesUi : PanelContainer
 		goldCountLabel = GetNode<NumberLabel>("%GoldCountLabel");
 		foodCountLabel = GetNode<NumberLabel>("%FoodCountLabel");
 
-		woodCountLabel.SetImmediate(ResourceManager.Instance.GetWood(Faction.Player));
-		goldCountLabel.SetImmediate(ResourceManager.Instance.GetGold(Faction.Player));
-		foodCountLabel.SetImmediate(ResourceManager.Instance.GetFood(Faction.Player));
+		woodCountLabel.SetImmediate(ResourceManager.Instance.GetWood(FactionType.Player));
+		goldCountLabel.SetImmediate(ResourceManager.Instance.GetGold(FactionType.Player));
+		foodCountLabel.SetImmediate(ResourceManager.Instance.GetFood(FactionType.Player));
 		
 		ResourceManager.Instance.ResourceChanged += UpdateResouceCounts;
 	}
@@ -32,7 +32,7 @@ public partial class ResourcesUi : PanelContainer
 
 	public void UpdateResouceCounts(int faction, int gold, int wood, int food)
 	{
-		if(faction != (int) Faction.Player) return;
+		if(faction != (int) FactionType.Player) return;
 
 		woodCountLabel.AnimateTo(wood);
 		goldCountLabel.AnimateTo(gold);

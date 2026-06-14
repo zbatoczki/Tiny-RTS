@@ -2,7 +2,7 @@ using Godot;
 
 namespace Game.Globals;
 
-public enum Faction      { Player, Enemy }
+public enum FactionType      { Player, Enemy }
 public enum GameState    { Playing, PlayerWon, EnemyWon }
 public enum ResourceType { Gold, Wood, Food }
 public enum UnitTypes  { Worker, Warrior, Archer, Spearman, Monk }

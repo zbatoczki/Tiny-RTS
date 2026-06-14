@@ -10,6 +10,7 @@ public partial class BuildingResource : Resource
 	[Export] public string Name {get; private set;}
 	[Export] public string Description {get; private set;}
 	[Export] public Vector2I Dimensions {get; private set;}
+	[Export] public FactionType Faction {get; private set;}
 	[Export] public int BuildableRadius {get; private set;}
 	[Export] public int ResourceRadius {get; private set;}
 	[Export] public int AttackRadius {get; private set;}

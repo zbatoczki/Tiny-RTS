@@ -39,6 +39,17 @@ public partial class GridManager
 		pathfinder.Update();
 	}
 
+	private void InitializeGrid()
+	{
+		for (int x = 0; x < GridWidth; x++)
+		{
+			for (int y = 0; y < GridHeight; y++)
+			{
+				grid[x, y] = (CellState.Empty, null);
+			}
+		}
+	}
+
 	private void SetCell(int x, int y, CellState state, Node2D node)
 	{
 		grid[x, y] = (state, node);
@@ -71,7 +82,7 @@ public partial class GridManager
 		return path;
 	}
 
-	public bool IsCellFree(int x, int y) => grid[x, y].cellState == CellState.Empty;
+	public bool IsCellFree(int x, int y) => IsCellWithinBounds(x, y) && grid[x, y].cellState == CellState.Empty;
 
 	public bool IsCellWithinBounds(int x, int y) => x >= 0 && x < GridWidth && y >= 0 && y < GridHeight;
 
@@ -96,16 +107,7 @@ public partial class GridManager
 		return true;
 	}
 
-	private void InitializeGrid()
-	{
-		for (int x = 0; x < GridWidth; x++)
-		{
-			for (int y = 0; y < GridHeight; y++)
-			{
-				grid[x, y] = (CellState.Empty, null);
-			}
-		}
-	}
+	
 
 	// Clears all registered cells. Call after a scene reload so the grid does not
 	// retain references to freed (disposed) nodes from the previous scene.
@@ -160,6 +162,19 @@ public partial class GridManager
 				GD.Print($"  ({x},{y}) {state} -> {node.Name} [{node.GetType().Name}]");
 			}
 		}
+	}
+
+	public bool IsCellAreaBuildable(Rect2I tileArea)
+	{
+		List<Vector2I> cells = tileArea.ToCells();
+
+		if(cells.Count == 0) return false;
+
+		foreach(Vector2I cell in cells)
+			if(!IsCellFree(cell.X, cell.Y)) //TODO: Units will need to move when building is placed.
+				return false;
+
+		return true;
 	}
 
 	public void RegisterBuilding(Building building)

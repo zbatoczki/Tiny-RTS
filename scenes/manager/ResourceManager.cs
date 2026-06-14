@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Game.Globals;
 using Godot;
@@ -10,16 +11,10 @@ public partial class ResourceManager : Node
 
 	[Signal] public delegate void ResourceChangedEventHandler(int faction, int gold, int wood, int food);
 
-	private Dictionary<Faction, int> gold = [];
-    private Dictionary<Faction, int> wood = [];
-    private Dictionary<Faction, int> food = [];
+	private Dictionary<FactionType, int> gold = [];
+    private Dictionary<FactionType, int> wood = [];
+    private Dictionary<FactionType, int> food = [];
 
-	private int CurrentWoodAmount = 0;
-	private int CurrentGoldAmount = 0;
-	private int CurrentFoodAmount = 0;
-
-
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		//ResourceEvents.Instance.ResourcesModified += OnResourcesModified;
@@ -33,11 +28,11 @@ public partial class ResourceManager : Node
         InitializeResources();
 	}
 
-	public int  GetGold(Faction f) => gold[f];
-    public int  GetWood(Faction f) => wood[f];
-	public int  GetFood(Faction f) => food[f];
+	public int  GetGold(FactionType f) => gold[f];
+    public int  GetWood(FactionType f) => wood[f];
+	public int  GetFood(FactionType f) => food[f];
 
-	public bool CanAfford(Faction faction, int woodCost = 0, int goldCost = 0, int foodCost = 0)
+	public bool CanAfford(FactionType faction, int woodCost = 0, int goldCost = 0, int foodCost = 0)
 	{
 		return 
 		gold[faction] >= goldCost && 
@@ -45,23 +40,18 @@ public partial class ResourceManager : Node
 		food[faction] >= foodCost;
 	}
 
-	public bool Spend(Faction faction, int woodCost = 0, int goldCost = 0, int foodCost = 0)
+	public bool Spend(FactionType faction, int woodCost = 0, int goldCost = 0, int foodCost = 0)
 	{
-		if(!CanAfford(faction, woodCost, goldCost, foodCost))
-		{
-			return false;
-		}
-
-		gold[faction] -= goldCost;
-		wood[faction] -= woodCost;
-		food[faction] -= foodCost;
+		gold[faction] = Math.Max(0, gold[faction] - goldCost);
+		wood[faction] = Math.Max(0, wood[faction] -woodCost);
+		food[faction] = Math.Max(0, food[faction] - foodCost);
 
 		EmitSignal(SignalName.ResourceChanged, (int) faction, gold[faction], wood[faction], food[faction]);
 
 		return true;
 	}
 
-	public void AddResource(Faction faction, ResourceType type, int amount)
+	public void AddResource(FactionType faction, ResourceType type, int amount)
 	{
 		if(type == ResourceType.Food)
 		{
@@ -80,7 +70,7 @@ public partial class ResourceManager : Node
 
 	public void InitializeResources()
 	{
-		foreach (Faction f in System.Enum.GetValues<Faction>())
+		foreach (FactionType f in System.Enum.GetValues<FactionType>())
         { 
 			//TODO: Configure starting resources dynamically
 			gold[f] = 10000;

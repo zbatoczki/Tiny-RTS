@@ -2,7 +2,6 @@ using Game.Manager;
 using Game.Resources.Building;
 using Godot;
 using Game.InputMap;
-using System;
 using Game.Autoload;
 using Game.Globals;
 using Game.Buildings;
@@ -21,7 +20,7 @@ public partial class BuildingManager : Node
 	}
 
 	private BuildState currentBuildState = BuildState.Idle;
-	private BuildingResource toPlaceBuildingResource;
+	private BuildingResource buildingToPlaceResource;
 	private Rect2I hoveredGridArea = new(Vector2I.Zero, Vector2I.One);
 
 	private BuildingGhost buildingGhost;
@@ -50,7 +49,7 @@ public partial class BuildingManager : Node
 					ChangeState(BuildState.Idle);
 					GetViewport().SetInputAsHandled();
 				}
-				else if (evt.IsActionPressed(InputMapping.LEFT_CLICK) && toPlaceBuildingResource != null)
+				else if (evt.IsActionPressed(InputMapping.LEFT_CLICK) && buildingToPlaceResource != null)
 				{
 					PlaceBuildingAtHoveredCellPosition();
 					GetViewport().SetInputAsHandled();
@@ -61,39 +60,10 @@ public partial class BuildingManager : Node
 		}
 	}
 
-    private void PlaceBuildingAtHoveredCellPosition()
-    {
-		if(toPlaceBuildingResource.BuildingScene == null)
-		{
-			GD.PushError($"Building resource {toPlaceBuildingResource.Name} does not have a building scene assigned.");
-			return;
-		}
-
-        Building building = toPlaceBuildingResource.BuildingScene.Instantiate<Building>();
-		building.BuildingResource = toPlaceBuildingResource;
-
-		//TODO: Check the grid is open for the building at hovered cell position
-		var costs = building.BuildingResource.ResourceCosts;
-		var woodCost = costs.GetValueOrDefault(ResourceType.Wood);
-		var foodCost = costs.GetValueOrDefault(ResourceType.Food);
-		var goldCost = costs.GetValueOrDefault(ResourceType.Gold);
-		if(!resourceManager.Spend(building.Faction, woodCost, goldCost, foodCost))
-		{
-			//TODO: Notify player on screen that there are not enough resources
-			GD.PushWarning("Not enough resources");
-			return;
-		}
-
-		building.GlobalPosition = hoveredGridArea.Position  * GlobalValues.CELL_SIZE;
-		GetParent().AddChild(building);
-		gridManager.RegisterBuilding(building);
-
-		ChangeState(BuildState.Idle);
-    }
-
     public override void _Process(double _)
 	{
 		var mouseGridPosition = GridManager.WorldPositionToGridCell(tileMapLayer.GetGlobalMousePosition());
+		if(!gridManager.IsCellWithinBounds(mouseGridPosition.X, mouseGridPosition.Y)) return;
 		switch (currentBuildState)
 		{
 			case BuildState.Idle:
@@ -104,8 +74,7 @@ public partial class BuildingManager : Node
 				break;
 		}
 
-		var rootCell = hoveredGridArea.Position;
-		if(rootCell != mouseGridPosition)
+		if(hoveredGridArea.Position != mouseGridPosition)
 		{
 			hoveredGridArea.Position = mouseGridPosition;
 			UpdateHoveredGridArea();
@@ -115,7 +84,6 @@ public partial class BuildingManager : Node
 
 	private void UpdateGridDisplay()
 	{
-		//if building placable at area, set valid
 		if(IsBuildingPlaceableAtArea(hoveredGridArea))
 		{
 			buildingGhost.SetValid();
@@ -145,8 +113,7 @@ public partial class BuildingManager : Node
 	/// <summary>Whether the building being placed fits and is affordable at the given area.</summary>
 	private bool IsBuildingPlaceableAtArea(Rect2I tileArea)
 	{
-		//TODO: check if there is room at the grid area and if the player has enough resources to place the building
-		return true;
+		return gridManager.IsCellAreaBuildable(tileArea);
 	}
 
 	/// <summary>Clears the highlight overlay and frees the placement ghost.</summary>
@@ -165,7 +132,7 @@ public partial class BuildingManager : Node
 		if(currentBuildState == BuildState.PlacingBuilding)
 		{
 			ClearBuildingGhost();
-			toPlaceBuildingResource = null;
+			buildingToPlaceResource = null;
 		}
 
 		currentBuildState = newState;
@@ -189,7 +156,47 @@ public partial class BuildingManager : Node
 		buildingGhost.SetMarkerDimensions(building.Dimensions);
 		buildingGhostDimensions = building.Dimensions;
 
-		toPlaceBuildingResource = building;
+		buildingToPlaceResource = building;
+    }
+
+	private void PlaceBuildingAtHoveredCellPosition()
+    {
+		if(buildingToPlaceResource.BuildingScene == null)
+		{
+			GD.PushError($"Building resource {buildingToPlaceResource.Name} does not have a building scene assigned.");
+			return;
+		}
+
+		FactionType faction = buildingToPlaceResource.Faction;
+		var costs = buildingToPlaceResource.ResourceCosts;
+		var woodCost = costs.GetValueOrDefault(ResourceType.Wood);
+		var foodCost = costs.GetValueOrDefault(ResourceType.Food);
+		var goldCost = costs.GetValueOrDefault(ResourceType.Gold);
+
+		if(!resourceManager.CanAfford(faction, woodCost, goldCost, foodCost))
+		{
+			//TODO: Notify player on screen that there are not enough resources
+			GD.PushWarning("Not enough resources.");
+			return;
+		}
+
+		if (!IsBuildingPlaceableAtArea(hoveredGridArea))
+		{
+			//TODO: Notify player on screen of invalid placement
+			GD.PushWarning("You can't place a building there.");
+			return;
+		}
+
+        Building building = buildingToPlaceResource.BuildingScene.Instantiate<Building>();
+		building.BuildingResource = buildingToPlaceResource;
+		building.GlobalPosition = hoveredGridArea.Position  * GlobalValues.CELL_SIZE;
+
+		GetParent().AddChild(building);
+
+		resourceManager.Spend(faction, woodCost, goldCost, foodCost);
+		GameManager.Instance.RegisterBuilding(building);
+
+		ChangeState(BuildState.Idle);
     }
 
 

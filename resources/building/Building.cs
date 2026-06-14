@@ -15,7 +15,6 @@ namespace Game.Buildings;
 public abstract partial class Building : StaticBody2D
 {
     [Export] public BuildingResource BuildingResource;
-	[Export] public Faction Faction;
     [Export] public Array<UnitResource> BuildableUnits {get; private set;}
     [Export] public float MaxHealth = 500f;
     [Export] public float TrainTime = 3f;
@@ -30,6 +29,7 @@ public abstract partial class Building : StaticBody2D
     private Timer timer;
     private Sprite2D selectionRing;
     private CollisionShape2D bodyCollisionShape;
+    private HashSet<Vector2I> occupiedTiles = [];
 
 
     private ShaderMaterial buildMaterial;
@@ -74,7 +74,50 @@ public abstract partial class Building : StaticBody2D
         {
             RunTestBuildAnimation();
         }
+
+        Callable.From(CalculateOccupiedCellPositions).CallDeferred();
     }
+
+    #region GRID RELATED HELPERS
+
+    /// <summary>
+    /// Returns the building's top-left grid cell position.
+    /// </summary>
+    public Vector2I GetGridCellPosition()
+    {
+        Vector2 gridPosition = (GlobalPosition / GlobalValues.CELL_SIZE).Floor();
+        return new Vector2I((int)gridPosition.X, (int) gridPosition.Y);
+    }
+
+    public HashSet<Vector2I> GetOccupiedCellPositions()
+    {
+        return [.. occupiedTiles];  //A copy is returned to avoid modifying the acutal set of positions.
+    }
+
+    public bool IsGridCellPositionInBuildingArea(Vector2I cellPosition)
+    {
+        return occupiedTiles.Contains(cellPosition);
+    }
+
+    public Rect2I GetCellArea()
+    {
+        var rootCell = GetGridCellPosition();
+        return new Rect2I(rootCell, BuildingResource.Dimensions);
+    }
+
+    private void CalculateOccupiedCellPositions()
+    {
+        var gridPosition = GetGridCellPosition();
+		for(int x = gridPosition.X; x < gridPosition.X + BuildingResource.Dimensions.X; x++)
+		{
+			for(int y = gridPosition.Y; y < gridPosition.Y + BuildingResource.Dimensions.Y; y++)
+			{
+				occupiedTiles.Add(new Vector2I(x, y));
+			}
+		}
+    }
+
+    #endregion
 
     public virtual void TakeDamage(float amount)
     {
@@ -118,8 +161,8 @@ public abstract partial class Building : StaticBody2D
 		int goldCost = unitResource.ResourceCosts.TryGetValue(ResourceType.Gold, out int gCost) ? gCost : 0;
 		int foodCost = unitResource.ResourceCosts.TryGetValue(ResourceType.Food, out int fCost) ? fCost : 0;	
 
-		if(!GameManager.Instance.CanTrain(Faction.Player)) return false;
-		if(!ResourceManager.Instance.Spend(Faction, woodCost, goldCost, foodCost)) return false;
+		if(!GameManager.Instance.CanTrain(FactionType.Player)) return false;
+		if(!ResourceManager.Instance.Spend(BuildingResource.Faction, woodCost, goldCost, foodCost)) return false;
 
         Unit unitToSpawn = InstantiateUnit(unitResource.UnitScene, unitResource);
 
@@ -136,7 +179,7 @@ public abstract partial class Building : StaticBody2D
         }
         var unit = unitScene.Instantiate<Unit>();
         unit.stats = statsToAssign;
-        unit.stats.Faction = Faction;
+        unit.stats.Faction = BuildingResource.Faction;
 
         var rootCell = GridManager.WorldPositionToGridCell(GlobalPosition);
         List<Vector2I> adjacentCells = GameManager.Instance.Grid.GetAdjecentCells(rootCell, BuildingResource.Dimensions, true);

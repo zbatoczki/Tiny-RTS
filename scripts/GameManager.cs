@@ -19,8 +19,8 @@ public partial class GameManager: Node
 
     public GameState State {get; private set;} = GameState.Playing;
 
-    private readonly Dictionary<Faction, int> currentPopulation = [];
-    private readonly Dictionary<Faction, int> maxPopulation = [];
+    private readonly Dictionary<FactionType, int> currentPopulation = [];
+    private readonly Dictionary<FactionType, int> maxPopulation = [];
 
     public readonly HashSet<Unit> AllUnits = [];
     public readonly HashSet<Building> AllBuildings = [];
@@ -38,7 +38,7 @@ public partial class GameManager: Node
 
         Grid = new GridManager(50, 50);
 
-        foreach(Faction faction in System.Enum.GetValues<Faction>())
+        foreach(FactionType faction in System.Enum.GetValues<FactionType>())
         {
             currentPopulation[faction] = 0;
             maxPopulation[faction] = 5;
@@ -50,7 +50,7 @@ public partial class GameManager: Node
     public void AddUnitToPopulation(Unit unit)
     {
         AllUnits.Add(unit);
-        Faction faction = unit.stats.Faction;
+        FactionType faction = unit.stats.Faction;
         currentPopulation[faction]++;
         EmitSignal(SignalName.PopulationChanged, (int)faction, currentPopulation[faction], maxPopulation[faction]);
     }
@@ -58,7 +58,7 @@ public partial class GameManager: Node
      public void RemoveUnitFromPopulation(Unit unit)
     {
         AllUnits.Remove(unit);
-        Faction faction = unit.stats.Faction;
+        FactionType faction = unit.stats.Faction;
         currentPopulation[faction] = Mathf.Max(0, currentPopulation[faction] - 1);
         EmitSignal(SignalName.PopulationChanged, (int)faction, currentPopulation[faction], maxPopulation[faction]);
     }
@@ -83,19 +83,19 @@ public partial class GameManager: Node
 
     #region POPULATION
 
-    public int GetCurrentPopulation(Faction faction) => currentPopulation[faction];
+    public int GetCurrentPopulation(FactionType faction) => currentPopulation[faction];
 
-    public int GetMaxPopulation(Faction faction) => maxPopulation[faction];
+    public int GetMaxPopulation(FactionType faction) => maxPopulation[faction];
 
-    public bool CanTrain(Faction faction) => currentPopulation[faction] < maxPopulation[faction];
+    public bool CanTrain(FactionType faction) => currentPopulation[faction] < maxPopulation[faction];
 
-    public void IncreaseMaxPopulation(Faction faction, int amount)
+    public void IncreaseMaxPopulation(FactionType faction, int amount)
     {
         maxPopulation[faction] += amount;
         EmitSignal(SignalName.PopulationChanged, (int)faction, currentPopulation[faction], maxPopulation[faction]);
     }
 
-    public void DecreaseMaxPopulation(Faction faction, int amount)
+    public void DecreaseMaxPopulation(FactionType faction, int amount)
     {
         maxPopulation[faction] = Mathf.Max(5, maxPopulation[faction] - amount);
         EmitSignal(SignalName.PopulationChanged, (int)faction, currentPopulation[faction], maxPopulation[faction]);
@@ -103,17 +103,17 @@ public partial class GameManager: Node
 
     #endregion
 
-    public List<Unit> GetUnits(Faction faction) => [.. AllUnits.Where(unit => unit.stats.Faction == faction)];
+    public List<Unit> GetUnits(FactionType faction) => [.. AllUnits.Where(unit => unit.stats.Faction == faction)];
 
-    public List<Building> GetBuildings(Faction faction) => [.. AllBuildings.Where(building => building.Faction == faction)];
+    public List<Building> GetBuildings(FactionType faction) => [.. AllBuildings.Where(building => building.BuildingResource.Faction == faction)];
 
     private void CheckWinLoss()
     {
         if(State != GameState.Playing) return;
 
         var castles = AllBuildings.Where(building => building is Castle);
-        bool playerCastleExists = castles.Any(building => building.Faction == Faction.Player);
-        bool enemyCastleExists = castles.Any(building => building.Faction == Faction.Enemy);
+        bool playerCastleExists = castles.Any(building => building.BuildingResource.Faction == FactionType.Player);
+        bool enemyCastleExists = castles.Any(building => building.BuildingResource.Faction == FactionType.Enemy);
 
         if(!playerCastleExists)
         {
