@@ -6,6 +6,7 @@ public partial class BuildingGhost : Node2D
 {
 	[Export] private bool runAnimations = true;
 	
+	private readonly StringName DEFAULT_ANIMATION = "default";
 	private Node2D topLeft;
 	private Node2D bottomLeft;
 	private Node2D topRight;
@@ -28,12 +29,10 @@ public partial class BuildingGhost : Node2D
 		if (runAnimations)
 		{
 			RunUpDownTween();
+			
+			AnimationPlayer animationPlayer = GetNode<AnimationPlayer>(nameof(AnimationPlayer));
+			animationPlayer.Play(DEFAULT_ANIMATION);
 		}
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
 	}
 
 	/// <summary>Tints the ghost red to indicate an invalid placement.</summary>

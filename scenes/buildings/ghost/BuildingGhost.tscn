@@ -122,7 +122,6 @@ script = ExtResource("1_sgstx")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1831588577]
 libraries/ = SubResource("AnimationLibrary_tfggg")
-autoplay = &"default"
 
 [node name="TopLeft" type="Node2D" parent="." unique_id=311717593]
 
