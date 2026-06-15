@@ -188,13 +188,13 @@ public partial class BuildingManager : Node
 		}
 
         Building building = buildingToPlaceResource.BuildingScene.Instantiate<Building>();
+		building.PlacedAtRuntime = true;
 		building.BuildingResource = buildingToPlaceResource;
 		building.GlobalPosition = hoveredGridArea.Position  * GlobalValues.CELL_SIZE;
 
 		GetParent().AddChild(building);
 
 		resourceManager.Spend(faction, woodCost, goldCost, foodCost);
-		GameManager.Instance.RegisterBuilding(building);
 
 		ChangeState(BuildState.Idle);
     }

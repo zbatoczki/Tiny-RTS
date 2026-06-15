@@ -20,22 +20,12 @@ public abstract partial class Building : StaticBody2D
     [Export] public float TrainTime = 3f;
     [Export] private bool testAutoBuild = true;
     [Export] private float testBuildTime = 3f;
-    [Export] public float BuildInterpolationTime = 0.25f;
+    [Export] public float BuildShaderInterpolationTime = 0.25f; //time it takes to interpolate between from and to values in the shader progress
+    [Export(PropertyHint.Range, "0,1")] public float BuildShaderProgressTarget = 1f; //fraction of sprite height occupied by the building (e.g. 0.9 if the top 10% is empty space)
 
     public float CurrentHealth {get; protected set;}
+    public bool PlacedAtRuntime {get; set;} = false;
     public bool IsUnderConstruction => buildProgress < 1f;
-
-    private HealthComponent healthBar;
-    private Timer timer;
-    private Sprite2D selectionRing;
-    private CollisionShape2D bodyCollisionShape;
-    private HashSet<Vector2I> occupiedTiles = [];
-
-
-    private ShaderMaterial buildMaterial;
-    private float buildProgress = 1f;
-    private Tween buildTween;
-
     public Vector2 CenterPosition
     {
         get
@@ -45,7 +35,19 @@ public abstract partial class Building : StaticBody2D
         }
     }
 
-    protected readonly Queue<(Unit unitToSpawn, float waitTime)> queue = new();
+    private HealthComponent healthBar;
+    private Timer timer;
+    private Sprite2D selectionRing;
+    private CollisionShape2D bodyCollisionShape;
+    private HashSet<Vector2I> occupiedTiles = [];
+
+    private ShaderMaterial buildMaterial;
+    private float buildProgress = 1f;
+    private Tween buildTween;
+    private Timer buildTimer;
+    private int buildTicksElapsed;
+
+    protected private readonly Queue<(Unit unitToSpawn, float waitTime)> queue = new();
 
     public void OnReady()
     {
@@ -68,11 +70,14 @@ public abstract partial class Building : StaticBody2D
         selectionRing = GetNode<Sprite2D>("SelectionRing");
         selectionRing.Visible = false;
 
-        SetupBuildVisual();
-
-        if(testAutoBuild)
-        {
-            RunTestBuildAnimation();
+       
+        if (PlacedAtRuntime)
+        {   
+            SetupBuildShader();
+            if(testAutoBuild)
+            {
+                RunTestBuildAnimation();
+            }
         }
 
         Callable.From(CalculateOccupiedCellPositions).CallDeferred();
@@ -216,15 +221,14 @@ public abstract partial class Building : StaticBody2D
     }
 
     #region BUILD PROGRESS VISUALS
-    private void SetupBuildVisual()
+    private void SetupBuildShader()
     {
         foreach (var child in GetChildren().Where(node => node is Sprite2D).Cast<Sprite2D>())
         {
             if (child.Material is ShaderMaterial shader)
             {
-                buildMaterial = (ShaderMaterial)shader.Duplicate();
-                child.Material = buildMaterial;
-                SetBuildProgress(buildProgress);
+                buildMaterial = shader;
+                buildMaterial?.SetShaderParameter("progress_target", BuildShaderProgressTarget);
                 return;
             }
         }
@@ -234,13 +238,27 @@ public abstract partial class Building : StaticBody2D
     {
         SetBuildProgress(0f);
 
-        if (buildTween != null && buildTween.IsValid())
+        if (buildTimer == null)
         {
-            buildTween.Kill();
+            buildTimer = new Timer { OneShot = false, WaitTime = 1f };
+            AddChild(buildTimer);
+            buildTimer.Timeout += OnBuildTimerTimeout; 
         }
 
-        buildTween = CreateTween();
-        buildTween.TweenMethod(Callable.From<float>(ApplyBuildProgress), 0f, 1f, testBuildTime);
+        buildTicksElapsed = 0;
+        buildTimer.Start();
+    }
+
+    private void OnBuildTimerTimeout()
+    {
+        buildTicksElapsed++;
+        float target = testBuildTime > 0f ? Mathf.Min(buildTicksElapsed / testBuildTime, 1f) : 1f;
+        SetBuildProgress(target, interpolate: true);
+
+        if (target >= 1f)
+        {
+            buildTimer.Stop();
+        }
     }
 
     public void SetBuildProgress(float value, bool interpolate = false)
@@ -259,13 +277,14 @@ public abstract partial class Building : StaticBody2D
         }
 
         buildTween = CreateTween();
-        buildTween.TweenMethod(Callable.From<float>(ApplyBuildProgress), buildProgress, target, BuildInterpolationTime);
+        buildTween.TweenMethod(Callable.From<float>(ApplyBuildProgress), buildProgress, target, BuildShaderInterpolationTime);
     }
 
     private void ApplyBuildProgress(float value)
     {
-        buildProgress = value;
-        buildMaterial?.SetShaderParameter("progress", buildProgress);
+        buildProgress = value;                                        // logical 0..1 (drives IsUnderConstruction)
+        float shaderProgress = buildProgress * BuildShaderProgressTarget; // remap so 1.0 fills only the occupied part of the sprite
+        buildMaterial?.SetShaderParameter("progress", shaderProgress);
     }
     #endregion
 }
