@@ -159,7 +159,6 @@ public partial class GridManager
 					GD.Print($"  ({x},{y}) {state} -> <freed>");
 					continue;
 				}
-				GD.Print($"  ({x},{y}) {state} -> {node.Name} [{node.GetType().Name}]");
 			}
 		}
 	}
@@ -225,7 +224,6 @@ public partial class GridManager
 		{
 			var anchorCell = treeLayer.LocalToMap(tree.Position);
 			var dims = tree.Dimensions;
-			GD.Print($"Registering tree {tree.Name} at cell {anchorCell}/position {tree.Position} with dims {dims}");
 			for (int dx = 0; dx < dims.X; dx++)
 			{
 				for (int dy = 0; dy < dims.Y; dy++)
@@ -285,10 +283,10 @@ public partial class GridManager
     }
 
 	/// <summary>
-	/// Finds adjacent cells relative to a root grid cell position and dimensions. Can choose if only open cells are selected.
+	/// Finds adjacent cells relative to a root grid cell position and dimensions. Can choose if only adjacent open cells are selected.
 	/// </summary>
 	/// <returns>Returns an enumerable of Vector2I representing adjacent cells</returns>
-	public List<Vector2I> GetAdjecentCells(Vector2I rootCell, Vector2I dimension, bool openCellsOnly = false)
+	public List<Vector2I> GetAdjecentCells(Vector2I rootCell, Vector2I dimension, bool openAdjacentCellsOnly = false)
 	{
 		List<Vector2I> result = [];
 		if (dimension.X <= 0 || dimension.Y <= 0)
@@ -302,7 +300,7 @@ public partial class GridManager
 
 		void TryAdd(int x, int y)
 		{
-			if (!openCellsOnly || IsCellFree(x, y))
+			if (!openAdjacentCellsOnly || IsCellFree(x, y))
 				result.Add(new Vector2I(x, y));
 		}
 

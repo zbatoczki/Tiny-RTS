@@ -82,12 +82,14 @@ public partial class SelectionWindow : Control
 
 	private void OnBuildingSelected(Building building)
 	{
-		ClearPanelContents();
 		Visible = true;
 
+		ClearPanelContents();
 		PopulateBuildingInfo(building);
-		PopulateBuildingActions(building);
 
+		if(!building.IsUnderConstruction)
+			PopulateBuildingActions(building);
+			
 		ShowPanels();
 	}
 

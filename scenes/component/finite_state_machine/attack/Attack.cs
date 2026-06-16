@@ -69,7 +69,6 @@ public partial class Attack : State
 	private void SetAttackDirection()
 	{
 		(float x, float y) = (unit.GlobalPosition - unit.AttackTarget.GlobalPosition).Normalized().Round();
-		GD.Print($"{x} : {y}");
 		if(y >= 1)
 		{
 			AnimationName = AttackAnimationDirections.AtackUp;

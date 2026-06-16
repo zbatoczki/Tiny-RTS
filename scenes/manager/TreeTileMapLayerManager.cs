@@ -25,7 +25,6 @@ public partial class TreeTileMapLayerManager : TileMapLayer
 	{
 		var trees = GetChildren().Cast<Tree>();
 		var usedCells = GetUsedCells();
-		GD.Print("Used cells in tree layer: " + usedCells.Count);
 		foreach(Vector2I cell in GetUsedCells())
 		{
 			var localPos = MapToLocal(cell);

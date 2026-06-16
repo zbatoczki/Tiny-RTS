@@ -80,6 +80,10 @@ public abstract partial class Building : StaticBody2D
             {
                 RunTestBuildAnimation();
             }
+            else
+            {
+                ApplyBuildProgress(0f);
+            }
         }
 
         Callable.From(CalculateOccupiedCellPositions).CallDeferred();
