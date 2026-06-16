@@ -51,15 +51,14 @@ BuildingResource = ExtResource("7_ebg2g")
 position = Vector2(192, 64)
 BuildingResource = ExtResource("15_1iba3")
 testAutoBuild = false
-testBuildTime = 10.0
 
 [node name="ArcheryRange" parent="." unique_id=972537190 instance=ExtResource("13_qmy6f")]
 position = Vector2(192, 320)
 BuildingResource = ExtResource("14_1nqs0")
 testAutoBuild = false
 
-[node name="GoldMine" parent="." unique_id=829714884 instance=ExtResource("9_lhr70")]
-position = Vector2(896, 512)
+[node name="GoldMine" parent="." unique_id=93055991 instance=ExtResource("9_lhr70")]
+position = Vector2(832, 448)
 
 [node name="TreeTileMapLayer" type="TileMapLayer" parent="." unique_id=1184793851 groups=["TreeMapLayer"]]
 y_sort_enabled = true

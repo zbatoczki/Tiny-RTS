@@ -18,6 +18,8 @@ public abstract partial class Building : StaticBody2D
     [Export] public Array<UnitResource> BuildableUnits {get; private set;}
     [Export] public float MaxHealth = 500f;
     [Export] public float TrainTime = 3f;
+
+    [ExportCategory("Build Progress")]
     [Export] private bool testAutoBuild = true;
     [Export] private float testBuildTime = 3f;
     [Export] public float BuildShaderInterpolationTime = 0.25f; //time it takes to interpolate between from and to values in the shader progress

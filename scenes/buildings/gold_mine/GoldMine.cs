@@ -1,7 +1,6 @@
-using Game.Component;
 using Game.Groups;
+using Game.Manager;
 using Game.Resources;
-using Game.Resources.Gathering;
 using Game.Units;
 using Godot;
 using System.Collections.Generic;
@@ -32,7 +31,7 @@ public partial class GoldMine : ResourceNode
 		ResourceGathered += OnResourceGathered;
 		ResourceDepleted += OnResourceDepleted;
 
-		CellCoordinates = (Vector2I)GlobalPosition;
+		CellCoordinates = GridManager.WorldPositionToGridCell(GlobalPosition);
 	}
 
     private void OnResourceDepleted(Vector2I _)

@@ -269,7 +269,7 @@ public partial class GridManager
 			for (int dy = 0; dy < dims.Y; dy++)
 			{
 				int x = anchorCell.X + dx;
-				int y = anchorCell.Y - dy;
+				int y = anchorCell.Y + dy;
 				if (!IsCellWithinBounds(x, y) || grid[x, y].cellState != CellState.Empty) continue;
 				SetCell(x, y, CellState.Resource, goldMine);
 			}
