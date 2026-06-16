@@ -23,24 +23,12 @@ namespace Game.SelectionManager;
 /// </summary>
 public partial class SelectionManager : Node2D
 {
-    // -------------------------------------------------------------------------
-    // Signals — connect these in the UI layer
-    // -------------------------------------------------------------------------
-
     [Signal] public delegate void UnitsSelectedEventHandler(Array<Unit> units);
     [Signal] public delegate void BuildingSelectedEventHandler(Building building);
     [Signal] public delegate void ResourceSelectedEventHandler(ResourceNode resource);
     [Signal] public delegate void SelectionClearedEventHandler();
 
-    // -------------------------------------------------------------------------
-    // Exports
-    // -------------------------------------------------------------------------
-
     [Export] TreeTileMapLayerManager treeTileMapLayer = null!;
-
-    // -------------------------------------------------------------------------
-    // Private state
-    // -------------------------------------------------------------------------
 
     private Vector2 _dragStart;
     private readonly List<Unit> _selectedUnits = [];
@@ -60,10 +48,6 @@ public partial class SelectionManager : Node2D
     // Small threshold: drags shorter than this are treated as clicks.
     private const float CLICK_THRESHOLD = 6f;
 
-    // -------------------------------------------------------------------------
-    // Lifecycle
-    // -------------------------------------------------------------------------
-
     public override void _Ready()
     {
         _selectionBox = GetNode<ReferenceRect>("SelectionBox");
@@ -72,10 +56,6 @@ public partial class SelectionManager : Node2D
         _contextHandler = new ContextActionHandler(this, treeTileMapLayer);
     }
 
-    // -------------------------------------------------------------------------
-    // Input
-    // -------------------------------------------------------------------------
-
     public override void _UnhandledInput(InputEvent evt)
     {
         HandleLeftClickDragStart(evt);
@@ -83,10 +63,6 @@ public partial class SelectionManager : Node2D
         HandleLeftClickRelease(evt);
         HandleRightClick(evt);
     }
-
-    // -------------------------------------------------------------------------
-    // Left-click drag — box selection
-    // -------------------------------------------------------------------------
 
     private void HandleLeftClickDragStart(InputEvent evt)
     {
@@ -181,7 +157,7 @@ public partial class SelectionManager : Node2D
     private void HandleRightClick(InputEvent evt)
     {
         if (!evt.IsActionPressed(InputMapping.RIGHT_CLICK)) return;
-        if (Input.IsActionPressed(InputMapping.LEFT_CLICK)) return;   // ignore while dragging
+        if (evt.IsActionPressed(InputMapping.LEFT_CLICK)) return;   // ignore while dragging
 
         if (_pendingCommand != PendingCommand.None)
         {
@@ -267,8 +243,7 @@ public partial class SelectionManager : Node2D
     /// <summary>Immediately halts every selected unit.</summary>
     public void StopSelectedUnits()
     {
-        foreach (Unit unit in _selectedUnits)
-            unit.Stop();
+        _selectedUnits.ForEach(unit => unit.Stop());
     }
 
     private void ExecutePendingCommand(Vector2 worldPosition)

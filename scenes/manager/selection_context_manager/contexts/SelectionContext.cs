@@ -26,7 +26,7 @@ public sealed class SelectionContext
     public bool HasWorkers => Workers.Count > 0;
 
     //Building selection
-    public Building SelectedBuilding {get;}
+    public Building SelectedBuilding {get; private set;}
     public bool HasBuilding => SelectedBuilding != null;
 
     //Empty / No selection
@@ -35,6 +35,7 @@ public sealed class SelectionContext
         Type = SelectionType.None;
         Units = [];
         Workers = []; 
+        SelectedBuilding = null;
     }
 
         // Unit selection
@@ -43,6 +44,7 @@ public sealed class SelectionContext
         Type = SelectionType.Units;
         Units = units;
         Workers = [.. units.OfType<Worker>()];
+        SelectedBuilding = null;
     }
  
     // Building selection

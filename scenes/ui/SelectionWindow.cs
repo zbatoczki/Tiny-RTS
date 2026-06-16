@@ -89,7 +89,7 @@ public partial class SelectionWindow : Control
 
 		if(!building.IsUnderConstruction)
 			PopulateBuildingActions(building);
-			
+
 		ShowPanels();
 	}
 
@@ -101,7 +101,6 @@ public partial class SelectionWindow : Control
 		infoContent.AddChild(new Label { Text = resource.Name });
 		infoContent.AddChild(new Label { Text = $"Type: {resource.Type}" });
 		infoContent.AddChild(new Label { Text = $"Remaining: {resource.RemainingResources} / {resource.TotalResources}" });
-		// TODO: resource-specific actions (none for now)
 
 		ShowPanels();
 	}
