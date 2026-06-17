@@ -92,6 +92,11 @@ public partial class GridManager
 		return new Vector2I((int)tilePsotion.X, (int)tilePsotion.Y);
 	}
 
+	public static Vector2 GridCellToWorldPosition(Vector2I cellPosition)
+	{
+		return cellPosition * GlobalValues.CELL_SIZE + new Vector2(GlobalValues.HALF_CELL_SIZE, GlobalValues.HALF_CELL_SIZE);
+	}
+
 	public bool TryRegisterEntityAtCell(Vector2 cellPos, CellState state, Node2D entityNode)
 	{
 		var cellPosition = WorldPositionToGridCell(cellPos);
@@ -314,8 +319,8 @@ public partial class GridManager
 		// Left and right columns, excluding the corners already added above.
 		for (int y = rootCell.Y; y < rootCell.Y + dimension.Y; y++)
 		{
-			TryAdd(left, top);
-			TryAdd(right, top);
+			TryAdd(left, y);
+			TryAdd(right, y);
 		}
 
 		return result;

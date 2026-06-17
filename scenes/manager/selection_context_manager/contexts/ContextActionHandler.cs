@@ -21,6 +21,7 @@ public sealed class ContextActionHandler(Node2D _sceneRoot, TreeTileMapLayerMana
     private readonly List<IContextAction> actions =
         [
             new AttackAction(),
+            new BuildAction(),
             new GatherTreeAction(treeTileMapLayer),
             new GatherGoldAction(),
             new MoveAction(), // catch-all — must remain last

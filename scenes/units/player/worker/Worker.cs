@@ -23,6 +23,7 @@ public partial class Worker : MeleeUnit
 
 	public bool HasInventory => CurrentInventory.Any(resource => resource.Value > 0);
 	public ResourceNode GatheringResourceTarget {get; set{ field = value; GD.Print(GatheringResourceTarget);}}
+	public Building CostructionTarget {get; set;}
 
 	private Area2D resourceDetector;
 	private Vector2? castleLocation;
