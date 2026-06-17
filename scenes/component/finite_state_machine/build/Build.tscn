@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://pbgiwan5tofl"]
+
+[ext_resource type="Script" path="res://scenes/component/finite_state_machine/build/Build.cs" id="1_ectpa"]
+
+[node name="Build" type="Node" unique_id=599415030]
+script = ExtResource("1_ectpa")

@@ -7,12 +7,10 @@ namespace Game.FSM;
 public partial class Move : State
 {
 
-	[Export]
-	private State IdleState;
-    [Export]
-	private State DeadState;
-    [Export]
-	private State AttackState;
+	[Export] private State IdleState;
+    [Export] private State DeadState;
+    [Export] private State AttackState;
+    [Export] private State BuildState;
 
 	public override void Enter()
     {
@@ -56,6 +54,8 @@ public partial class Move : State
         {
             unit.path = [];
             unit.QueueRedraw();
+            if(unit is Worker worker && worker.CostructionTarget != null)
+                return BuildState;
             return IdleState;
         }
 

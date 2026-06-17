@@ -138,4 +138,10 @@ public partial class Worker : MeleeUnit
 		}
 	}
 
+	private void Construct()
+	{
+		GD.Print("Construct called to add health to building");
+		//TODO: Apply health to target building
+	}
+
 }

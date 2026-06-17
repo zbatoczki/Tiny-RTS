@@ -5,8 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://bsiqyoumidgco" path="res://assets/units/player/pawn/pawn_interact_knife.png" id="2_3j8ay"]
 [ext_resource type="Texture2D" uid="uid://ca775ksc530rm" path="res://assets/units/player/pawn/pawn_idle.png" id="2_nowm4"]
 [ext_resource type="Texture2D" uid="uid://dsfgxp5fsj28e" path="res://assets/units/player/pawn/pawn_run.png" id="3_3j8ay"]
+[ext_resource type="PackedScene" uid="uid://pbgiwan5tofl" path="res://scenes/component/finite_state_machine/build/Build.tscn" id="4_eadu0"]
 [ext_resource type="PackedScene" uid="uid://bofm86qfpkq7u" path="res://scenes/component/finite_state_machine/gather/Gather.tscn" id="4_kgdwa"]
 [ext_resource type="Texture2D" uid="uid://dxohd707fnn56" path="res://assets/units/player/pawn/pawn_swing_axe.png" id="6_fkppf"]
+[ext_resource type="Texture2D" uid="uid://emkfo66vcc5c" path="res://assets/units/player/pawn/pawn_interact_hammer.png" id="6_h1fsp"]
 [ext_resource type="Texture2D" uid="uid://bbnhi377lqtqj" path="res://assets/units/player/pawn/pawn_idle_wood.png" id="8_fkppf"]
 [ext_resource type="Texture2D" uid="uid://c4rw6ppti7f3d" path="res://assets/units/player/pawn/pawn_run_wood.png" id="10_2rd3q"]
 [ext_resource type="Texture2D" uid="uid://d2c6txamrye2y" path="res://assets/units/player/pawn/pawn_run_gold.png" id="10_phryt"]
@@ -29,6 +31,18 @@ region = Rect2(384, 0, 192, 192)
 [sub_resource type="AtlasTexture" id="AtlasTexture_o8sua"]
 atlas = ExtResource("2_3j8ay")
 region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bsfyn"]
+atlas = ExtResource("6_h1fsp")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u15ko"]
+atlas = ExtResource("6_h1fsp")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0t3mx"]
+atlas = ExtResource("6_h1fsp")
+region = Rect2(384, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2rd3q"]
 atlas = ExtResource("6_fkppf")
@@ -190,7 +204,7 @@ region = Rect2(768, 0, 192, 192)
 atlas = ExtResource("10_2rd3q")
 region = Rect2(960, 0, 192, 192)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_2rd3q"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_55pm5"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -208,6 +222,20 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bsfyn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u15ko")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0t3mx")
+}],
+"loop": true,
+"name": &"build",
 "speed": 10.0
 }, {
 "frames": [{
@@ -368,9 +396,17 @@ collision_mask = 33
 script = ExtResource("2_2rd3q")
 GatheringRange = 5.0
 
+[node name="Move" parent="StateMachine" parent_id_path=PackedInt32Array(1526190014) index="1" unique_id=2013647738 node_paths=PackedStringArray("BuildState")]
+BuildState = NodePath("../Build")
+
 [node name="Gather" parent="StateMachine" parent_id_path=PackedInt32Array(1526190014) index="4" unique_id=1583901294 node_paths=PackedStringArray("IdleState", "MoveState", "DeadState") instance=ExtResource("4_kgdwa")]
 IdleState = NodePath("../Idle")
 MoveState = NodePath("../Move")
+DeadState = NodePath("../Dead")
+
+[node name="Build" parent="StateMachine" parent_id_path=PackedInt32Array(1526190014) index="5" unique_id=599415030 node_paths=PackedStringArray("MoveState", "AttackState", "DeadState") instance=ExtResource("4_eadu0")]
+MoveState = NodePath("../Move")
+AttackState = NodePath("../Attack")
 DeadState = NodePath("../Dead")
 
 [node name="DamageComponent" parent="." index="2" unique_id=341774930]
@@ -415,9 +451,9 @@ debug_color = Color(0, 0.6, 0, 0.41960785)
 [node name="AnimatedSprite2D" parent="." index="7" unique_id=290410313]
 y_sort_enabled = true
 position = Vector2(32, 32)
-sprite_frames = SubResource("SpriteFrames_2rd3q")
-animation = &"move"
+sprite_frames = SubResource("SpriteFrames_55pm5")
+animation = &"build"
 autoplay = "idle"
 frame = 1
-frame_progress = 0.24703515
+frame_progress = 0.14614278
 offset = Vector2(-98, -103)
