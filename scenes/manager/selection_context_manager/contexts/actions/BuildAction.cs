@@ -28,15 +28,34 @@ public sealed class BuildAction : IContextAction
         if(target is not Building building) return;
         
         List<Vector2I> adjacentCells = GameManager.Instance.Grid.GetAdjecentCells(building.GetGridCellPosition(), building.BuildingResource.Dimensions, true);
-        GD.Print(string.Join(',', adjacentCells));
+
         // move worker units to open adject tiles and have workers swtich to build state. Replenishs health as build progress
         for (int i = 0; i < context.Workers.Count; i++)
         {
-            var randomPositionIndex = (int)(GD.Randi() % adjacentCells.Count);
-            var randomCell = adjacentCells[randomPositionIndex];
-            context.Workers[i].CostructionTarget = building;
-            context.Workers[i].MoveTo(GridManager.GridCellToWorldPosition(randomCell));
-            adjacentCells.RemoveAt(randomPositionIndex); //avoid having multiple units go to the same cell
+            if (adjacentCells.Count == 0) break;
+
+            var worker = context.Workers[i];
+
+            // pick the open adjacent cell closest to this worker
+            int closestIndex = 0;
+            float closestDistanceSquared = float.MaxValue;
+            for (int j = 0; j < adjacentCells.Count; j++)
+            {
+                var cellWorldPosition = GridManager.GridCellToWorldPosition(adjacentCells[j]);
+                float distanceSquared = worker.GlobalPosition.DistanceSquaredTo(cellWorldPosition);
+                if (distanceSquared < closestDistanceSquared)
+                {
+                    closestDistanceSquared = distanceSquared;
+                    closestIndex = j;
+                }
+            }
+
+            var closestCell = adjacentCells[closestIndex];
+            worker.ConstructionTarget = building;
+            worker.ConstructionTarget.BuildingConstructed += worker.OnBuldingConstructed;
+
+            worker.MoveTo(GridManager.GridCellToWorldPosition(closestCell));
+            adjacentCells.RemoveAt(closestIndex); //avoid having multiple units go to the same cell
         }
     }
 }

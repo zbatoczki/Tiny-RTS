@@ -16,6 +16,7 @@ public partial class UnitResource : Resource
     [Export] public float AttackRange { get; set; } = 1f;
     [Export] public float VisionRange { get; set; } = 1f;
     [Export] public float GatherRate {get; set; } = 1f;
+    [Export] public float RepairRate {get; set;} = 0f;
     [Export] public FactionType Faction {get; set;}
     [Export] public PackedScene UnitScene { get; set; }
     [Export(PropertyHint.File, "*.tres")] public string IconPath { get; set; }

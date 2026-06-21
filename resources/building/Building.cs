@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Game.Autoload;
@@ -14,6 +15,8 @@ namespace Game.Buildings;
 
 public abstract partial class Building : StaticBody2D
 {
+    [Signal] public delegate void BuildingConstructedEventHandler(Building constructedBuilding);
+
     [Export] public BuildingResource BuildingResource;
     [Export] public Array<UnitResource> BuildableUnits {get; private set;}
     [Export] public float MaxHealth = 500f;
@@ -75,6 +78,7 @@ public abstract partial class Building : StaticBody2D
        
         if (PlacedAtRuntime)
         {   
+            CurrentHealth = 0;
             SetupBuildShader();
             if(testAutoBuild)
             {
@@ -129,6 +133,15 @@ public abstract partial class Building : StaticBody2D
     }
 
     #endregion
+
+    public void Construct(float amount)
+    {
+        CurrentHealth = Math.Min(CurrentHealth + amount, MaxHealth);
+        healthBar?.SetCurrentHealth(CurrentHealth);
+        SetBuildProgress(CurrentHealth / MaxHealth, true);
+        if(CurrentHealth >= MaxHealth)
+            EmitSignal(SignalName.BuildingConstructed, this);
+    }
 
     public virtual void TakeDamage(float amount)
     {

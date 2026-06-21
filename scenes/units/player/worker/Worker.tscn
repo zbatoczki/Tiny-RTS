@@ -204,7 +204,7 @@ region = Rect2(768, 0, 192, 192)
 atlas = ExtResource("10_2rd3q")
 region = Rect2(960, 0, 192, 192)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_55pm5"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_eadu0"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -451,7 +451,7 @@ debug_color = Color(0, 0.6, 0, 0.41960785)
 [node name="AnimatedSprite2D" parent="." index="7" unique_id=290410313]
 y_sort_enabled = true
 position = Vector2(32, 32)
-sprite_frames = SubResource("SpriteFrames_55pm5")
+sprite_frames = SubResource("SpriteFrames_eadu0")
 animation = &"build"
 autoplay = "idle"
 frame = 1

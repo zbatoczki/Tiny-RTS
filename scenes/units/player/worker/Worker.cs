@@ -23,7 +23,7 @@ public partial class Worker : MeleeUnit
 
 	public bool HasInventory => CurrentInventory.Any(resource => resource.Value > 0);
 	public ResourceNode GatheringResourceTarget {get; set{ field = value; GD.Print(GatheringResourceTarget);}}
-	public Building CostructionTarget {get; set;}
+	public Building ConstructionTarget {get; set;}
 
 	private Area2D resourceDetector;
 	private Vector2? castleLocation;
@@ -138,10 +138,18 @@ public partial class Worker : MeleeUnit
 		}
 	}
 
-	private void Construct()
+	public void Construct()
 	{
-		GD.Print("Construct called to add health to building");
-		//TODO: Apply health to target building
+		if(!IsInstanceValid(ConstructionTarget))
+			return;
+
+		ConstructionTarget.Construct(stats.RepairRate);
+	}
+
+	public void OnBuldingConstructed(Building constructedBuilding)
+	{
+		ConstructionTarget.BuildingConstructed -= OnBuldingConstructed;
+		stateMachine.ForceToState<Idle>();
 	}
 
 }

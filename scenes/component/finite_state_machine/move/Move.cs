@@ -54,8 +54,11 @@ public partial class Move : State
         {
             unit.path = [];
             unit.QueueRedraw();
-            if(unit is Worker worker && worker.CostructionTarget != null)
+            if(unit is Worker worker && worker.ConstructionTarget != null)
+            { 
+                GD.Print("Finished moving; returning build state to transition to.");
                 return BuildState;
+            }
             return IdleState;
         }
 

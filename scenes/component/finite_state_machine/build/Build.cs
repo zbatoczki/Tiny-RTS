@@ -6,25 +6,39 @@ namespace Game.FSM;
 
 public partial class Build : State
 {
-	[Export]
-	private State MoveState;
-	[Export]
-	private State AttackState;
-    [Export]
-	private State DeadState;
+	[Export] private State MoveState;
+	[Export] private State AttackState;
+    [Export] private State DeadState;
+    
+    private Timer buildTimer = new();
 
+    public override void _Ready()
+    {
+        buildTimer.WaitTime = 3;
+        buildTimer.Timeout += OnBuildTimerFinished;
+        AddChild(buildTimer);
+    }
+    
     public override void Enter()
     {
-        GD.Print("Build State entered");
         AnimationName = "build";
 		unit.targetPosition = Vector2.Zero;
 		unit.Velocity = Vector2.Zero;
         base.Enter();
+        
+        buildTimer.Start();
     }
 
     public override void Exit()
     {
-        if(unit is Worker worker)
-            worker.CostructionTarget = null;
+        buildTimer.Stop();
+        (unit as Worker).ConstructionTarget = null;
+    }
+
+    public void OnBuildTimerFinished()
+    {
+        Worker worker = unit as Worker;
+        worker.Construct();
+        buildTimer.Start();
     }
 }
