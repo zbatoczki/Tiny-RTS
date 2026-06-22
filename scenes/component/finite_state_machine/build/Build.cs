@@ -1,4 +1,5 @@
 using System.Linq;
+using Game.Globals;
 using Game.Units;
 using Godot;
 
@@ -32,7 +33,9 @@ public partial class Build : State
     public override void Exit()
     {
         buildTimer.Stop();
-        (unit as Worker).ConstructionTarget = null;
+        Worker worker = unit as Worker;
+        if(IsInstanceValid(worker.ConstructionTarget))
+            worker.ConstructionTarget.BuildingConstructed -= worker.OnBuldingConstructed;
     }
 
     public void OnBuildTimerFinished()

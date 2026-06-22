@@ -24,8 +24,7 @@ public sealed class ContextActionHandler(Node2D _sceneRoot, TreeTileMapLayerMana
             new BuildAction(),
             new GatherTreeAction(treeTileMapLayer),
             new GatherGoldAction(),
-            new MoveAction(), // catch-all — must remain last
-            //TODO: Add BuildAction - condition: at least one worker selected and right click on a building under construction; execute: move worker units to open adject tiles and have workers swtich to build state. Replenishs health as build progress
+            new MoveAction(), // default — must remain last
         ];
 
     private readonly Node2D sceneRoot = _sceneRoot; // used for physics queries

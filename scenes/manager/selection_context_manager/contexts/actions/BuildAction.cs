@@ -1,11 +1,8 @@
-using System;
 using System.Collections.Generic;
 using Game.Autoload;
 using Game.Buildings;
-using Game.Groups;
 using Game.Manager;
 using Game.Selection;
-using Game.Units;
 using Godot;
 
 namespace Game.Context.Actions;
@@ -51,10 +48,17 @@ public sealed class BuildAction : IContextAction
             }
 
             var closestCell = adjacentCells[closestIndex];
+
+            // Detach from any prior construction target before retargeting to avoid duplicate subscriptions.
+            if (GodotObject.IsInstanceValid(worker.ConstructionTarget))
+                worker.ConstructionTarget.BuildingConstructed -= worker.OnBuldingConstructed;
+
             worker.ConstructionTarget = building;
             worker.ConstructionTarget.BuildingConstructed += worker.OnBuldingConstructed;
 
-            worker.MoveTo(GridManager.GridCellToWorldPosition(closestCell));
+            var targetGlobalPosition = GridManager.GridCellToWorldPosition(closestCell);
+            GD.Print($"Placed buildingl move unit to {targetGlobalPosition}");
+            worker.MoveTo(targetGlobalPosition);
             adjacentCells.RemoveAt(closestIndex); //avoid having multiple units go to the same cell
         }
     }

@@ -148,7 +148,8 @@ public partial class Worker : MeleeUnit
 
 	public void OnBuldingConstructed(Building constructedBuilding)
 	{
-		ConstructionTarget.BuildingConstructed -= OnBuldingConstructed;
+		if(IsInstanceValid(ConstructionTarget))
+			ConstructionTarget.BuildingConstructed -= OnBuldingConstructed;
 		stateMachine.ForceToState<Idle>();
 	}
 

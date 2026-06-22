@@ -25,9 +25,10 @@
 [node name="Main" type="Node" unique_id=330848765]
 script = ExtResource("1_cvmbd")
 
-[node name="SelectionManager" parent="." unique_id=588987418 node_paths=PackedStringArray("treeTileMapLayer") instance=ExtResource("1_0bbpv")]
+[node name="SelectionManager" parent="." unique_id=588987418 node_paths=PackedStringArray("treeTileMapLayer", "buildingManager") instance=ExtResource("1_0bbpv")]
 z_index = 3
 treeTileMapLayer = NodePath("../TreeTileMapLayer")
+buildingManager = NodePath("../BuildingManager")
 
 [node name="DebugGrid" type="Node2D" parent="." unique_id=199937788]
 z_index = 1000

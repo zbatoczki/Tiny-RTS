@@ -29,6 +29,7 @@ public partial class SelectionManager : Node2D
     [Signal] public delegate void SelectionClearedEventHandler();
 
     [Export] TreeTileMapLayerManager treeTileMapLayer = null!;
+    [Export] BuildingManager buildingManager;
 
     private Vector2 _dragStart;
     private readonly List<Unit> _selectedUnits = [];
@@ -54,7 +55,19 @@ public partial class SelectionManager : Node2D
         _selectionBox.Visible = false;
 
         _contextHandler = new ContextActionHandler(this, treeTileMapLayer);
+
+        buildingManager.BuildingPlaced += OnBuildingPlaced;
     }
+
+    private void OnBuildingPlaced(Building placedBuilding)
+    {
+        // If workers are selected, send them straight to construct the building just placed.
+        var buildAction = new BuildAction();
+        if (!buildAction.CanHandle(_currentContext, placedBuilding)) return;
+
+        buildAction.Execute(_currentContext, placedBuilding, placedBuilding.GlobalPosition);
+    }
+
 
     public override void _UnhandledInput(InputEvent evt)
     {

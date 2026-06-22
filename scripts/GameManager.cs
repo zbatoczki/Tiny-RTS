@@ -38,11 +38,31 @@ public partial class GameManager: Node
 
         Grid = new GridManager(50, 50);
 
+        InitializePopulation();
+    }
+
+    private void InitializePopulation()
+    {
         foreach(FactionType faction in System.Enum.GetValues<FactionType>())
         {
             currentPopulation[faction] = 0;
             maxPopulation[faction] = 5;
         }
+    }
+
+    /// <summary>
+    /// Clears all per-scene state so a scene reload starts fresh. The autoload itself
+    /// survives the reload, so without this the grid, unit/building sets, and population
+    /// counts would retain references and tallies from the previous scene. The reloaded
+    /// scene re-registers its entities on _Ready.
+    /// </summary>
+    public void Reset()
+    {
+        Grid?.Reset();
+        AllUnits.Clear();
+        AllBuildings.Clear();
+        InitializePopulation();
+        State = GameState.Playing;
     }
 
     #region UNITS

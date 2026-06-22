@@ -9,6 +9,8 @@ using System.Collections.Generic;
 
 public partial class BuildingManager : Node
 {
+	[Signal] public delegate void BuildingPlacedEventHandler(Building placedBuilding);
+
 	[Export] private SelectionWindow selectionWindow;
 	[Export] private TileMapLayer tileMapLayer;
 	[Export] private PackedScene buildingGhostScene;
@@ -195,6 +197,8 @@ public partial class BuildingManager : Node
 		GetParent().AddChild(building);
 
 		resourceManager.Spend(faction, woodCost, goldCost, foodCost);
+
+		EmitSignal(SignalName.BuildingPlaced, building);
 
 		ChangeState(BuildState.Idle);
     }

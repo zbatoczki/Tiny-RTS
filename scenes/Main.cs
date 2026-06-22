@@ -16,11 +16,17 @@ public partial class Main : Node
         treeLayer = GetNode<TileMapLayer>("TreeTileMapLayer");
 
         resetButton = GetNode<Button>("%ResetButton");
-        resetButton.Pressed += () => GetTree().ReloadCurrentScene();
+        resetButton.Pressed += OnResetPressed;
 
         CallDeferred(nameof(RegisterTreesInGrid));
         CallDeferred(nameof(RegisterGoldminesInGrid));
         CallDeferred(nameof(PrintGridAfterRegistration));
+    }
+
+    private void OnResetPressed()
+    {
+        GameManager.Instance.Reset();
+        GetTree().ReloadCurrentScene();
     }
 
     private void RegisterTreesInGrid()

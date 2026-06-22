@@ -21,10 +21,12 @@ public sealed class MoveAction : IContextAction
 
     public void Execute(SelectionContext context, GodotObject target, Vector2 mousePosition)
     {
-        // Clear attack targets so units stop chasing.
+        // Clear targets so units stop chasing.
         foreach (Unit unit in context.Units)
         {
             unit.AttackTarget = null;
+            if(unit is Worker worker)
+                worker.ConstructionTarget = null;
         }
 
         List<Vector2> positions = GetFormationPositions(mousePosition, context.Units.Count);
