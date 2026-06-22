@@ -22,6 +22,8 @@ public abstract partial class ResourceNode : Node2D
     public bool IsDepleted => RemainingResources <= 0;
     public int  RemainingResources {get; set;}
 
+    public Vector2 CenterPosition =>
+        (Vector2)CellCoordinates * GlobalValues.CELL_SIZE + (Vector2)Dimensions * GlobalValues.HALF_CELL_SIZE;
 
     protected void InitializeResource(StringName stringName)
     {

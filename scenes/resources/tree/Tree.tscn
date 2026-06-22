@@ -59,7 +59,7 @@ collision_layer = 32
 collision_mask = 2
 script = ExtResource("1_pknr5")
 Type = 1
-TotalResources = 10
+TotalResources = 100
 Dimensions = Vector2i(1, 2)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=619849326]

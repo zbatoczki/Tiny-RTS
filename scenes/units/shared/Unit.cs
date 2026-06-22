@@ -138,6 +138,10 @@ public abstract partial class Unit : CharacterBody2D
 
 #region MOVEMENT
 
+    /// <summary>
+    /// Move to a world position
+    /// </summary>
+    /// <param name="worldTarget">A Vector2D representing a global position.</param>
     public virtual void MoveTo(Vector2 worldTarget)
     {
         targetPosition = worldTarget;

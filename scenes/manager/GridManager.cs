@@ -58,10 +58,8 @@ public partial class GridManager
 
 	public Vector2[] FindPath(Vector2 worldFrom, Vector2 worldTo)
 	{
-		var fromV = WorldPositionToGridCell(worldFrom);
-		var toV = WorldPositionToGridCell(worldTo);
-		var fromCell = new Vector2I(fromV.X, fromV.Y);
-		var toCell = new Vector2I(toV.X, toV.Y);
+		var fromCell = WorldPositionToGridCell(worldFrom);
+		var toCell = WorldPositionToGridCell(worldTo);
 
 		if (!IsCellWithinBounds(fromCell.X, fromCell.Y) || !IsCellWithinBounds(toCell.X, toCell.Y))
 			return [];

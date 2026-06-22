@@ -108,7 +108,7 @@ public partial class Worker : MeleeUnit
 	{
 		if(GatheringResourceTarget.Type == ResourceType.Gold && !GatheringResourceTarget.IsDepleted)
 		{
-			MoveTo(GatheringResourceTarget.CellCoordinates);
+			MoveTo(GatheringResourceTarget.CenterPosition);
 		}
 		else if(GatheringResourceTarget.Type == ResourceType.Wood)
 		{
