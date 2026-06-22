@@ -7,15 +7,15 @@ namespace Game.FSM;
 
 public partial class Gather : State
 {
-	[Export]
-	private State IdleState;
-	[Export]
-	private State MoveState;
-	[Export]
-	private State DeadState;
+	[Export] private State IdleState;
+	[Export] private State MoveState;
+	[Export] private State DeadState;
+	[Export] AudioStreamPlayer2D woodChopSfx;
+	[Export] AudioStreamPlayer2D goldMineSfx;
 
 	private Worker worker;
 	private Timer gatherTimer = new();
+	private bool chopSyncConnected;
 
 	public override void _Ready()
 	{
@@ -43,11 +43,18 @@ public partial class Gather : State
 		{
 			worker.Visible = false;
 			worker.GatheringResourceTarget.EmitSignal("ResourceGathering");
+			goldMineSfx.Play();
 		}
 		else
 		{
 			StringName gatheringAnimation = $"gather_{worker.GatheringResourceTarget.Type.ToString().ToLower()}";
 			worker.animatedSprite2D.Play(gatheringAnimation);
+			if(worker.GatheringResourceTarget.Type == ResourceType.Wood)
+			{
+				// Play the chop sound at the end of each gather_wood loop so it syncs with the swing.
+				worker.animatedSprite2D.AnimationLooped += OnGatherAnimationLooped;
+				chopSyncConnected = true;
+			}
 		}
 
 		gatherTimer.WaitTime = unit.stats.GatherRate;
@@ -58,7 +65,22 @@ public partial class Gather : State
     {
 		worker.Visible = true;
         gatherTimer.Stop();
+		woodChopSfx.Stop();
+		goldMineSfx.Stop();
+
+		if(chopSyncConnected)
+		{
+			worker.animatedSprite2D.AnimationLooped -= OnGatherAnimationLooped;
+			chopSyncConnected = false;
+		}
     }
+
+	// Fires each time gather_wood completes a loop; one chop sound per swing.
+	private void OnGatherAnimationLooped()
+	{
+		if(worker.animatedSprite2D.Animation == "gather_wood")
+			woodChopSfx.Play();
+	}
 
 
 	private void GatherResource()

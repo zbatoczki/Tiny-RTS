@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://lo1qoequykk7"
+path="res://.godot/imported/Bow Attack 1.ogg-531c6cd9d85e4a38d47ed0b8f68b4623.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/archer/Bow Attack 1.ogg"
+dest_files=["res://.godot/imported/Bow Attack 1.ogg-531c6cd9d85e4a38d47ed0b8f68b4623.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

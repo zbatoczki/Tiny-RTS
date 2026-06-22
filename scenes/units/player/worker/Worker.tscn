@@ -7,11 +7,13 @@
 [ext_resource type="Texture2D" uid="uid://dsfgxp5fsj28e" path="res://assets/units/player/pawn/pawn_run.png" id="3_3j8ay"]
 [ext_resource type="PackedScene" uid="uid://pbgiwan5tofl" path="res://scenes/component/finite_state_machine/build/Build.tscn" id="4_eadu0"]
 [ext_resource type="PackedScene" uid="uid://bofm86qfpkq7u" path="res://scenes/component/finite_state_machine/gather/Gather.tscn" id="4_kgdwa"]
+[ext_resource type="AudioStream" uid="uid://dtkgeo76aoby1" path="res://assets/audio/sfx/gold_minemine.ogg" id="4_n78tb"]
 [ext_resource type="Texture2D" uid="uid://dxohd707fnn56" path="res://assets/units/player/pawn/pawn_swing_axe.png" id="6_fkppf"]
 [ext_resource type="Texture2D" uid="uid://emkfo66vcc5c" path="res://assets/units/player/pawn/pawn_interact_hammer.png" id="6_h1fsp"]
 [ext_resource type="Texture2D" uid="uid://bbnhi377lqtqj" path="res://assets/units/player/pawn/pawn_idle_wood.png" id="8_fkppf"]
 [ext_resource type="Texture2D" uid="uid://c4rw6ppti7f3d" path="res://assets/units/player/pawn/pawn_run_wood.png" id="10_2rd3q"]
 [ext_resource type="Texture2D" uid="uid://d2c6txamrye2y" path="res://assets/units/player/pawn/pawn_run_gold.png" id="10_phryt"]
+[ext_resource type="AudioStream" uid="uid://c55f4e53xstwc" path="res://assets/audio/sfx/wood_chop.ogg" id="13_h1fsp"]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_2rd3q"]
 b = Vector2(64, 0)
@@ -204,7 +206,7 @@ region = Rect2(768, 0, 192, 192)
 atlas = ExtResource("10_2rd3q")
 region = Rect2(960, 0, 192, 192)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_eadu0"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_n78tb"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -396,31 +398,46 @@ collision_mask = 33
 script = ExtResource("2_2rd3q")
 GatheringRange = 5.0
 
+[node name="WoodChopping" type="AudioStreamPlayer2D" parent="." index="0" unique_id=1282739958]
+stream = ExtResource("13_h1fsp")
+volume_db = -10.0
+max_distance = 1200.0
+bus = &"SFX"
+parameters/looping = false
+
+[node name="GoldMine" type="AudioStreamPlayer2D" parent="." index="1" unique_id=1022063034]
+stream = ExtResource("4_n78tb")
+volume_db = -10.199
+max_distance = 1200.0
+bus = &"SFX"
+
 [node name="Move" parent="StateMachine" parent_id_path=PackedInt32Array(1526190014) index="1" unique_id=2013647738 node_paths=PackedStringArray("BuildState")]
 BuildState = NodePath("../Build")
 
-[node name="Gather" parent="StateMachine" parent_id_path=PackedInt32Array(1526190014) index="4" unique_id=1583901294 node_paths=PackedStringArray("IdleState", "MoveState", "DeadState") instance=ExtResource("4_kgdwa")]
+[node name="Gather" parent="StateMachine" parent_id_path=PackedInt32Array(1526190014) index="4" unique_id=1583901294 node_paths=PackedStringArray("IdleState", "MoveState", "DeadState", "woodChopSfx", "goldMineSfx") instance=ExtResource("4_kgdwa")]
 IdleState = NodePath("../Idle")
 MoveState = NodePath("../Move")
 DeadState = NodePath("../Dead")
+woodChopSfx = NodePath("../../WoodChopping")
+goldMineSfx = NodePath("../../GoldMine")
 
 [node name="Build" parent="StateMachine" parent_id_path=PackedInt32Array(1526190014) index="5" unique_id=599415030 node_paths=PackedStringArray("MoveState", "AttackState", "DeadState") instance=ExtResource("4_eadu0")]
 MoveState = NodePath("../Move")
 AttackState = NodePath("../Attack")
 DeadState = NodePath("../Dead")
 
-[node name="DamageComponent" parent="." index="2" unique_id=341774930]
+[node name="DamageComponent" parent="." index="4" unique_id=341774930]
 collision_mask = 4
 targetGroup = &"EnemyUnit"
 
-[node name="UnitDetectionComponent" parent="." index="3" unique_id=1331689136]
+[node name="UnitDetectionComponent" parent="." index="5" unique_id=1331689136]
 targetGroup = &"EnemyUnit"
 
-[node name="SelectionRing" parent="." index="5" unique_id=1405774456]
+[node name="SelectionRing" parent="." index="7" unique_id=1405774456]
 position = Vector2(0, 0)
 offset = Vector2(32, 56)
 
-[node name="ResourceDetector" type="Area2D" parent="." index="6" unique_id=844198648]
+[node name="ResourceDetector" type="Area2D" parent="." index="8" unique_id=844198648]
 collision_layer = 0
 collision_mask = 33
 input_pickable = false
@@ -448,12 +465,12 @@ rotation = -1.5707964
 shape = SubResource("SegmentShape2D_2rd3q")
 debug_color = Color(0, 0.6, 0, 0.41960785)
 
-[node name="AnimatedSprite2D" parent="." index="7" unique_id=290410313]
+[node name="AnimatedSprite2D" parent="." index="9" unique_id=290410313]
 y_sort_enabled = true
 position = Vector2(32, 32)
-sprite_frames = SubResource("SpriteFrames_eadu0")
-animation = &"build"
+sprite_frames = SubResource("SpriteFrames_n78tb")
+animation = &"idle"
 autoplay = "idle"
-frame = 1
-frame_progress = 0.14614278
+frame = 4
+frame_progress = 0.39194763
 offset = Vector2(-98, -103)

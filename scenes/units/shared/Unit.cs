@@ -15,6 +15,7 @@ public abstract partial class Unit : CharacterBody2D
     [Export] public UnitResource stats;
     [Export] public bool HasAttackDirections {get; private set;} = false;
     [Export] public bool CanAttack {get; private set;} = true;
+    [Export] public bool DrawMovementPath = false;
 
     public Vector2 targetPosition    = Vector2.Zero;
     public Vector2[] path = [];
@@ -68,7 +69,7 @@ public abstract partial class Unit : CharacterBody2D
     public override void _PhysicsProcess(double delta)
     {
         stateMachine.UpdatePhysicsFrame(delta);
-        if (path.Length > 0 && AttackTarget == null) QueueRedraw();
+        if (path.Length > 0 && AttackTarget == null && DrawMovementPath) QueueRedraw();
     }
 
     public override void _Draw()
