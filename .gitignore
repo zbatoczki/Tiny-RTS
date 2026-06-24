@@ -46,3 +46,4 @@ Thumbs.db
 out/
 Tiny Swords Assets/
 
+*.csproj.old
