@@ -74,7 +74,7 @@ public abstract partial class Unit : CharacterBody2D
 
     public override void _Draw()
     {
-        if (AttackTarget != null || path.Length == 0 || pathIndex >= path.Length) return;
+        if (AttackTarget != null || path.Length == 0 || pathIndex >= path.Length || !DrawMovementPath) return;
 
         var color = Colors.Red;
         Vector2 prev = CellCenterOffset;

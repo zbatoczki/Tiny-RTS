@@ -39,6 +39,7 @@ treeTileMapLayer = NodePath("../TreeTileMapLayer")
 buildingManager = NodePath("../BuildingManager")
 
 [node name="DebugGrid" type="Node2D" parent="." unique_id=199937788]
+visible = false
 z_index = 1000
 script = ExtResource("15_3p2gp")
 Columns = 50
